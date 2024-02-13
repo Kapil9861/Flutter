@@ -2,6 +2,7 @@ import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/new_expenses.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({
@@ -32,8 +33,38 @@ class _ExpensesState extends State<Expenses> {
 
   void _addExpensesOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => const NewExpenses(),
+      builder: (ctx) => NewExpenses(addExpense: _onAddExpenses),
+    );
+  }
+
+  void _onAddExpenses(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
+  void _onRemoveExpenses(Expense expense) {
+    int expenseIndex = _registeredExpenses.indexOf(expense);
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Expense Deleted!",
+          style: GoogleFonts.lato(fontSize: 16),
+        ),
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () => setState(() {
+            _registeredExpenses.insert(expenseIndex, expense);
+          }),
+        ),
+      ),
     );
   }
 
@@ -51,9 +82,21 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text("Expenses"),
+          (_registeredExpenses.isNotEmpty)
+              ? const Text("Expenses")
+              : Center(
+                  heightFactor: 4,
+                  child: Text(
+                    "No expenses Found!\n Please Add Some!",
+                    style: GoogleFonts.lato(fontSize: 18),
+                  ),
+                ),
           Expanded(
-            child: ExpensesList(expensesList: _registeredExpenses),
+            child: (_registeredExpenses.isNotEmpty)
+                ? ExpensesList(
+                    expensesList: _registeredExpenses,
+                    onRemoveExpense: _onRemoveExpenses)
+                : const Text(""),
           ),
         ],
       ),
