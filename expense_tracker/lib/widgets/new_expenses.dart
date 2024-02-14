@@ -1,4 +1,4 @@
-import 'package:expense_tracker/main.dart';
+// import 'package:expense_tracker/main.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -62,7 +62,7 @@ class _NewExpensesState extends State<NewExpenses> {
           return AlertDialog(
             title: Text(
               "Invalid Input!",
-              style: TextStyle(color: kColorScheme.onPrimaryContainer),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             content: Text(
               "Please provide input with appropriate title and select date with amount greater than 0 Rs.",
@@ -145,7 +145,7 @@ class _NewExpensesState extends State<NewExpenses> {
                             child: Text(
                               category.name.toUpperCase(),
                               style: const TextStyle(
-                                  color: Color.fromARGB(255, 70, 68, 68)),
+                                  color: Color.fromARGB(255, 116, 114, 114)),
                             ),
                           ))
                       .toList(),
