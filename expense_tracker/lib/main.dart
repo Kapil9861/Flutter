@@ -8,6 +8,7 @@ var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 5, 99, 125),
 );
+
 void main() {
   runApp(const MyApp());
 }
@@ -50,26 +51,31 @@ class MyApp extends StatelessWidget {
               backgroundColor: kColorScheme.primaryContainer),
         ),
         textTheme: const TextTheme().copyWith(
-            titleLarge: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.normal,
-              // this is not required as this will be overridden in the AppBar by its foreground Color
-              color:
-                  kColorScheme.onPrimaryContainer, //for manual and import use
-            ),
-            titleMedium: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              // this is not required as this will be overridden in the AppBar by its foreground Color
-              color:
-                  kColorScheme.onPrimaryContainer, //for manual and import use
-            ),
-            bodyMedium: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.normal,
-              // this is not required as this will be overridden in the AppBar by its foreground Color
-              color: kColorScheme.onPrimaryContainer,
-            )),
+          titleLarge: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.normal,
+            // this is not required as this will be overridden in the AppBar by its foreground Color
+            color: kColorScheme.onPrimaryContainer, //for manual and import use
+          ),
+          titleMedium: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            // this is not required as this will be overridden in the AppBar by its foreground Color
+            color: kColorScheme.onPrimaryContainer, //for manual and import use
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.normal,
+            // this is not required as this will be overridden in the AppBar by its foreground Color
+            color: kColorScheme.onPrimaryContainer,
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+            // this is not required as this will be overridden in the AppBar by its foreground Color
+            color: kColorScheme.onPrimaryContainer,
+          ),
+        ),
         dialogTheme: const DialogTheme().copyWith(
           backgroundColor: kColorScheme.primaryContainer,
           //can't set foreground color so need to do it manually
