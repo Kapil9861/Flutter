@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
+// import 'package:flutter/services.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 86, 76, 101),
@@ -10,7 +11,16 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 );
 
 void main() {
-  runApp(const MyApp());
+  //this is for locking the orientation but it is not needed right now
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]).then(
+  //   (function) => runApp(const MyApp()),
+  // );
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -54,19 +64,16 @@ class MyApp extends StatelessWidget {
           titleLarge: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.normal,
-            // this is not required as this will be overridden in the AppBar by its foreground Color
             color: kColorScheme.onPrimaryContainer, //for manual and import use
           ),
           titleMedium: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            // this is not required as this will be overridden in the AppBar by its foreground Color
             color: kColorScheme.onPrimaryContainer, //for manual and import use
           ),
           bodyMedium: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.normal,
-            // this is not required as this will be overridden in the AppBar by its foreground Color
             color: kColorScheme.onPrimaryContainer,
           ),
           bodyLarge: TextStyle(

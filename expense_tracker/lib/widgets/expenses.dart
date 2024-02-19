@@ -34,6 +34,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _addExpensesOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpenses(addExpense: _onAddExpenses),
@@ -71,6 +72,7 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(context) {
+    final backgroundWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Expenses"),
@@ -81,26 +83,47 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          (_registeredExpenses.isNotEmpty)
-              ? Chart(expenses: _registeredExpenses)
-              : Center(
-                  heightFactor: 4,
-                  child: Text(
-                    "No expenses Found!\n Please Add Some!",
-                    style: GoogleFonts.lato(fontSize: 18),
-                  ),
+      body: backgroundWidth < 600
+          ? Column(
+              children: [
+                (_registeredExpenses.isNotEmpty)
+                    ? Chart(expenses: _registeredExpenses)
+                    : Center(
+                        heightFactor: 4,
+                        child: Text(
+                          "No expenses Found!\n Please Add Some!",
+                          style: GoogleFonts.lato(fontSize: 18),
+                        ),
+                      ),
+                Expanded(
+                  child: (_registeredExpenses.isNotEmpty)
+                      ? ExpensesList(
+                          expensesList: _registeredExpenses,
+                          onRemoveExpense: _onRemoveExpenses)
+                      : const Text(""),
                 ),
-          Expanded(
-            child: (_registeredExpenses.isNotEmpty)
-                ? ExpensesList(
-                    expensesList: _registeredExpenses,
-                    onRemoveExpense: _onRemoveExpenses)
-                : const Text(""),
-          ),
-        ],
-      ),
+              ],
+            )
+          : Row(
+              children: [
+                (_registeredExpenses.isNotEmpty)
+                    ? Expanded(child: Chart(expenses: _registeredExpenses))
+                    : Center(
+                        heightFactor: 4,
+                        child: Text(
+                          "No expenses Found!\n Please Add Some!",
+                          style: GoogleFonts.lato(fontSize: 18),
+                        ),
+                      ),
+                Expanded(
+                  child: (_registeredExpenses.isNotEmpty)
+                      ? ExpensesList(
+                          expensesList: _registeredExpenses,
+                          onRemoveExpense: _onRemoveExpenses)
+                      : const Text(""),
+                ),
+              ],
+            ),
     );
   }
 }
