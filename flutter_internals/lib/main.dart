@@ -3,12 +3,12 @@ import 'package:flutter_internals/keys/keys.dart';
 
 void main() {
   runApp(
-    const App(),
+    const MyApp(),
   );
 }
 
-class App extends StatelessWidget {
-  const App({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
