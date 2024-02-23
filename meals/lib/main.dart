@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meals/screens/categories.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 final kDarkColorScheme = ThemeData(
-  brightness: Brightness.dark,
   colorScheme: ColorScheme.fromSeed(
+    brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 131, 57, 0),
   ),
   useMaterial3: true,
@@ -23,9 +24,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'MEALS',
-      home: Text("Meals!"),
+    return MaterialApp(
+      theme: kDarkColorScheme,
+      home: const CategoriesScreen(),
     );
   }
 }
