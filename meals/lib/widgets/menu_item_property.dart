@@ -16,7 +16,10 @@ class MenuItemProperty extends StatelessWidget {
         ),
         Text(
           label,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
         ),
       ],
     );

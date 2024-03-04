@@ -6,10 +6,10 @@ class MealsScreen extends StatelessWidget {
   const MealsScreen({
     super.key,
     required this.meal,
-    required this.title,
+    this.title,
   });
   final List<Meal> meal;
-  final String title;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +44,13 @@ class MealsScreen extends StatelessWidget {
         },
       );
     }
+    if (title == null) {
+      return content;
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(title),
+        title: Text(title!),
       ),
       body: content,
     );
