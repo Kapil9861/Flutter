@@ -41,14 +41,13 @@ class _TabsScreenState extends State<TabsScreen> {
 
   String title = "Categories";
   void setScreen(String screen) {
+    Navigator.of(context).pop();
     if (screen == "filters") {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const FiltersScreen(),
         ),
       );
-    } else {
-      Navigator.of(context).pop();
     }
   }
 
