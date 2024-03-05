@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:meals/screens/list_tile.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key});
+  const MainDrawer({
+    super.key,
+    required this.setScreen,
+  });
+
+  final Function(String screenIdentifier) setScreen;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -40,13 +45,17 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTileScreen(
             icon: const Icon(Icons.restaurant),
-            onTap: () {},
-            title: "Filters",
+            onTap: () {
+              setScreen("meals");
+            },
+            title: "Meals",
           ),
           ListTileScreen(
             icon: const Icon(Icons.settings),
-            onTap: () {},
-            title: "Settings",
+            onTap: () {
+              setScreen("filters");
+            },
+            title: "Filters",
           )
         ],
       ),
