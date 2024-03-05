@@ -5,8 +5,14 @@ import 'package:meals/widgets/styled_text.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealDetail extends StatelessWidget {
-  const MealDetail({super.key, required this.meal});
+  const MealDetail({
+    super.key,
+    required this.meal,
+     required this.toggleFavourite,
+  });
   final Meal meal;
+
+  final Function(Meal meal) toggleFavourite;
 
   String get complexity {
     return meal.complexity.name[0].toUpperCase() +
@@ -21,7 +27,17 @@ class MealDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(meal.title)),
+      appBar: AppBar(
+        title: Text(meal.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+               toggleFavourite(meal);
+            },
+            icon: const Icon(Icons.star),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

@@ -5,8 +5,13 @@ import 'package:meals/widgets/menu_item_property.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MenuItem extends StatelessWidget {
-  const MenuItem({super.key, required this.meal});
+  const MenuItem({
+    super.key,
+    required this.meal,
+    required this.toggleFavourites,
+  });
   final Meal meal;
+ final Function(Meal meal) toggleFavourites;
 
   String get complexity {
     return meal.complexity.name[0].toUpperCase() +
@@ -21,7 +26,10 @@ class MenuItem extends StatelessWidget {
   void mealDetail(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => MealDetail(meal: meal),
+        builder: (context) => MealDetail(
+          meal: meal,
+          toggleFavourite: toggleFavourites,
+        ),
       ),
     );
   }
