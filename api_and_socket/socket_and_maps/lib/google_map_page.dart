@@ -16,24 +16,26 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        initialCameraPosition: const CameraPosition(
-          target: currentLocation,
-          zoom: 13,
+    return MaterialApp(
+      home: Scaffold(
+        body: GoogleMap(
+          initialCameraPosition: const CameraPosition(
+            target: currentLocation,
+            zoom: 13,
+          ),
+          markers: {
+            const Marker(
+              markerId: MarkerId('sourceLocation'),
+              icon: BitmapDescriptor.defaultMarker,
+              position: currentLocation,
+            ),
+            const Marker(
+              markerId: MarkerId('destinationLocation'),
+              icon: BitmapDescriptor.defaultMarker,
+              position: destination,
+            ),
+          },
         ),
-        markers: {
-          const Marker(
-            markerId: MarkerId('sourceLocation'),
-            icon: BitmapDescriptor.defaultMarker,
-            position: currentLocation,
-          ),
-          const Marker(
-            markerId: MarkerId('destinationLocation'),
-            icon: BitmapDescriptor.defaultMarker,
-            position: destination,
-          ),
-        },
       ),
     );
   }
