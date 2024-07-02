@@ -47,7 +47,7 @@ class MenuItem extends StatelessWidget {
         onTap: () {
           mealDetail(context);
         },
-        splashColor: Theme.of(context).colorScheme.onBackground,
+        splashColor: Theme.of(context).colorScheme.onSurface,
         radius: 16,
         child: Stack(
           children: [
