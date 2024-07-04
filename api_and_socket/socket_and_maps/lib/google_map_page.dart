@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:socket_and_maps/constants.dart';
 
 class GoogleMapPage extends StatefulWidget {
   const GoogleMapPage({super.key});
@@ -16,36 +18,53 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
   static const destination = LatLng(37.3861, -122.0839);
   final locationController = Location();
   LatLng? updatedPosition;
+  Map<PolylineId, Polyline> polylines = {};
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance
-        .addPostFrameCallback((_) async => await fetchLocationUpdate());
+        .addPostFrameCallback((_) async => await initializeMap());
+  }
+
+  Future<void> initializeMap() async {
+    await fetchLocationUpdate();
+    final coordinates = await fetchPolylinePoints();
+    await generatePolyLineFromPoints(coordinates);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: GoogleMap(
-          initialCameraPosition: const CameraPosition(
-            target: currentLocation,
-            zoom: 13,
-          ),
-          markers: {
-            const Marker(
-              markerId: MarkerId('sourceLocation'),
-              icon: BitmapDescriptor.defaultMarker,
-              position: currentLocation,
-            ),
-            const Marker(
-              markerId: MarkerId('destinationLocation'),
-              icon: BitmapDescriptor.defaultMarker,
-              position: destination,
-            ),
-          },
-        ),
+        body: updatedPosition == null
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : GoogleMap(
+                initialCameraPosition: const CameraPosition(
+                  target: currentLocation,
+                  zoom: 13,
+                ),
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("updatedPosition"),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: updatedPosition!,
+                  ),
+                  const Marker(
+                    markerId: MarkerId('sourceLocation'),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: currentLocation,
+                  ),
+                  const Marker(
+                    markerId: MarkerId('destinationLocation'),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: destination,
+                  ),
+                },
+                polylines: Set<Polyline>.of(polylines.values),
+              ),
       ),
     );
   }
@@ -74,9 +93,42 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
           updatedPosition =
               LatLng(updatedLocation.latitude!, updatedLocation.longitude!);
         });
-        print(updatedLocation);
-        print("the input position ,must be same as above $updatedLocation");
       }
+    });
+  }
+
+  Future<List<LatLng>> fetchPolylinePoints() async {
+    final polyLinePoints = PolylinePoints();
+    final result = await polyLinePoints.getRouteBetweenCoordinates(
+      googleApiKey: googleMapsApiKey,
+      request: PolylineRequest(
+        origin:
+            PointLatLng(currentLocation.latitude, currentLocation.longitude),
+        destination: PointLatLng(destination.latitude, destination.longitude),
+        mode: TravelMode.driving,
+      ),
+    );
+    if (result.points.isNotEmpty) {
+      return result.points
+          .map((point) => LatLng(point.latitude, point.longitude))
+          .toList();
+    } else {
+      debugPrint(result.errorMessage);
+      return [];
+    }
+  }
+
+  Future<void> generatePolyLineFromPoints(
+      List<LatLng> polylineCoordinates) async {
+    const id = PolylineId('polyline');
+    final polyline = Polyline(
+      polylineId: id,
+      color: Colors.blue,
+      points: polylineCoordinates,
+      width: 5,
+    );
+    setState(() {
+      polylines[id] = polyline;
     });
   }
 }
