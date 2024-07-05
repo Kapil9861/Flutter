@@ -35,8 +35,11 @@ class _GoogleMapPageState extends State<GoogleMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Google Map And Tracking"),
+        ),
         body: updatedPosition == null
             ? const Center(
                 child: CircularProgressIndicator(),
