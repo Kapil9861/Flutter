@@ -1,21 +1,23 @@
 // import 'package:flutter/material.dart';
+// import 'package:socket_and_maps/providers/provider_second.dart';
 
-// class SecondProvider extends StatefulWidget {
-//   const SecondProvider({super.key, required this.numbers});
-//   final List<int> numbers;
+// class Home extends StatefulWidget {
+//   const Home({super.key});
 
 //   @override
-//   State<SecondProvider> createState() => _SecondProviderState();
+//   State<Home> createState() => _HomeState();
 // }
 
-// class _SecondProviderState extends State<SecondProvider> {
+// class _HomeState extends State<Home> {
+//   List<int> numbers = [1, 2, 3, 4, 5];
+
 //   void handleInput(String operation) {
 //     setState(() {
 //       if (operation == "add") {
-//         int last = widget.numbers.last;
-//         widget.numbers.add(last + 1);
+//         int last = numbers.last;
+//         numbers.add(last + 1);
 //       } else {
-//         widget.numbers.removeLast();
+//         numbers.removeLast();
 //       }
 //     });
 //   }
@@ -24,7 +26,7 @@
 //   Widget build(BuildContext context) {
 //     Size size = MediaQuery.of(context).size;
 //     double height = size.height;
-//     int last = widget.numbers.last;
+//     int last = numbers.last;
 //     return SafeArea(
 //       child: Scaffold(
 //         appBar: AppBar(
@@ -58,44 +60,49 @@
 //             ),
 //             Expanded(
 //               child: ListView.builder(
-//                 scrollDirection: Axis.horizontal,
-//                 itemCount: widget.numbers.length,
+//                 itemCount: numbers.length,
 //                 itemBuilder: (context, index) {
-//                   return Padding(
-//                     padding: const EdgeInsets.only(left: 4.0),
-//                     child: Text(
-//                       widget.numbers[index].toString(),
-//                       style: const TextStyle(fontSize: 20),
-//                     ),
+//                   return Text(
+//                     numbers[index].toString(),
+//                     style: const TextStyle(fontSize: 20),
 //                   );
 //                 },
 //               ),
 //             ),
+//             ElevatedButton(
+//                 onPressed: () {
+//                   Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+//                     return SecondProvider(numbers: numbers);
+//                   }));
+//                 },
+//                 child: const Text("SecondProvider"))
 //           ],
 //         ),
 //       ),
 //     );
 //   }
-// *******The above code does not work when we go back the state changes so to make them constant we have to use provider****
+// }
+// ***Class with provider , above code is without any providers ***
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_and_maps/providers/my_provider.dart';
+import 'package:socket_and_maps/providers/provider_second.dart';
 
-class SecondProvider extends StatefulWidget {
-  const SecondProvider({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<SecondProvider> createState() => _SecondProviderState();
+  State<Home> createState() => _HomeState();
 }
 
-class _SecondProviderState extends State<SecondProvider> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     return SafeArea(
       child: Consumer<MyProvider>(
-        builder: (context, myProvider, child) {
+        builder: (BuildContext context, myprovider, Widget? child) {
           return Scaffold(
             appBar: AppBar(
               title: const Text("Provider Totorial"),
@@ -106,14 +113,14 @@ class _SecondProviderState extends State<SecondProvider> {
                   height: height / 2,
                 ),
                 FloatingActionButton(
-                  onPressed: () => myProvider.handleChange("add"),
+                  onPressed: () => myprovider.handleChange("add"),
                   child: const Icon(Icons.add),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 FloatingActionButton(
-                  onPressed: () => myProvider.handleChange("minus"),
+                  onPressed: () => myprovider.handleChange("minus"),
                   child: const Icon(Icons.remove),
                 )
               ],
@@ -122,25 +129,29 @@ class _SecondProviderState extends State<SecondProvider> {
               children: [
                 Center(
                   child: Text(
-                    myProvider.numbers.last.toString(),
+                    myprovider.numbers.last.toString(),
                     style: const TextStyle(fontSize: 24, color: Colors.blue),
                   ),
                 ),
                 Expanded(
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: myProvider.numbers.length,
+                    itemCount: myprovider.numbers.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          myProvider.numbers[index].toString(),
-                          style: const TextStyle(fontSize: 20),
-                        ),
+                      return Text(
+                        myprovider.numbers[index].toString(),
+                        style: const TextStyle(fontSize: 20),
                       );
                     },
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (ctx) {
+                        return const SecondProvider();
+                      }));
+                    },
+                    child: const Text("SecondProvider"))
               ],
             ),
           );

@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MyProvider extends StatefulWidget {
-  const MyProvider({super.key});
-
-  @override
-  State<MyProvider> createState() => _MyProviderState();
-}
-
-class _MyProviderState extends State<MyProvider> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Provider Totorial"),
-        ),
-        body: Container(),
-      ),
-    );
+class MyProvider extends ChangeNotifier {
+  List<int> numbers = [1, 2, 3, 4, 5];
+  void handleChange(String operation) {
+    if (operation == "add") {
+      int toUpdate = numbers.last;
+      numbers.add(toUpdate + 1);
+    } else {
+      numbers.removeLast();
+    }
+    notifyListeners();
   }
 }
