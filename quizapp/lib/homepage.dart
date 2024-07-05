@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:quizapp/styled_text.dart";
 
 class HomePage extends StatelessWidget {
   const HomePage(this.startQuiz, {super.key});
@@ -29,7 +28,10 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 100,
           ),
-          const StyledText("First Quiz Application!", 20),
+          const Text(
+            "First Quiz Application!",
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
           const SizedBox(
             height: 20,
           ),
