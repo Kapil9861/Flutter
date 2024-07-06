@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:socket_and_maps/google_map_page.dart';
 import 'package:socket_and_maps/providers/home.dart';
-import 'package:socket_and_maps/my_socket.dart';
+import 'package:socket_and_maps/socket/socket.dart';
 import 'package:socket_and_maps/providers/my_provider.dart';
 
 void main() {
