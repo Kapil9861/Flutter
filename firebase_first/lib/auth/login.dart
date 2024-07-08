@@ -177,7 +177,7 @@ class _LogInState extends State<LogIn> {
               children: [
                 GestureDetector(
                   onTap: (){
-                    AuthMethods().signInWithGoogle(context);
+                    // AuthM().signInWithGoogle(context);
                   },
                   child: Image.asset(
                     "images/google.png",
@@ -191,7 +191,7 @@ class _LogInState extends State<LogIn> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    AuthMethods().signInWithApple();
+                    // AuthMethods().signInWithApple();
                   },
                   child: Image.asset(
                     "images/apple1.png",

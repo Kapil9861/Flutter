@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_first/auth/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -36,9 +37,9 @@ class LoginPage extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("data"),
+          title: const Text("Authentication With Firebase"),
         ),
-        body: Text("data"),
+        body: const SignUp(),
       ),
     );
   }
