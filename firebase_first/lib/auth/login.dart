@@ -1,10 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_first/auth/forgot_password.dart';
 import 'package:firebase_first/auth/home.dart';
-import 'package:firebase_first/auth/service/auth.dart';
 import 'package:firebase_first/auth/signup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LogIn extends StatefulWidget {
@@ -17,31 +16,41 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   String email = "", password = "";
 
-  TextEditingController mailcontroller = new TextEditingController();
-  TextEditingController passwordcontroller = new TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  final _formkey = GlobalKey<FormState>();
-
-  userLogin() async {
+  Future<void> userLogin() async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const Home()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.orangeAccent,
+          content: Text(
+            "No user with the detail was found!",
+            style: TextStyle(fontSize: 20),
+          ),
+        ));
+      } else if (e.code == 'invalid-credential') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Colors.orangeAccent,
+          content: Text(
+            "Invalid user credential!",
+            style: TextStyle(fontSize: 20),
+          ),
+        ));
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.orangeAccent,
-            content: Text(
-              "No User Found for that Email",
-              style: TextStyle(fontSize: 18.0),
-            )));
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: Colors.orangeAccent,
-            content: Text(
-              "Wrong Password Provided by User",
-              style: TextStyle(fontSize: 18.0),
-            )));
+          backgroundColor: Colors.orangeAccent,
+          content: Text(
+            e.code,
+            style: const TextStyle(fontSize: 20),
+          ),
+        ));
       }
     }
   }
@@ -50,29 +59,29 @@ class _LogInState extends State<LogIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
+      body: SizedBox(
         child: Column(
           children: [
-            Container(
+            SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Image.asset(
-                  "images/car.PNG",
+                  "assets/images/car.PNG",
                   fit: BoxFit.cover,
                 )),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Column(
                   children: [
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
-                          color: Color(0xFFedf0f8),
+                          color: const Color(0xFFedf0f8),
                           borderRadius: BorderRadius.circular(30)),
                       child: TextFormField(
                         validator: (value) {
@@ -81,59 +90,60 @@ class _LogInState extends State<LogIn> {
                           }
                           return null;
                         },
-                        controller: mailcontroller,
-                        decoration: InputDecoration(
+                        controller: emailController,
+                        decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
                             hintStyle: TextStyle(
                                 color: Color(0xFFb2b7bf), fontSize: 18.0)),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 2.0, horizontal: 30.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2.0, horizontal: 30.0),
                       decoration: BoxDecoration(
-                          color: Color(0xFFedf0f8),
+                          color: const Color(0xFFedf0f8),
                           borderRadius: BorderRadius.circular(30)),
                       child: TextFormField(
-                        controller: passwordcontroller,
+                        controller: passController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Password';
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Password",
                             hintStyle: TextStyle(
                                 color: Color(0xFFb2b7bf), fontSize: 18.0)),
-                   obscureText: true,   ),
+                        obscureText: true,
+                      ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30.0,
                     ),
                     GestureDetector(
-                      onTap: (){
-                        if(_formkey.currentState!.validate()){
-                          setState(() {
-                            email= mailcontroller.text;
-                            password=passwordcontroller.text;
-                          });
-                        }
+                      onTap: () {
+                        setState(() {
+                          if (_formKey.currentState!.validate()) {
+                            email = emailController.text;
+                            password = passController.text;
+                          }
+                        });
                         userLogin();
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 13.0, horizontal: 30.0),
                           decoration: BoxDecoration(
-                              color: Color(0xFF273671),
+                              color: const Color(0xFF273671),
                               borderRadius: BorderRadius.circular(30)),
-                          child: Center(
+                          child: const Center(
                               child: Text(
                             "Sign In",
                             style: TextStyle(
@@ -146,55 +156,58 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgotPassword()));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()));
               },
-              child: Text("Forgot Password?",
+              child: const Text("Forgot Password?",
                   style: TextStyle(
                       color: Color(0xFF8c8e98),
                       fontSize: 18.0,
                       fontWeight: FontWeight.w500)),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40.0,
             ),
-            Text(
+            const Text(
               "or LogIn with",
               style: TextStyle(
                   color: Color(0xFF273671),
                   fontSize: 22.0,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     // AuthM().signInWithGoogle(context);
                   },
                   child: Image.asset(
-                    "images/google.png",
+                    "assets/images/google.png",
                     height: 45,
                     width: 45,
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30.0,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     // AuthMethods().signInWithApple();
                   },
                   child: Image.asset(
-                    "images/apple1.png",
+                    "assets/images/apple1.png",
                     height: 50,
                     width: 50,
                     fit: BoxFit.cover,
@@ -202,26 +215,28 @@ class _LogInState extends State<LogIn> {
                 )
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 40.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Don't have an account?",
+                const Text("Don't have an account?",
                     style: TextStyle(
                         color: Color(0xFF8c8e98),
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500)),
-                SizedBox(
+                const SizedBox(
                   width: 5.0,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignUp()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUp()));
                   },
-                  child: Text(
+                  child: const Text(
                     "SignUp",
                     style: TextStyle(
                         color: Color(0xFF273671),

@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> {
         name.isNotEmpty &&
         email.isNotEmpty) {
       try {
-        UserCredential userCredential = await FirebaseAuth.instance
+        await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
-              "Registered Successfully",
+              "Weak Password! Please provide a new one!",
               style: TextStyle(fontSize: 20),
             ),
           ));
@@ -50,7 +50,7 @@ class _SignUpState extends State<SignUp> {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             backgroundColor: Colors.orangeAccent,
             content: Text(
-              "Registered Successfully",
+              "Email is already in use!",
               style: TextStyle(fontSize: 20),
             ),
           ));
