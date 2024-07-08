@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_first/auth/forgot_password.dart';
 import 'package:firebase_first/auth/home.dart';
+import 'package:firebase_first/auth/service/auth.dart';
 import 'package:firebase_first/auth/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -190,7 +191,7 @@ class _LogInState extends State<LogIn> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    // AuthM().signInWithGoogle(context);
+                    AuthMethods().signinWithGoogle(context);
                   },
                   child: Image.asset(
                     "assets/images/google.png",
@@ -204,7 +205,7 @@ class _LogInState extends State<LogIn> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // AuthMethods().signInWithApple();
+                    AuthMethods().signInWithApple(context);
                   },
                   child: Image.asset(
                     "assets/images/apple1.png",

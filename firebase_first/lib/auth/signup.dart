@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_first/auth/home.dart';
 import 'package:firebase_first/auth/login.dart';
+import 'package:firebase_first/auth/service/auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -201,20 +202,30 @@ class _SignUpState extends State<SignUp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/images/google.png",
-                  height: 45,
-                  width: 45,
-                  fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () {
+                    AuthMethods().signinWithGoogle(context);
+                  },
+                  child: Image.asset(
+                    "assets/images/google.png",
+                    height: 45,
+                    width: 45,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 const SizedBox(
                   width: 20.0,
                 ),
-                Image.asset(
-                  "assets/images/apple1.png",
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () {
+                    AuthMethods().signInWithApple(context);
+                  },
+                  child: Image.asset(
+                    "assets/images/apple1.png",
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
                 )
               ],
             ),
