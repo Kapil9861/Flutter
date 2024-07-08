@@ -73,7 +73,7 @@ class _SignUpState extends State<SignUp> {
                   fit: BoxFit.cover,
                 )),
             const SizedBox(
-              height: 30.0,
+              height: 15.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -103,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 15.0,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -127,7 +127,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 15.0,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -152,7 +152,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30.0,
+                      height: 15.0,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -168,7 +168,7 @@ class _SignUpState extends State<SignUp> {
                       child: Container(
                           width: MediaQuery.of(context).size.width,
                           padding: const EdgeInsets.symmetric(
-                              vertical: 13.0, horizontal: 30.0),
+                              vertical: 8.0, horizontal: 30.0),
                           decoration: BoxDecoration(
                               color: const Color(0xFF273671),
                               borderRadius: BorderRadius.circular(30)),
@@ -186,7 +186,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             const SizedBox(
-              height: 40.0,
+              height: 25.0,
             ),
             const Text(
               "or LogIn with",
@@ -196,7 +196,7 @@ class _SignUpState extends State<SignUp> {
                   fontWeight: FontWeight.w500),
             ),
             const SizedBox(
-              height: 30.0,
+              height: 15.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -208,7 +208,7 @@ class _SignUpState extends State<SignUp> {
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(
-                  width: 30.0,
+                  width: 20.0,
                 ),
                 Image.asset(
                   "assets/images/apple1.png",
@@ -219,7 +219,7 @@ class _SignUpState extends State<SignUp> {
               ],
             ),
             const SizedBox(
-              height: 40.0,
+              height: 30.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -241,7 +241,7 @@ class _SignUpState extends State<SignUp> {
                     "LogIn",
                     style: TextStyle(
                         color: Color(0xFF273671),
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
