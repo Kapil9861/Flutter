@@ -20,7 +20,7 @@ class AuthMethods {
 
     final GoogleSignInAuthentication googleAuth =
         await googleAccount!.authentication;
-    final AuthCredential credential = await GoogleAuthProvider.credential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
     UserCredential result = await fireAuth.signInWithCredential(credential);
