@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_first/auth/home.dart';
 import 'package:firebase_first/auth/login.dart';
 import 'package:firebase_first/auth/service/auth.dart';
+import 'package:firebase_first/phone_auth.dart/phone_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -36,7 +36,7 @@ class _SignUpState extends State<SignUp> {
           ),
         ));
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const Home(),
+          builder: (context) => const PhoneAuthentication(),
         ));
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-passeord') {

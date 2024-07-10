@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_first/auth/home.dart';
 import 'package:firebase_first/auth/service/database.dart';
+import 'package:firebase_first/phone_auth.dart/phone_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -34,8 +34,8 @@ class AuthMethods {
         'phoneNumber': userDetails.phoneNumber,
       };
       await Database().addUser(userDetails.uid, userDetail).then((value) {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Home()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const PhoneAuthentication()));
       });
     }
   }
@@ -59,7 +59,8 @@ class AuthMethods {
               fullName.familyName != null) {
             final displayName = '${fullName.givenName}${fullName.familyName}';
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const Home()),
+              MaterialPageRoute(
+                  builder: (context) => const PhoneAuthentication()),
             );
             await firebaseUser!.updateDisplayName(displayName);
           }

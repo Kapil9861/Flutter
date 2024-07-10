@@ -2,9 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_first/auth/forgot_password.dart';
-import 'package:firebase_first/auth/home.dart';
 import 'package:firebase_first/auth/service/auth.dart';
 import 'package:firebase_first/auth/signup.dart';
+import 'package:firebase_first/phone_auth.dart/phone_auth.dart';
 import 'package:flutter/material.dart';
 
 class LogIn extends StatefulWidget {
@@ -26,7 +26,7 @@ class _LogInState extends State<LogIn> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const Home()));
+          .push(MaterialPageRoute(builder: (context) => const PhoneAuthentication()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
