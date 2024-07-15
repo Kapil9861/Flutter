@@ -109,7 +109,9 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(Colors.red[900]),
               ),
@@ -120,7 +122,14 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(ctx).pop();
+                Todo newTodo = Todo(
+                    task: _controller.text,
+                    updatedOn: Timestamp.now(),
+                    createdOn: Timestamp.now(),
+                    isDone: false);
+                _service.addTodo(newTodo);
+                Navigator.of(context).pop();
+                _controller.clear();
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(Colors.blue[400]),
