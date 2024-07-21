@@ -20,3 +20,6 @@ class _WishlistState extends State<Wishlist> {
     );
   }
 }
+
+// add the wishlist item tile, check the emitted state and show snackbars acccordingly,
+// remember to initialize the initial bloc event and call the consumer of the bloc
