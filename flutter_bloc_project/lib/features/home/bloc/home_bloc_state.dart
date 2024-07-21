@@ -9,7 +9,10 @@ final class HomeBlocInitial extends HomeBlocState {}
 
 class HomeLoadingState extends HomeBlocState {}
 
-class HomeLoadSuccessState extends HomeBlocState {}
+class HomeLoadSuccessState extends HomeBlocState {
+  final List<ProductDataModel> products;
+  HomeLoadSuccessState({required this.products});
+}
 
 class HomeLoadFailureState extends HomeBlocState {}
 
