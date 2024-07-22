@@ -3,4 +3,14 @@ part of 'wishlist_bloc_bloc.dart';
 @immutable
 sealed class WishlistBlocEvent {}
 
-// add the initial event add the remove from the wishlist event,
+class WishlistInitialEvent extends WishlistBlocEvent {}
+
+class WishlistMoveToCartEvent extends WishlistBlocEvent {
+  final ProductDataModel product;
+  WishlistMoveToCartEvent({required this.product});
+}
+
+class RemoveFromWishlistEvent extends WishlistBlocEvent {
+  final ProductDataModel product;
+  RemoveFromWishlistEvent({required this.product});
+}

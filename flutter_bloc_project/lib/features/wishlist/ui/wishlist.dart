@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_project/features/wishlist/bloc/wishlist_bloc_bloc.dart';
+import 'package:flutter_bloc_project/features/wishlist/ui/product_tile_widget.dart';
 
 class Wishlist extends StatefulWidget {
   const Wishlist({super.key});
@@ -8,6 +11,13 @@ class Wishlist extends StatefulWidget {
 }
 
 class _WishlistState extends State<Wishlist> {
+  final WishlistBlocBloc bloc = WishlistBlocBloc();
+  @override
+  void initState() {
+    bloc.add(WishlistInitialEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,8 +26,57 @@ class _WishlistState extends State<Wishlist> {
           title: const Text("Wishlist"),
           centerTitle: true,
         ),
+        body: BlocConsumer<WishlistBlocBloc, WishlistBlocState>(
+          bloc: bloc,
+          listenWhen: (previous, current) => current is WishlistActionState,
+          listener: (context, state) {
+            if (state is ItemAlreadyInCartActionState) {
+              snackbar("Product Updated in Cart", Colors.green);
+            } else if (state is MovedToCartActionState) {
+              snackbar("Product Moved to Cart", Colors.green);
+            } else if (state is RemovedFromCartActionState) {
+              snackbar("Product Removed From Wishlist", Colors.green);
+            }
+          },
+          buildWhen: (context, state) => state is! WishlistActionState,
+          builder: (context, state) {
+            switch (state.runtimeType) {
+              case WishlistSuccessState:
+                final stateData = state as WishlistSuccessState;
+                return ListView.builder(
+                  itemCount: stateData.product.length,
+                  itemBuilder: (context, index) {
+                    return WishlistTileWidget(
+                        product: stateData.product[index], bloc: bloc);
+                  },
+                );
+
+              case WishlistFailedState:
+                return const Scaffold(
+                  body: Center(
+                    child: Text(
+                      "Error loading!",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                );
+              default:
+                return const SizedBox(
+                  child: Text("Something Went Wrong!"),
+                );
+            }
+          },
+        ),
       ),
     );
+  }
+
+  void snackbar(String message, Color color) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: color,
+    ));
   }
 }
 

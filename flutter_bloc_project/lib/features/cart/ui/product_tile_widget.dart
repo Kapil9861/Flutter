@@ -46,21 +46,21 @@ class CartItemsTileWidget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.shopping_bag_outlined),
+                      IconButton.filledTonal(
+                        icon: const Icon(
+                          Icons.shopping_bag,
+                          color: Colors.red,
+                          fill: 0.0,
+                        ),
                         onPressed: () {
-                          // bloc.add(AddToWishlistButtonClickedEvent(
-                          //     product: product));
                           bloc.add(RemoveFromCartEvent(product: product));
                         },
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 3.0),
-                        child: IconButton(
+                        child: IconButton.filledTonal(
                           icon: const Icon(Icons.favorite_border),
-                          onPressed: () {
-                            // bloc.add(AddToCartButtonClickedEvent(product:product));
-                          },
+                          onPressed: () {},
                         ),
                       ),
                     ],
