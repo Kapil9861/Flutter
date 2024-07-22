@@ -1,0 +1,7 @@
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">564180688474</string>
+    <string name="google_api_key" translatable="false">AIzaSyDzhzcMwItHGqH4UFbGcJi9KB2Edhvi_xk</string>
+    <string name="google_app_id" translatable="false">1:564180688474:android:237107b3e95b8a36994263</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDzhzcMwItHGqH4UFbGcJi9KB2Edhvi_xk</string>
+    <string name="project_id" translatable="false">the-grocery-app-a39ba</string>
+</resources>

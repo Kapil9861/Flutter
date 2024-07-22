@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_project/features/cart/ui/cart.dart';
 import 'package:flutter_bloc_project/features/home/bloc/home_bloc_bloc.dart';
+import 'package:flutter_bloc_project/features/home/service/database_service.dart';
 import 'package:flutter_bloc_project/features/home/ui/product_tile_widget.dart';
 import 'package:flutter_bloc_project/features/wishlist/ui/wishlist.dart';
 
@@ -13,10 +14,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isUploaded = false;
   @override
   void initState() {
     homeBloc.add(HomeInitialEvent());
     super.initState();
+    _uploadProductsToFirestore();
+  }
+
+  void _uploadProductsToFirestore() async {
+    if (!isUploaded) {
+      DatabaseService service = DatabaseService();
+      await service.uploadToFirestore();
+      setState(() {
+        isUploaded = true;
+      });
+    }
   }
 
   final HomeBlocBloc homeBloc = HomeBlocBloc();
