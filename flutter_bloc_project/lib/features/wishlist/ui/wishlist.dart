@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_project/features/home/models/product_data_model.dart';
 import 'package:flutter_bloc_project/features/wishlist/bloc/wishlist_bloc_bloc.dart';
+import 'package:flutter_bloc_project/features/wishlist/service/database_service.dart';
 import 'package:flutter_bloc_project/features/wishlist/ui/product_tile_widget.dart';
 
 class Wishlist extends StatefulWidget {
@@ -11,6 +13,7 @@ class Wishlist extends StatefulWidget {
 }
 
 class _WishlistState extends State<Wishlist> {
+  WishlistDataService service = WishlistDataService();
   final WishlistBlocBloc bloc = WishlistBlocBloc();
   @override
   void initState() {
@@ -42,14 +45,31 @@ class _WishlistState extends State<Wishlist> {
           builder: (context, state) {
             switch (state.runtimeType) {
               case WishlistSuccessState:
-                final stateData = state as WishlistSuccessState;
-                return ListView.builder(
-                  itemCount: stateData.product.length,
-                  itemBuilder: (context, index) {
-                    return WishlistTileWidget(
-                        product: stateData.product[index], bloc: bloc);
-                  },
-                );
+                return StreamBuilder(
+                    stream: service.getWishlistItems(),
+                    builder: (context, snapshot) {
+                      List data = snapshot.data?.docs ?? [];
+
+                      return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            ProductDataModel product = data[index].data();
+                            return WishlistTileWidget(
+                              product: product,
+                              bloc: bloc,
+                            );
+                          });
+                    });
+
+              // For locally stored data in a file(Data Model)
+              // final stateData = state as WishlistSuccessState;
+              // return ListView.builder(
+              //   itemCount: stateData.product.length,
+              //   itemBuilder: (context, index) {
+              //     return WishlistTileWidget(
+              //         product: stateData.product[index], bloc: bloc);
+              //   },
+              // );
 
               case WishlistFailedState:
                 return const Scaffold(

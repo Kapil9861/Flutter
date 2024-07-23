@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_project/features/cart/bloc/cart_bloc_bloc.dart';
+import 'package:flutter_bloc_project/features/cart/service/database_service.dart';
 import 'package:flutter_bloc_project/features/cart/ui/product_tile_widget.dart';
+import 'package:flutter_bloc_project/features/home/models/product_data_model.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -11,6 +13,7 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final CartDatabaseService service = CartDatabaseService();
   final CartBlocBloc cartBloc = CartBlocBloc();
   @override
   void initState() {
@@ -38,13 +41,28 @@ class _CartState extends State<Cart> {
           builder: (context, state) {
             switch (state.runtimeType) {
               case CartSuccessState:
-                final cartData = state as CartSuccessState;
-                return ListView.builder(
-                    itemCount: cartData.cartItems.length,
-                    itemBuilder: (context, index) {
-                      return CartItemsTileWidget(
-                          product: cartData.cartItems[index], bloc: cartBloc);
+                return StreamBuilder(
+                    stream: service.getProducts(),
+                    builder: (context, snapshot) {
+                      List data = snapshot.data?.docs ?? [];
+                      return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            ProductDataModel product = data[index].data();
+                            return CartItemsTileWidget(
+                              product: product,
+                              bloc: cartBloc,
+                            );
+                          });
                     });
+              // For locally stored data in a file (Data Model)
+              // final cartData = state as CartSuccessState;
+              // return ListView.builder(
+              //     itemCount: cartData.cartItems.length,
+              //     itemBuilder: (context, index) {
+              //       return CartItemsTileWidget(
+              //           product: cartData.cartItems[index], bloc: cartBloc);
+              //     });
               case CartFailState:
                 return const Scaffold(
                   body: Center(
