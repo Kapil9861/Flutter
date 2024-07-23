@@ -26,6 +26,7 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
       HomeInitialEvent event, Emitter<HomeBlocState> emit) async {
     emit(HomeLoadingState());
     await Future.delayed(const Duration(seconds: 2));
+    // This is a one-time operation and must be commented after running the code once to unnecessary population in database
     DatabaseService service = DatabaseService();
     service.uploadToFirestore();
     emit(
