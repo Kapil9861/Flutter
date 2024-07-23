@@ -41,7 +41,7 @@ class DatabaseService {
     await _productsRef.doc(productId.toString()).delete();
   }
 
-   Future<void> uploadToFirestore(Function(String) onError) async {
+  Future<void> uploadToFirestore(Function(String) onError) async {
     GroceryData data = GroceryData();
     for (var individualProduct in data.groceryProducts) {
       ProductDataModel product = ProductDataModel.fromJson(individualProduct);
@@ -50,7 +50,7 @@ class DatabaseService {
         if (!exists) {
           await _productsRef.add(product);
         } else {
-          onError("Product already exists.");
+          onError("${product.name} already exists.");
         }
       } catch (error) {
         onError("Failed to add product: $error");

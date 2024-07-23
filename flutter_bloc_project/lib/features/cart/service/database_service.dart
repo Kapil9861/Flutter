@@ -30,4 +30,24 @@ class CartDatabaseService {
   Future<void> removeProductFromWishlist(int productId) async {
     await _cartRef.doc(productId.toString()).delete();
   }
+
+  Future<void> moveProductToWishlist(ProductDataModel product) async {
+    CartDatabaseService service = CartDatabaseService();
+    service.moveProductToWishlist(product);
+  }
+
+  Future<void> movedToCart(ProductDataModel product) async {
+    bool exists = await _checkIfProductExists(product.id);
+    if (!exists) {
+      await _cartRef.add(product);
+    } else {
+      print("Product Already Exists");
+    }
+  }
+
+  Future<bool> _checkIfProductExists(int productId) async {
+    final querySnapshot =
+        await _cartRef.where('id', isEqualTo: productId).get();
+    return querySnapshot.docs.isNotEmpty;
+  }
 }
