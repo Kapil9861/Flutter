@@ -14,10 +14,12 @@ class ProductDataModel {
 
   ProductDataModel.fromJson(Map<String, dynamic> json)
       : this(
-          id: json['id'],
+          id: json['id'] as int,
           name: json['name'],
           description: json['description'],
-          price: json['price'],
+          price: json['price'] is int
+              ? (json['price'] as int).toDouble()
+              : json['price'],
           imgUrl: json['imageUrl'],
         );
 

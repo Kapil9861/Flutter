@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_project/features/cart/ui/cart.dart';
 import 'package:flutter_bloc_project/features/home/bloc/home_bloc_bloc.dart';
-// The firestore already has the data 
-// import 'package:flutter_bloc_project/features/home/service/database_service.dart';
+import 'package:flutter_bloc_project/features/home/models/product_data_model.dart';
+// The firestore already has the data
+import 'package:flutter_bloc_project/features/home/service/database_service.dart';
 import 'package:flutter_bloc_project/features/home/ui/product_tile_widget.dart';
 import 'package:flutter_bloc_project/features/wishlist/ui/wishlist.dart';
 
@@ -15,6 +16,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  DatabaseService service = DatabaseService();
+
   bool isUploaded = false;
   @override
   void initState() {
@@ -25,7 +28,6 @@ class _HomeState extends State<Home> {
 
   // void _uploadProductsToFirestore() async {
   //   if (!isUploaded) {
-  //     DatabaseService service = DatabaseService();
   //     await service.uploadToFirestore((error) {
   //       snackbar(error, Colors.red);
   //     });
@@ -70,7 +72,7 @@ class _HomeState extends State<Home> {
               ),
             );
           case HomeLoadSuccessState:
-            final stateData = state as HomeLoadSuccessState;
+            // final stateData = state as HomeLoadSuccessState;
             return Scaffold(
               appBar: AppBar(
                 title: const Text(
@@ -99,13 +101,29 @@ class _HomeState extends State<Home> {
                   )
                 ],
               ),
-              body: ListView.builder(
-                  itemCount: stateData.products.length,
-                  itemBuilder: (context, index) {
-                    return ProductTileWidget(
-                      product: stateData.products[index],
-                      bloc: homeBloc,
-                    );
+              body: StreamBuilder(
+                  stream: service.getProducts(),
+                  builder: (context, snapshot) {
+                    List data = snapshot.data?.docs ?? [];
+                    if (data.isEmpty) {
+                      return const Center(
+                        child: Text("No Produccts Found!"),
+                      );
+                    }
+                    return ListView.builder(
+                        // This is for local data file
+                        // itemCount: stateData.products.length,
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          ProductDataModel product = data[index].data();
+
+                          return ProductTileWidget(
+                            // this comes from the grocery data file so now updating to the database
+                            // product: stateData.products[index],
+                            product: product,
+                            bloc: homeBloc,
+                          );
+                        });
                   }),
             );
           case HomeLoadFailureState:
