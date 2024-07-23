@@ -18,3 +18,4 @@ class AddToWishlistButtonClickedEvent extends HomeBlocEvent {
 class NavigateToCartEvent extends HomeBlocEvent {}
 
 class NavigateToWishlistEvent extends HomeBlocEvent {}
+

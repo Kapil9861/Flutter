@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_project/features/cart/ui/cart.dart';
 import 'package:flutter_bloc_project/features/home/bloc/home_bloc_bloc.dart';
+// The firestore already has the data 
 // import 'package:flutter_bloc_project/features/home/service/database_service.dart';
 import 'package:flutter_bloc_project/features/home/ui/product_tile_widget.dart';
 import 'package:flutter_bloc_project/features/wishlist/ui/wishlist.dart';
@@ -19,14 +20,15 @@ class _HomeState extends State<Home> {
   void initState() {
     homeBloc.add(HomeInitialEvent());
     super.initState();
-    // Already called from the bloc HomeInitialEvent
     // _uploadProductsToFirestore();
   }
 
   // void _uploadProductsToFirestore() async {
   //   if (!isUploaded) {
   //     DatabaseService service = DatabaseService();
-  //     await service.uploadToFirestore();
+  //     await service.uploadToFirestore((error) {
+  //       snackbar(error, Colors.red);
+  //     });
   //     setState(() {
   //       isUploaded = true;
   //     });
@@ -39,7 +41,7 @@ class _HomeState extends State<Home> {
     return BlocConsumer<HomeBlocBloc, HomeBlocState>(
       bloc: homeBloc,
       listenWhen: (context, state) => state is HomeActionState,
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state is NavigateToCartActionState) {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
@@ -53,9 +55,9 @@ class _HomeState extends State<Home> {
             ),
           );
         } else if (state is AddedToCartActionState) {
-          snackbar("Added to Cart!");
+          snackbar("Added to Cart!", Colors.green);
         } else if (state is AddedToWishlistActionState) {
-          snackbar("Added to Wishlist!");
+          snackbar("Added to Wishlist!", Colors.green);
         }
       },
       buildWhen: (previous, current) => current is! HomeActionState,
@@ -124,11 +126,14 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void snackbar(String message) {
+  void snackbar(
+    String message,
+    Color color,
+  ) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
-      backgroundColor: Colors.green,
+      backgroundColor: color,
     ));
   }
 }

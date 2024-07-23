@@ -23,3 +23,4 @@ class NaviagetToWishlistActionState extends HomeActionState {}
 class AddedToCartActionState extends HomeActionState {}
 
 class AddedToWishlistActionState extends HomeActionState {}
+
