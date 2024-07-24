@@ -33,6 +33,7 @@ class _CartState extends State<Cart> {
           bloc: cartBloc,
           listenWhen: (previous, current) => current is CartActionState,
           listener: (context, state) {
+            print(state);
             if (state is RemoveFromCartActionState) {
               snackbar("Removed From Cart", Colors.red);
             } else if (state is MovedToWishlistActionState) {

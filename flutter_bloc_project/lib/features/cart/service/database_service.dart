@@ -34,7 +34,11 @@ class CartDatabaseService {
   }
 
   Future<void> removeProductFromWishlist(int productId) async {
-    await _cartRef.doc(productId.toString()).delete();
+    QuerySnapshot query =
+        await _cartRef.where('id', isEqualTo: productId).get();
+    for (QueryDocumentSnapshot doc in query.docs) {
+      await doc.reference.delete();
+    }
   }
 
   Future<void> movedToCart(

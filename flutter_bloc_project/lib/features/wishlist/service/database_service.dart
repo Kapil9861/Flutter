@@ -33,11 +33,13 @@ class WishlistDataService {
     } else {
       message("Product ${product.name} updated in wishlist");
     }
-    _wishlistRef.add(product);
   }
 
   Future<void> removeProductFromWishlist(int productId) async {
-    await _wishlistRef.doc(productId.toString()).delete();
+    QuerySnapshot query = await _wishlistRef.where('id', isEqualTo: productId).get();
+    for (QueryDocumentSnapshot doc in query.docs) {
+      await doc.reference.delete();
+    }
   }
 
   Future<void> movedToWishlist(

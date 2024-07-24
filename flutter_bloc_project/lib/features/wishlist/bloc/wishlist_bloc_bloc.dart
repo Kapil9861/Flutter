@@ -19,29 +19,38 @@ class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
     on<WishlistMoveToCartEvent>(wishlistMoveToCartEvent);
   }
 
-  FutureOr<void> wishlistInitialEvent(
-      WishlistInitialEvent event, Emitter<WishlistBlocState> emit) {
+  Future<void> wishlistInitialEvent(
+      WishlistInitialEvent event, Emitter<WishlistBlocState> emit) async {
     emit(WishlistSuccessState());
   }
 
-  FutureOr<void> removeFromWishlistEvent(
+  Future<void> removeFromWishlistEvent(
       RemoveFromWishlistEvent event, Emitter<WishlistBlocState> emit) async {
-    await service.removeProductFromWishlist(event.product.id);
-    emit(RemovedFromCartActionState());
-    emit(WishlistSuccessState());
+    try {
+      await service.removeProductFromWishlist(event.product.id);
+      emit(RemovedFromCartActionState());
+      emit(WishlistSuccessState());
+    } catch (e) {
+      emit(ItemAlreadyInCartActionState(message: e.toString()));
+    }
   }
 
-  FutureOr<void> wishlistMoveToCartEvent(
-      WishlistMoveToCartEvent event, Emitter<WishlistBlocState> emit) {
+  Future<void> wishlistMoveToCartEvent(
+      WishlistMoveToCartEvent event, Emitter<WishlistBlocState> emit) async {
     CartDatabaseService cartService = CartDatabaseService();
-    cartService.movedToCart(event.product, (error) {
-      message = error;
-    });
-    if (message.isNotEmpty) {
-      emit(ItemAlreadyInCartActionState(message: message));
+    try {
+      await cartService.movedToCart(event.product, (error) {
+        message = error;
+      });
+      if (message.isNotEmpty) {
+        emit(ItemAlreadyInCartActionState(message: message));
+      } else {
+        emit(MovedToCartActionState());
+        await service.removeProductFromWishlist(event.product.id);
+        emit(WishlistSuccessState());
+      }
+    } catch (e) {
+      emit(ItemAlreadyInCartActionState(message: e.toString()));
     }
-    emit(MovedToCartActionState());
-    service.removeProductFromWishlist(event.product.id);
-    emit(WishlistSuccessState());
   }
 }

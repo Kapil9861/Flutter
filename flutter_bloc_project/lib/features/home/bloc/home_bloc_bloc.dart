@@ -12,7 +12,7 @@ part 'home_bloc_state.dart';
 
 class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
   final groceryData = GroceryData();
-  late String message="";
+  late String message = "";
   CartDatabaseService cartService = CartDatabaseService();
   WishlistDataService wishlistService = WishlistDataService();
   HomeBlocBloc() : super(HomeBlocInitial()) {
@@ -57,22 +57,30 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
   FutureOr<void> addToWishlictButtonClickedEvent(
       AddToWishlistButtonClickedEvent event, Emitter<HomeBlocState> emit) {
     wishlistService.addProductToWishlist(event.product, (message) {
-       message = message;
+      message = message;
+      print(message);
+
     });
     if (message.isNotEmpty) {
       emit(AddToCartFailedActionState(message: message));
     }
-    emit(AddedToWishlistActionState());
+    if (!emit.isDone) {
+      emit(AddedToWishlistActionState());
+    }
   }
 
   FutureOr<void> addToCartButtonClickedEvent(
       AddToCartButtonClickedEvent event, Emitter<HomeBlocState> emit) {
     cartService.addProductToWishlist(event.product, (error) {
       message = error;
+      print(message);
+
     });
     if (message.isNotEmpty) {
       emit(AddToWishlistFailedActionState(message: message));
     }
-    emit(AddedToCartActionState());
+    if (!emit.isDone) {
+      emit(AddedToCartActionState());
+    }
   }
 }
