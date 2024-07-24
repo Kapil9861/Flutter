@@ -46,9 +46,9 @@ class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
         emit(ItemAlreadyInCartActionState(message: message));
       } else {
         emit(MovedToCartActionState());
-        await service.removeProductFromWishlist(event.product.id);
         emit(WishlistSuccessState());
       }
+      await service.removeProductFromWishlist(event.product.id);
     } catch (e) {
       emit(ItemAlreadyInCartActionState(message: e.toString()));
     }

@@ -58,13 +58,10 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
       AddToWishlistButtonClickedEvent event, Emitter<HomeBlocState> emit) {
     wishlistService.addProductToWishlist(event.product, (message) {
       message = message;
-      print(message);
-
     });
     if (message.isNotEmpty) {
       emit(AddToCartFailedActionState(message: message));
-    }
-    if (!emit.isDone) {
+    } else {
       emit(AddedToWishlistActionState());
     }
   }
@@ -73,13 +70,10 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
       AddToCartButtonClickedEvent event, Emitter<HomeBlocState> emit) {
     cartService.addProductToWishlist(event.product, (error) {
       message = error;
-      print(message);
-
     });
     if (message.isNotEmpty) {
       emit(AddToWishlistFailedActionState(message: message));
-    }
-    if (!emit.isDone) {
+    } else {
       emit(AddedToCartActionState());
     }
   }

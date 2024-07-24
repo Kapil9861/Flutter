@@ -40,8 +40,7 @@ class CartBlocBloc extends Bloc<CartBlocEvent, CartBlocState> {
     });
     if (message.isNotEmpty) {
       emit(ItemAlreadyInWishlistActionState(message: message));
-    }
-    if (!emit.isDone) {
+    } else {
       emit(MovedToWishlistActionState());
     }
     service.removeProductFromWishlist(event.product.id);
