@@ -10,8 +10,14 @@ final class CartBlocInitial extends CartBlocState {}
 class CartFailState extends CartBlocState {}
 
 class CartSuccessState extends CartBlocState {
-  final List<ProductDataModel> cartItems;
-  CartSuccessState({required this.cartItems});
+  CartSuccessState();
 }
 
-class RemoveFromCartAction extends CartActionState {}
+class RemoveFromCartActionState extends CartActionState {}
+
+class ItemAlreadyInWishlistActionState extends CartActionState {
+  final String message;
+  ItemAlreadyInWishlistActionState({required this.message});
+}
+
+class MovedToWishlistActionState extends CartActionState {}

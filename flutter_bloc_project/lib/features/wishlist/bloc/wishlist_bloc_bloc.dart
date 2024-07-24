@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc_project/data/cart_items.dart';
-import 'package:flutter_bloc_project/data/wish_list.dart';
+import 'package:flutter_bloc_project/features/cart/service/database_service.dart';
 import 'package:flutter_bloc_project/features/home/models/product_data_model.dart';
+import 'package:flutter_bloc_project/features/wishlist/service/database_service.dart';
 import 'package:meta/meta.dart';
 
 part 'wishlist_bloc_event.dart';
 part 'wishlist_bloc_state.dart';
 
 class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
+  WishlistDataService service = WishlistDataService();
   WishlistBlocBloc() : super(WishlistBlocInitial()) {
     on<WishlistBlocEvent>((event, emit) {});
     on<WishlistInitialEvent>(wishlistInitialEvent);
@@ -19,25 +20,24 @@ class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
 
   FutureOr<void> wishlistInitialEvent(
       WishlistInitialEvent event, Emitter<WishlistBlocState> emit) {
-    emit(WishlistSuccessState(product: wishlist));
+    emit(WishlistSuccessState());
   }
 
   FutureOr<void> removeFromWishlistEvent(
       RemoveFromWishlistEvent event, Emitter<WishlistBlocState> emit) {
-    wishlist.remove(event.product);
+    service.removeProductFromWishlist(event.product.id);
     emit(RemovedFromCartActionState());
-    emit(WishlistSuccessState(product: wishlist));
+    emit(WishlistSuccessState());
   }
 
   FutureOr<void> wishlistMoveToCartEvent(
       WishlistMoveToCartEvent event, Emitter<WishlistBlocState> emit) {
-    if (cartItems.contains(event.product)) {
-      emit(ItemAlreadyInCartActionState());
-    } else {
-      cartItems.add(event.product);
-      emit(MovedToCartActionState());
-    }
-    wishlist.remove(event.product);
-    emit(WishlistSuccessState(product: wishlist));
+    CartDatabaseService cartService = CartDatabaseService();
+    cartService.movedToCart(event.product, (error) {
+      emit(ItemAlreadyInCartActionState(message: error));
+    });
+    emit(MovedToCartActionState());
+    service.removeProductFromWishlist(event.product.id);
+    emit(WishlistSuccessState());
   }
 }

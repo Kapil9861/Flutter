@@ -39,6 +39,8 @@ class _WishlistState extends State<Wishlist> {
               snackbar("Product Moved to Cart", Colors.green);
             } else if (state is RemovedFromCartActionState) {
               snackbar("Product Removed From Wishlist", Colors.green);
+            } else if (state is ItemAlreadyInCartActionState) {
+              snackbar(state.message, Colors.green);
             }
           },
           buildWhen: (context, state) => state is! WishlistActionState,

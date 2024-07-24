@@ -33,17 +33,13 @@ class WishlistDataService {
     await _wishlistRef.doc(productId.toString()).delete();
   }
 
-  Future<void> moveProductToCart(ProductDataModel product) async {
-    WishlistDataService service = WishlistDataService();
-    service.moveProductToCart(product);
-  }
-
-  Future<void> movedToWishlist(ProductDataModel product) async {
+  Future<void> movedToWishlist(
+      ProductDataModel product, Function(String) onError) async {
     bool exists = await _checkIfProductExists(product.id);
     if (!exists) {
       await _wishlistRef.add(product);
     } else {
-      print("Product Already Exists");
+      onError("Product ${product.name} updated in wishlist");
     }
   }
 

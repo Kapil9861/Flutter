@@ -10,3 +10,8 @@ class RemoveFromCartEvent extends CartBlocEvent {
 
   RemoveFromCartEvent({required this.product});
 }
+class MoveToWishlistEvent extends CartBlocEvent {
+  final ProductDataModel product;
+
+  MoveToWishlistEvent({required this.product});
+}

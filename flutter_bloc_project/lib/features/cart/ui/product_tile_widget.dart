@@ -60,7 +60,9 @@ class CartItemsTileWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 3.0),
                         child: IconButton.filledTonal(
                           icon: const Icon(Icons.favorite_border),
-                          onPressed: () {},
+                          onPressed: () {
+                            bloc.add(MoveToWishlistEvent(product: product));
+                          },
                         ),
                       ),
                     ],
@@ -73,5 +75,4 @@ class CartItemsTileWidget extends StatelessWidget {
       ),
     );
   }
-  
 }

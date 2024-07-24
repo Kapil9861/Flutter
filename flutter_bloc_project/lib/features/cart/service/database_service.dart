@@ -31,17 +31,13 @@ class CartDatabaseService {
     await _cartRef.doc(productId.toString()).delete();
   }
 
-  Future<void> moveProductToWishlist(ProductDataModel product) async {
-    CartDatabaseService service = CartDatabaseService();
-    service.moveProductToWishlist(product);
-  }
-
-  Future<void> movedToCart(ProductDataModel product) async {
+  Future<void> movedToCart(
+      ProductDataModel product, Function(String) onError) async {
     bool exists = await _checkIfProductExists(product.id);
     if (!exists) {
       await _cartRef.add(product);
     } else {
-      print("Product Already Exists");
+      onError("Product ${product.name} Updated in Cart!");
     }
   }
 
