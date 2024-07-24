@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc_project/data/cart_items.dart';
 import 'package:flutter_bloc_project/data/grocery_data.dart';
-import 'package:flutter_bloc_project/data/wish_list.dart';
+import 'package:flutter_bloc_project/features/cart/service/database_service.dart';
 import 'package:flutter_bloc_project/features/home/models/product_data_model.dart';
+import 'package:flutter_bloc_project/features/wishlist/service/database_service.dart';
 import 'package:meta/meta.dart';
 
 part 'home_bloc_event.dart';
@@ -12,6 +12,9 @@ part 'home_bloc_state.dart';
 
 class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
   final groceryData = GroceryData();
+  late String message="";
+  CartDatabaseService cartService = CartDatabaseService();
+  WishlistDataService wishlistService = WishlistDataService();
   HomeBlocBloc() : super(HomeBlocInitial()) {
     on<HomeBlocEvent>((event, emit) {});
     on<HomeInitialEvent>(homeInitialEvent);
@@ -53,13 +56,23 @@ class HomeBlocBloc extends Bloc<HomeBlocEvent, HomeBlocState> {
 
   FutureOr<void> addToWishlictButtonClickedEvent(
       AddToWishlistButtonClickedEvent event, Emitter<HomeBlocState> emit) {
-    wishlist.add(event.product);
+    wishlistService.addProductToWishlist(event.product, (message) {
+       message = message;
+    });
+    if (message.isNotEmpty) {
+      emit(AddToCartFailedActionState(message: message));
+    }
     emit(AddedToWishlistActionState());
   }
 
   FutureOr<void> addToCartButtonClickedEvent(
       AddToCartButtonClickedEvent event, Emitter<HomeBlocState> emit) {
-    cartItems.add(event.product);
+    cartService.addProductToWishlist(event.product, (error) {
+      message = error;
+    });
+    if (message.isNotEmpty) {
+      emit(AddToWishlistFailedActionState(message: message));
+    }
     emit(AddedToCartActionState());
   }
 }

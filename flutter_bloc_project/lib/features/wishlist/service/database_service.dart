@@ -25,8 +25,15 @@ class WishlistDataService {
     return _wishlistRef.snapshots();
   }
 
-  Future<void> addProductToWishlist(ProductDataModel product) async {
-    await _wishlistRef.add(product);
+  Future<void> addProductToWishlist(
+      ProductDataModel product, Function(String) message) async {
+    bool exists = await _checkIfProductExists(product.id);
+    if (!exists) {
+      await _wishlistRef.add(product);
+    } else {
+      message("Product ${product.name} updated in wishlist");
+    }
+    _wishlistRef.add(product);
   }
 
   Future<void> removeProductFromWishlist(int productId) async {

@@ -23,8 +23,14 @@ class CartDatabaseService {
     return _cartRef.snapshots();
   }
 
-  Future<void> addProductToWishlist(ProductDataModel product) async {
-    await _cartRef.add(product);
+  Future<void> addProductToWishlist(
+      ProductDataModel product, Function(String) onError) async {
+    bool exists = await _checkIfProductExists(product.id);
+    if (!exists) {
+      await _cartRef.add(product);
+    } else {
+      onError("Product ${product.name} updated in wishlist");
+    }
   }
 
   Future<void> removeProductFromWishlist(int productId) async {

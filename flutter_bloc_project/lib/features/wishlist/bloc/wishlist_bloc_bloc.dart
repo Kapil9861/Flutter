@@ -11,6 +11,7 @@ part 'wishlist_bloc_state.dart';
 
 class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
   WishlistDataService service = WishlistDataService();
+  late String message = "";
   WishlistBlocBloc() : super(WishlistBlocInitial()) {
     on<WishlistBlocEvent>((event, emit) {});
     on<WishlistInitialEvent>(wishlistInitialEvent);
@@ -24,8 +25,8 @@ class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
   }
 
   FutureOr<void> removeFromWishlistEvent(
-      RemoveFromWishlistEvent event, Emitter<WishlistBlocState> emit) {
-    service.removeProductFromWishlist(event.product.id);
+      RemoveFromWishlistEvent event, Emitter<WishlistBlocState> emit) async {
+    await service.removeProductFromWishlist(event.product.id);
     emit(RemovedFromCartActionState());
     emit(WishlistSuccessState());
   }
@@ -34,8 +35,11 @@ class WishlistBlocBloc extends Bloc<WishlistBlocEvent, WishlistBlocState> {
       WishlistMoveToCartEvent event, Emitter<WishlistBlocState> emit) {
     CartDatabaseService cartService = CartDatabaseService();
     cartService.movedToCart(event.product, (error) {
-      emit(ItemAlreadyInCartActionState(message: error));
+      message = error;
     });
+    if (message.isNotEmpty) {
+      emit(ItemAlreadyInCartActionState(message: message));
+    }
     emit(MovedToCartActionState());
     service.removeProductFromWishlist(event.product.id);
     emit(WishlistSuccessState());

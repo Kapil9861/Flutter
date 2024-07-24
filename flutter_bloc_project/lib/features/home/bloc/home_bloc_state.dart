@@ -24,3 +24,12 @@ class AddedToCartActionState extends HomeActionState {}
 
 class AddedToWishlistActionState extends HomeActionState {}
 
+class AddToCartFailedActionState extends HomeActionState {
+  AddToCartFailedActionState({required this.message});
+  final String message;
+}
+
+class AddToWishlistFailedActionState extends HomeActionState {
+  AddToWishlistFailedActionState({required this.message});
+  final String message;
+}

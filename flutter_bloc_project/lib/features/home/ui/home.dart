@@ -60,6 +60,10 @@ class _HomeState extends State<Home> {
           snackbar("Added to Cart!", Colors.green);
         } else if (state is AddedToWishlistActionState) {
           snackbar("Added to Wishlist!", Colors.green);
+        } else if (state is AddToWishlistFailedActionState) {
+          snackbar(state.message, Colors.red);
+        } else if (state is AddToCartFailedActionState) {
+          snackbar(state.message, Colors.red);
         }
       },
       buildWhen: (previous, current) => current is! HomeActionState,
