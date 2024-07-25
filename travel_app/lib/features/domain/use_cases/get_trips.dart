@@ -11,4 +11,6 @@ class GetTrips {
   Future<List<Trip>> call() {
     return repository.getTrips();
   }
+
+  getTrips() {}
 }
