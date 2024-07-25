@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:travel_app/features/domain/entities/trip.dart';
 
-part 'dart_modell.g.dart';
+part 'trip_model.g.dart';
 
 // The TripModel extends Trip would also work but sometime that does not work hence followed this approach
 @HiveType(typeId: 0)
@@ -16,6 +16,8 @@ class TripModel {
   final DateTime date;
   @HiveField(4)
   final String location;
+  @HiveField(5)
+  final int id;
 
   TripModel({
     required this.title,
@@ -23,6 +25,7 @@ class TripModel {
     required this.description,
     required this.date,
     required this.location,
+    required this.id,
   });
 
   // Factory that converts the entity to model
@@ -32,6 +35,7 @@ class TripModel {
         photos: trip.photos,
         description: trip.description,
         location: trip.location,
+        id: trip.id
       );
 
   // Conversion that converts model to entity
@@ -41,5 +45,6 @@ class TripModel {
         description: description,
         date: date,
         location: location,
+        id:id
       );
 }

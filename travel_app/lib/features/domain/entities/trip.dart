@@ -4,6 +4,7 @@ class Trip {
   final String description;
   final DateTime date;
   final String location;
+  final int id;
 
   Trip({
     required this.title,
@@ -11,5 +12,6 @@ class Trip {
     required this.description,
     required this.date,
     required this.location,
+    required this.id,
   });
 }
