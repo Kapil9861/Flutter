@@ -91,8 +91,6 @@ class _MySocketState extends State<MySocket> {
         for (final c in clients) {
           c.write("Server: A new client $message has joined the server");
         }
-        addMessage("Server: A new client $message has joined the server",
-            Colors.green);
         client.write("Server: You are logged in as: $message");
         setState(() {});
       },
@@ -189,7 +187,7 @@ class _MySocketState extends State<MySocket> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Client"),
+              const Text("Client2"),
               const SizedBox(
                 width: 20,
               ),
