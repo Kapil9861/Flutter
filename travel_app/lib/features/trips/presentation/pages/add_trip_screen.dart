@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,46 +27,86 @@ class AddTripScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _titleController,
-            decoration: const InputDecoration(labelText: 'Title'),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: Colors.green,
           ),
-          TextFormField(
-            controller: _descController,
-            decoration: const InputDecoration(labelText: 'Description'),
+        ),
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: TextFormField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(labelText: 'Title'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: TextFormField(
+                    controller: _descController,
+                    decoration: const InputDecoration(labelText: 'Description'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: TextFormField(
+                    controller: _locationController,
+                    decoration: const InputDecoration(labelText: 'Location'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: TextFormField(
+                    controller: _pictureController,
+                    decoration: const InputDecoration(labelText: 'Photo'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 100.0),
+                  child: ElevatedButton(
+                    style: const ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(
+                        Color.fromARGB(255, 14, 7, 229),
+                      ),
+                      foregroundColor: WidgetStatePropertyAll(Colors.white),
+                    ),
+                    onPressed: () async {
+                      pictures.add(_pictureController.text);
+                      if (_formKey.currentState!.validate()) {
+                        final id = await getNextId();
+                        final newTrip = Trip(
+                          title: _titleController.text,
+                          description: _descController.text,
+                          date: DateTime.now(),
+                          location: _locationController.text,
+                          photos: pictures,
+                          id: id,
+                        );
+                        ref
+                            .read(tripListNotifierProvider.notifier)
+                            .addNewTrip(newTrip);
+                        ref.read(tripListNotifierProvider.notifier).loadTrips();
+                      }
+                    },
+                    child: const Text(
+                      'Add Trip',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          TextFormField(
-            controller: _locationController,
-            decoration: const InputDecoration(labelText: 'Location'),
-          ),
-          TextFormField(
-            controller: _pictureController,
-            decoration: const InputDecoration(labelText: 'Photo'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              pictures.add(_pictureController.text);
-              if (_formKey.currentState!.validate()) {
-                final id = await getNextId();
-                final newTrip = Trip(
-                  title: _titleController.text,
-                  description: _descController.text,
-                  date: DateTime.now(),
-                  location: _locationController.text,
-                  photos: pictures,
-                  id: id,
-                );
-                ref.read(tripListNotifierProvider.notifier).addNewTrip(newTrip);
-                ref.read(tripListNotifierProvider.notifier).loadTrips();
-              }
-            },
-            child: const Text('Add Trip'),
-          ),
-        ],
+        ),
       ),
     );
   }

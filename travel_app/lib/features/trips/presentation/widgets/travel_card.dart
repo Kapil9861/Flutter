@@ -7,14 +7,17 @@ class TravelCard extends StatelessWidget {
   final String date;
   final String location;
   final VoidCallback onDelete;
+  final VoidCallback onUpdate;
 
-  const TravelCard({super.key, 
+  const TravelCard({
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.description,
     required this.date,
     required this.location,
     required this.onDelete,
+    required this.onUpdate,
   });
 
   void showAlertDialog(BuildContext context) {
@@ -25,21 +28,20 @@ class TravelCard extends StatelessWidget {
             title: const Text("Description"),
             backgroundColor: Theme.of(context).cardColor,
             content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(description),
-                ]
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(description),
+              ],
             ),
           );
-        }
-    );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 310,
       width: 300,
       padding: const EdgeInsets.all(12),
       child: Card(
@@ -52,14 +54,13 @@ class TravelCard extends StatelessWidget {
             Expanded(
               flex: 2,
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   showAlertDialog(context);
                 },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0)
-                  ),
+                      topRight: Radius.circular(20.0)),
                   child: Image.network(
                     imageUrl,
                     fit: BoxFit.cover,
@@ -87,13 +88,15 @@ class TravelCard extends StatelessWidget {
                           location,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Text(
                           date,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
@@ -107,10 +110,25 @@ class TravelCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(Icons.delete, color: Colors.red[700]),
-                          onPressed: onDelete,
-                        )
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            IconButton(
+                              onPressed: onUpdate,
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.green,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 50,
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete, color: Colors.red[700]),
+                              onPressed: onDelete,
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ],
@@ -123,4 +141,3 @@ class TravelCard extends StatelessWidget {
     );
   }
 }
-
