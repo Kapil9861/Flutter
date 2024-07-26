@@ -124,6 +124,3 @@ class TravelCard extends StatelessWidget {
   }
 }
 
-/*
-
-* */

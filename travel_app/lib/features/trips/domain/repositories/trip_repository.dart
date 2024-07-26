@@ -7,4 +7,6 @@ abstract class TripRepository {
   Future<Either<Failure, List<Trip>>> getTrips();
   Future<void> addTrip(Trip trip);
   Future<void> deleteTrip(int index);
+  Future<void> updateTrip(Trip trip);
+
 }

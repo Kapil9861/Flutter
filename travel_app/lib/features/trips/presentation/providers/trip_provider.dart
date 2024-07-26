@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:travel_app/features/trips/data/repositories/trip_repository_impl.dart';
 import 'package:travel_app/features/trips/domain/usecases/get_trips.dart';
+import 'package:travel_app/features/trips/domain/usecases/update_trip.dart';
 
 import '../../data/datasources/trip_local_datasource.dart';
 import '../../data/models/trip_model.dart';
@@ -35,21 +36,32 @@ final deleteTripProvider = Provider<DeleteTrip>((ref) {
   return DeleteTrip(repository);
 });
 
+final updateTripProvider = Provider<UpdateTrip>((ref) {
+  final repository = ref.read(tripRepositoryProvider);
+  return UpdateTrip(repository);
+});
+
 // This provider will manage fetching trips from the repository.
-final tripListNotifierProvider = StateNotifierProvider<TripListNotifier, List<Trip>>((ref) {
+final tripListNotifierProvider =
+    StateNotifierProvider<TripListNotifier, List<Trip>>((ref) {
   final getTrips = ref.read(getTripsProvider);
   final addTrip = ref.read(addTripProvider);
   final deleteTrip = ref.read(deleteTripProvider);
+  final updateTrip = ref.read(updateTripProvider);
 
-  return TripListNotifier(getTrips, addTrip, deleteTrip);
+
+  return TripListNotifier(getTrips, addTrip, deleteTrip,updateTrip);
 });
 
 class TripListNotifier extends StateNotifier<List<Trip>> {
   final GetTrips _getTrips;
   final AddTrip _addTrip;
   final DeleteTrip _deleteTrip;
+  final UpdateTrip _updateTrip;
 
-  TripListNotifier(this._getTrips, this._addTrip, this._deleteTrip) : super([]);
+  TripListNotifier(
+      this._getTrips, this._addTrip, this._deleteTrip, this._updateTrip)
+      : super([]);
 
   // Load trips from the repository and update the state.
   Future<void> loadTrips() async {
@@ -64,5 +76,9 @@ class TripListNotifier extends StateNotifier<List<Trip>> {
 
   Future<void> removeTrip(int tripId) async {
     await _deleteTrip(tripId);
+  }
+
+  Future<void> updateTrip(Trip trip) async {
+    await _updateTrip(trip);
   }
 }

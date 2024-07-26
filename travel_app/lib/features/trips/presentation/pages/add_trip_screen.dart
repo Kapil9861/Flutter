@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/entitites/trip.dart';
 import '../providers/trip_provider.dart';
@@ -10,8 +11,16 @@ class AddTripScreen extends ConsumerWidget {
   final _titleController = TextEditingController(text: "City 1");
   final _descController = TextEditingController(text: "Best city ever");
   final _locationController = TextEditingController(text: "Paris");
-  final _pictureController = TextEditingController(text: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D');
+  final _pictureController = TextEditingController(
+      text:
+          'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D');
   List<String> pictures = [];
+  Future<int> getNextId() async {
+    final prefs = await SharedPreferences.getInstance();
+    int currentId = (prefs.getInt('nextTripId') ?? 0);
+    await prefs.setInt('nextTripId', currentId + 1);
+    return currentId;
+  }
 
   AddTripScreen({super.key});
 
@@ -38,19 +47,20 @@ class AddTripScreen extends ConsumerWidget {
             decoration: const InputDecoration(labelText: 'Photo'),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               pictures.add(_pictureController.text);
               if (_formKey.currentState!.validate()) {
+                final id = await getNextId();
                 final newTrip = Trip(
                   title: _titleController.text,
                   description: _descController.text,
                   date: DateTime.now(),
                   location: _locationController.text,
                   photos: pictures,
+                  id: id,
                 );
                 ref.read(tripListNotifierProvider.notifier).addNewTrip(newTrip);
                 ref.read(tripListNotifierProvider.notifier).loadTrips();
-                //Navigator.pop(context);
               }
             },
             child: const Text('Add Trip'),

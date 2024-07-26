@@ -6,7 +6,7 @@ import 'package:travel_app/features/trips/domain/repositories/trip_repository.da
 
 import '../models/trip_model.dart';
 
-class TripRepositoryImpl implements TripRepository{
+class TripRepositoryImpl implements TripRepository {
   final TripLocalDataSource localDataSource;
 
   TripRepositoryImpl(this.localDataSource);
@@ -33,4 +33,9 @@ class TripRepositoryImpl implements TripRepository{
     }
   }
 
+  @override
+  Future<void> updateTrip(Trip trip) async {
+    final tripModel = TripModel.fromEntity(trip);
+    localDataSource.addTrip(tripModel);
+  }
 }

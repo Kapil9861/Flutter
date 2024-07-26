@@ -7,9 +7,17 @@ import 'package:travel_app/features/trips/presentation/pages/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
+
+  final appDocDir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(appDocDir.path);
   Hive.registerAdapter(TripModelAdapter());
-  await Hive.openBox<TripModel>('trips');
+
+  // Open the box
+  var box = await Hive.openBox<TripModel>('trips');
+
+  // Clear the box data before loading it
+  await box.clear();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -20,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Travel App ',
+      title: 'My Travel App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
