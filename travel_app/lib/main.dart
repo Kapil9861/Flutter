@@ -13,10 +13,10 @@ void main() async {
   Hive.registerAdapter(TripModelAdapter());
 
   // Open the box
-  var box = await Hive.openBox<TripModel>('trips');
+  await Hive.openBox<TripModel>('trips');
 
   // Clear the box data before loading it
-  await box.clear();
+  // await box.clear();
 
   runApp(const ProviderScope(child: MyApp()));
 }

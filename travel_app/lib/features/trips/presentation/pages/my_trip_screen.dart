@@ -11,7 +11,6 @@ class MyTripsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //ref.read(tripListNotifierProvider.notifier).loadTrips();
     final tripList = ref.watch(tripListNotifierProvider);
 
     return SingleChildScrollView(
@@ -29,7 +28,7 @@ class MyTripsScreen extends ConsumerWidget {
                 imageUrl: trip.photos[0],
                 title: trip.title,
                 description: trip.description,
-                date: DateFormat.yMMMEd().format(trip.date).toString(),
+                date: trip.date,
                 location: trip.location,
                 onDelete: () {
                   ref.read(tripListNotifierProvider.notifier).removeTrip(index);

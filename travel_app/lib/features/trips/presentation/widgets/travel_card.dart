@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TravelCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String description;
-  final String date;
+  final DateTime date;
   final String location;
   final VoidCallback onDelete;
   final VoidCallback onUpdate;
@@ -40,6 +41,7 @@ class TravelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var formattedDate = DateFormat('EEE, M/d/yyyy h:mm:ss a').format(date);
     return Container(
       height: 310,
       width: 300,
@@ -92,7 +94,7 @@ class TravelCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          date,
+                          formattedDate,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -121,7 +123,7 @@ class TravelCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              width: 50,
+                              width: 5,
                             ),
                             IconButton(
                               icon: Icon(Icons.delete, color: Colors.red[700]),
