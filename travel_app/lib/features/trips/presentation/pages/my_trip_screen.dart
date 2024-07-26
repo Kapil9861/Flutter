@@ -7,6 +7,8 @@ import '../widgets/custom_search_bar.dart';
 import '../widgets/travel_card.dart';
 
 class MyTripsScreen extends ConsumerWidget {
+  const MyTripsScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //ref.read(tripListNotifierProvider.notifier).loadTrips();
@@ -18,7 +20,7 @@ class MyTripsScreen extends ConsumerWidget {
         children: [
           CustomSearchBar(),
           ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: tripList.length,
             itemBuilder: (context, index) {

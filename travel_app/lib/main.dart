@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter((await getApplicationDocumentsDirectory()).path);
   Hive.registerAdapter(TripModelAdapter());
-  await Hive.openBox<TripModel>('trip');
+  await Hive.openBox<TripModel>('trips');
   runApp(const ProviderScope(child: MyApp()));
 }
 

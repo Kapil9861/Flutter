@@ -8,7 +8,7 @@ class TravelCard extends StatelessWidget {
   final String location;
   final VoidCallback onDelete;
 
-  TravelCard({
+  const TravelCard({super.key, 
     required this.imageUrl,
     required this.title,
     required this.description,
@@ -56,7 +56,7 @@ class TravelCard extends StatelessWidget {
                   showAlertDialog(context);
                 },
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0)
                   ),
@@ -85,13 +85,13 @@ class TravelCard extends StatelessWidget {
                       children: [
                         Text(
                           location,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,),
                         ),
                         Text(
                           date,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,),
                         ),

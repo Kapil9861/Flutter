@@ -5,10 +5,13 @@ import '../providers/trip_provider.dart';
 import 'add_trip_screen.dart';
 import 'my_trip_screen.dart';
 
+// ignore: must_be_immutable
 class MainScreen extends ConsumerWidget {
   final PageController _pageController = PageController();
   final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
   String profilPic = "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8fDA%3D";
+
+  MainScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,9 +57,9 @@ class MainScreen extends ConsumerWidget {
       body: PageView(
         controller: _pageController,
         children: [
-          MyTripsScreen(),
+          const MyTripsScreen(),
           AddTripScreen(),
-          Text("Maps"),
+          const Text("Maps"),
         ],
       ),
       bottomNavigationBar: ValueListenableBuilder<int>(

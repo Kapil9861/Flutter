@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entitites/trip.dart';
 import '../providers/trip_provider.dart';
 
+// ignore: must_be_immutable
 class AddTripScreen extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController(text: "City 1");
@@ -11,6 +12,8 @@ class AddTripScreen extends ConsumerWidget {
   final _locationController = TextEditingController(text: "Paris");
   final _pictureController = TextEditingController(text: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D');
   List<String> pictures = [];
+
+  AddTripScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,19 +23,19 @@ class AddTripScreen extends ConsumerWidget {
         children: [
           TextFormField(
             controller: _titleController,
-            decoration: InputDecoration(labelText: 'Title'),
+            decoration: const InputDecoration(labelText: 'Title'),
           ),
           TextFormField(
             controller: _descController,
-            decoration: InputDecoration(labelText: 'Description'),
+            decoration: const InputDecoration(labelText: 'Description'),
           ),
           TextFormField(
             controller: _locationController,
-            decoration: InputDecoration(labelText: 'Location'),
+            decoration: const InputDecoration(labelText: 'Location'),
           ),
           TextFormField(
             controller: _pictureController,
-            decoration: InputDecoration(labelText: 'Photo'),
+            decoration: const InputDecoration(labelText: 'Photo'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -50,7 +53,7 @@ class AddTripScreen extends ConsumerWidget {
                 //Navigator.pop(context);
               }
             },
-            child: Text('Add Trip'),
+            child: const Text('Add Trip'),
           ),
         ],
       ),
