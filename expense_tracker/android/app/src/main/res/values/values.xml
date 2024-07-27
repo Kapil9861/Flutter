@@ -1,0 +1,7 @@
+<resources>
+<string name="gcm_defaultSenderId" translateable="false">998799372267</string>
+<string name="google_api_key" translateable="false">AIzaSyBBOKMwzn7WtOP1dcjkG3yGR1-zsaNmmTw</string>
+<string name="google_app_id" translateable="false">1:998799372267:android:4c47ae3322e35466cef3ae</string>
+<string name="google_crash_reporting_api_key" translateable="false">AIzaSyBBOKMwzn7WtOP1dcjkG3yGR1-zsaNmmTw</string>
+<string name="project_id" translateable="false">expense-tracker-5e9c9</string>
+</resources>
