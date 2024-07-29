@@ -1,0 +1,7 @@
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">738845206387</string>
+    <string name="google_api_key" translatable="false">AIzaSyC62u9EBXt3ne2-kda-PPPcQGNPnYMHSY4</string>
+    <string name="google_app_id" translatable="false">1:738845206387:android:bf01bbc4c4539917908706</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyC62u9EBXt3ne2-kda-PPPcQGNPnYMHSY4</string>
+    <string name="project_id" translatable="false">phone-authentication-31a2a</string>
+</resources>
