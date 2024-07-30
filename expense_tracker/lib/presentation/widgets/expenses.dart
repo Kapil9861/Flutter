@@ -1,7 +1,7 @@
-import 'package:expense_tracker/widgets/chart/chart.dart';
-import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
+import 'package:expense_tracker/presentation/widgets/chart/chart.dart';
+import 'package:expense_tracker/presentation/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
-import 'package:expense_tracker/widgets/new_expenses.dart';
+import 'package:expense_tracker/presentation/widgets/new_expenses.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,6 +23,7 @@ class _ExpensesState extends State<Expenses> {
       amount: 14.99,
       title: "Flutter Course",
       category: Category.work,
+
     ),
     Expense(
       date: DateTime.now(),
