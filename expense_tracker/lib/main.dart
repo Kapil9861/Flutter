@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expense_tracker/auth/authentication_screen/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:expense_tracker/presentation/widgets/expenses.dart';
 // import 'package:flutter/services.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
@@ -12,7 +12,7 @@ var kDarkColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 5, 99, 125),
 );
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseFirestore.instance.settings = const Settings(
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark().copyWith(
         //appBarTheme: AppBarTheme(backgroundColor: kDarkColorScheme),
         colorScheme: kDarkColorScheme,
@@ -89,7 +90,7 @@ class MyApp extends StatelessWidget {
           //or from the text theme
         ),
       ),
-      home: const Expenses(),
+      home: const LogIn(),
     );
   }
 }

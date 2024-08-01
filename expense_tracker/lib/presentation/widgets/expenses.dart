@@ -18,19 +18,19 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   DateTime date = DateTime.now();
   final List<Expense> _registeredExpenses = [
-    Expense(
-      date: DateTime.now(),
-      amount: 14.99,
-      title: "Flutter Course",
-      category: Category.work,
+    // Expense(
+    //   date: DateTime.now(),
+    //   amount: 14.99,
+    //   title: "Flutter Course",
+    //   category: Category.work,
 
-    ),
-    Expense(
-      date: DateTime.now(),
-      amount: 21,
-      title: "Movie",
-      category: Category.leisure,
-    )
+    // ),
+    // Expense(
+    //   date: DateTime.now(),
+    //   amount: 21,
+    //   title: "Movie",
+    //   category: Category.leisure,
+    // )
   ];
 
   void _addExpensesOverlay() {

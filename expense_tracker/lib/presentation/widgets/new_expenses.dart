@@ -84,11 +84,14 @@ class _NewExpensesState extends State<NewExpenses> {
       );
       return;
     }
-    widget.addExpense(Expense(
-        date: _selectedDate!,
-        amount: amount,
-        title: expenseTitle,
-        category: _selectedItem));
+    widget.addExpense(
+      Expense(
+          date: _selectedDate!,
+          amount: amount,
+          title: expenseTitle,
+          category: _selectedItem,
+          userId: "hwqgjhwgd"),
+    );
     Navigator.pop(context);
   }
 
