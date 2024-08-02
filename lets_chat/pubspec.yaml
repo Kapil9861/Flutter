@@ -47,6 +47,17 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   flutter_launcher_icons: ^0.13.1
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.3
+  cloud_firestore: ^5.2.0
+  dash_chat_2: ^0.0.21
+  get_it: ^7.7.0
+  path: ^1.9.0
+  image_picker: ^1.1.2
+  google_fonts: ^6.2.1
+  firebase_analytics: ^11.2.1
+  delightful_toast: ^1.1.0
+  firebase_storage: ^12.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
