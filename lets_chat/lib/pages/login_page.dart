@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:lets_chat/const.dart';
+import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/widgets/custom_form.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,6 +12,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GetIt _getIt = GetIt.instance;
+  late AuthService _authService;
+  String? email, password;
+  bool? hidePassword = false;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
+  @override
+  void initState() {
+    _authService = _getIt.get<AuthService>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _headerText(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,21 +83,56 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.sizeOf(context).height * 0.08,
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CustomForm(
-            hint: "Email",
-            height: MediaQuery.sizeOf(context).height * 0.08,
-          ),
-          CustomForm(
-            hint: "Password",
-            height: MediaQuery.sizeOf(context).height * 0.08,
-          ),
-          _loginButton(),
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 40, bottom: 48.0),
+              child: CustomForm(
+                customRegExp: EMAIL_VALIDATION_REGEX,
+                hint: "Email",
+                height: MediaQuery.sizeOf(context).height * 0.08,
+                onSave: (value) {
+                  setState(() {
+                    email = value;
+                  });
+                },
+              ),
+            ),
+            CustomForm(
+              onSave: (value) {
+                setState(() {
+                  password = value;
+                });
+              },
+              obscureText: !hidePassword!,
+              customRegExp: PASSWORD_VALIDATION_REGEX,
+              hint: "Password",
+              height: MediaQuery.sizeOf(context).height * 0.08,
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: hidePassword,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        hidePassword = value;
+                      });
+                    },
+                  ),
+                  const Text("Show Password"),
+                ],
+              ),
+            ),
+            _loginButton(),
+          ],
+        ),
       ),
     );
   }
@@ -91,7 +141,15 @@ class _LoginPageState extends State<LoginPage> {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () async {
+          if (_formKey.currentState?.validate() ?? false) {
+            _formKey.currentState?.save();
+            bool result = await _authService.login(email!, password!);
+            print(result);
+            if (result) {
+            } else {}
+          }
+        },
         color: const Color.fromARGB(255, 3, 132, 238),
         child: const Text(
           "Login",
