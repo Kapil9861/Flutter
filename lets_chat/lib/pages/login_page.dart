@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/const.dart';
+import 'package:lets_chat/pages/forgot_password.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/widgets/custom_form.dart';
 
@@ -43,6 +44,34 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             _headerText(context),
             _loginForm(),
+            const Text(
+              "or LogIn with",
+              style: TextStyle(
+                  color: Color(0xFF273671),
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  child: GestureDetector(
+                    onTap: () {
+                      _authService.signinWithGoogle(context);
+                    },
+                    child: Image.asset(
+                      "assets/images/google.png",
+                      height: 45,
+                      width: 45,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             _createButtomLink(),
           ],
         ),
@@ -86,22 +115,19 @@ class _LoginPageState extends State<LoginPage> {
       child: Form(
         key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 40, bottom: 48.0),
-              child: CustomForm(
-                customRegExp: EMAIL_VALIDATION_REGEX,
-                hint: "Email",
-                height: MediaQuery.sizeOf(context).height * 0.08,
-                onSave: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
-              ),
+            CustomForm(
+              customRegExp: EMAIL_VALIDATION_REGEX,
+              hint: "Email",
+              height: MediaQuery.sizeOf(context).height * 0.08,
+              onSave: (value) {
+                setState(() {
+                  email = value;
+                });
+              },
             ),
             CustomForm(
               onSave: (value) {
@@ -114,7 +140,8 @@ class _LoginPageState extends State<LoginPage> {
               hint: "Password",
               height: MediaQuery.sizeOf(context).height * 0.08,
             ),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -131,6 +158,21 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             _loginButton(),
+            SizedBox(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ForgotPassword()));
+                },
+                child: const Text("Forgot Password?",
+                    style: TextStyle(
+                        color: Color(0xFF8c8e98),
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500)),
+              ),
+            ),
           ],
         ),
       ),
