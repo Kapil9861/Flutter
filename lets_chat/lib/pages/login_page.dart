@@ -232,7 +232,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              _navigationService.pushNamed("/register");
+            },
             child: const Text(
               "Sign Up",
               style: TextStyle(
