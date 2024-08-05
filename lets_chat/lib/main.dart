@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/navigation_service.dart';
 import 'package:lets_chat/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,8 +23,10 @@ class MyApp extends StatelessWidget {
     super.key,
   }) {
     _navigationService = _getIt.get<NavigationService>();
+    _authService = _getIt.get<AuthService>();
   }
   late NavigationService _navigationService;
+  late AuthService _authService;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
-      initialRoute: "/login",
+      initialRoute: _authService.user != null ? "/home" : "/login",
       routes: _navigationService.routes,
     );
   }

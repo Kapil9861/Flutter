@@ -122,15 +122,18 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomForm(
-              customRegExp: EMAIL_VALIDATION_REGEX,
-              hint: "Email",
-              height: MediaQuery.sizeOf(context).height * 0.08,
-              onSave: (value) {
-                setState(() {
-                  email = value;
-                });
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 30, bottom: 10),
+              child: CustomForm(
+                customRegExp: EMAIL_VALIDATION_REGEX,
+                hint: "Email",
+                height: MediaQuery.sizeOf(context).height * 0.08,
+                onSave: (value) {
+                  setState(() {
+                    email = value;
+                  });
+                },
+              ),
             ),
             CustomForm(
               onSave: (value) {
@@ -143,22 +146,19 @@ class _LoginPageState extends State<LoginPage> {
               hint: "Password",
               height: MediaQuery.sizeOf(context).height * 0.08,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Checkbox(
-                    value: hidePassword,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        hidePassword = value;
-                      });
-                    },
-                  ),
-                  const Text("Show Password"),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: hidePassword,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      hidePassword = value;
+                    });
+                  },
+                ),
+                const Text("Show Password"),
+              ],
             ),
             _loginButton(),
             SizedBox(
