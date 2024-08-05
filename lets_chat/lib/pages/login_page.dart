@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:lets_chat/const.dart';
 import 'package:lets_chat/pages/forgot_password.dart';
 import 'package:lets_chat/services/auth_services.dart';
+import 'package:lets_chat/services/navigation_service.dart';
 import 'package:lets_chat/widgets/custom_form.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GetIt _getIt = GetIt.instance;
   late AuthService _authService;
+  late NavigationService _navigationService;
   String? email, password;
   bool? hidePassword = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
@@ -22,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     _authService = _getIt.get<AuthService>();
+    _navigationService = _getIt.get<NavigationService>();
     super.initState();
   }
 
@@ -187,8 +190,8 @@ class _LoginPageState extends State<LoginPage> {
           if (_formKey.currentState?.validate() ?? false) {
             _formKey.currentState?.save();
             bool result = await _authService.login(email!, password!);
-            print(result);
             if (result) {
+              _navigationService.pushReplacementNamed("/home");
             } else {}
           }
         },

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lets_chat/pages/login_page.dart';
+import 'package:get_it/get_it.dart';
+import 'package:lets_chat/services/navigation_service.dart';
 import 'package:lets_chat/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   await setup();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 Future<void> setup() async {
@@ -14,13 +15,20 @@ Future<void> setup() async {
   await registerService();
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GetIt _getIt = GetIt.instance;
+  MyApp({
+    super.key,
+  }) {
+    _navigationService = _getIt.get<NavigationService>();
+  }
+  late NavigationService _navigationService;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: _navigationService.navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Let\'s Chat',
       theme: ThemeData(
@@ -28,7 +36,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.montserratTextTheme(),
       ),
-      home: const LoginPage(),
+      initialRoute: "/login",
+      routes: _navigationService.routes,
     );
   }
 }

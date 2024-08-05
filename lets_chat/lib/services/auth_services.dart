@@ -41,6 +41,7 @@ class AuthService {
 
     UserCredential result = await fireAuth.signInWithCredential(credential);
     User? userDetails = result.user;
+    // ignore: unnecessary_null_comparison
     if (result != null) {
       Map<String, dynamic> userDetail = {
         'email': userDetails!.email,
