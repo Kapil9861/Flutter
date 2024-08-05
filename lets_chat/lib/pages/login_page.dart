@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/const.dart';
 import 'package:lets_chat/pages/forgot_password.dart';
+import 'package:lets_chat/services/alert_service.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/navigation_service.dart';
 import 'package:lets_chat/widgets/custom_form.dart';
@@ -17,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final GetIt _getIt = GetIt.instance;
   late AuthService _authService;
   late NavigationService _navigationService;
+  late AlertService _alertService;
   String? email, password;
   bool? hidePassword = false;
   final GlobalKey<FormState> _formKey = GlobalKey();
@@ -25,6 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _authService = _getIt.get<AuthService>();
     _navigationService = _getIt.get<NavigationService>();
+    _alertService = _getIt.get<AlertService>();
+
     super.initState();
   }
 
@@ -192,7 +196,15 @@ class _LoginPageState extends State<LoginPage> {
             bool result = await _authService.login(email!, password!);
             if (result) {
               _navigationService.pushReplacementNamed("/home");
-            } else {}
+            } else {
+              _alertService.showAlert(
+                text:
+                    "Invalid Credentials! \n Are you sure you are registered?",
+                textColor: Colors.red,
+                icon: Icons.error,
+                iconColor: Colors.red,
+              );
+            }
           }
         },
         color: const Color.fromARGB(255, 3, 132, 238),
