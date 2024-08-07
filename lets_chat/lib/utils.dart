@@ -5,6 +5,7 @@ import 'package:lets_chat/services/alert_service.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/media_service.dart';
 import 'package:lets_chat/services/navigation_service.dart';
+import 'package:lets_chat/services/storage_service.dart';
 
 Future<void> firebaseSetup() async {
   await Firebase.initializeApp(
@@ -25,5 +26,8 @@ Future<void> registerService() async {
   );
   getIt.registerSingleton<MediaService>(
     MediaService(),
+  );
+  getIt.registerSingleton<StorageService>(
+    StorageService(),
   );
 }
