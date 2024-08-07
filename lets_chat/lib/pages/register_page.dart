@@ -34,6 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _navigationService = _getIt.get<NavigationService>();
     _mediaService = _getIt.get<MediaService>();
     _storageService = _getIt.get<StorageService>();
+    _authService = _getIt.get<AuthService>();
     super.initState();
   }
 
