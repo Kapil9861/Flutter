@@ -1,45 +1,37 @@
 {
   "project_info": {
-    "project_number": "872460901191",
-    "project_id": "lets-chat-3da11",
-    "storage_bucket": "lets-chat-3da11.appspot.com"
+    "project_number": "897933754185",
+    "project_id": "chat-app-eb7b8",
+    "storage_bucket": "chat-app-eb7b8.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:872460901191:android:8cf859f215e50b6431ca62",
+        "mobilesdk_app_id": "1:897933754185:android:119262b15986f3a2432498",
         "android_client_info": {
           "package_name": "com.example.lets_chat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "872460901191-2po7ibcm1bdbij8npqiuunqlmfv4rvv4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.lets_chat",
-            "certificate_hash": "d14b5e54c4277a50f76fbc00c31c9c8ced935538"
-          }
-        },
-        {
-          "client_id": "872460901191-934hp8su98de5k3gq7uvdpvl61h7rhdg.apps.googleusercontent.com",
+          "client_id": "897933754185-u4h0b48pevpm6uc2v66mbu00h415m7fj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDo2WInBMIomafOfjaNzQzhJjlTuW7VBSs"
+          "current_key": "AIzaSyBu_dntNlgfd_ZXqZDL1ENgVBc7eFsy9T0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "872460901191-934hp8su98de5k3gq7uvdpvl61h7rhdg.apps.googleusercontent.com",
+              "client_id": "897933754185-u4h0b48pevpm6uc2v66mbu00h415m7fj.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "872460901191-3knse5tml57oil6hs3aloi9clalp8d7q.apps.googleusercontent.com",
+              "client_id": "897933754185-9mddd3uadp84c8fqbttpksgvuig58hkm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.letsChat"
