@@ -41,48 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBBhnIfLhm_0SUKpMFq7B4PVhPvgyXZiAE',
-    appId: '1:872460901191:web:1f0528881e979d0631ca62',
-    messagingSenderId: '872460901191',
-    projectId: 'lets-chat-3da11',
-    authDomain: 'lets-chat-3da11.firebaseapp.com',
-    storageBucket: 'lets-chat-3da11.appspot.com',
-    measurementId: 'G-LP465J1Z8W',
+    apiKey: 'AIzaSyCSRVMEDVdFhIKFPMyuWzzkQ-eZODtrRoY',
+    appId: '1:897933754185:web:1f6e96b2d95da4af432498',
+    messagingSenderId: '897933754185',
+    projectId: 'chat-app-eb7b8',
+    authDomain: 'chat-app-eb7b8.firebaseapp.com',
+    storageBucket: 'chat-app-eb7b8.appspot.com',
+    measurementId: 'G-KVW15SM2L2',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDo2WInBMIomafOfjaNzQzhJjlTuW7VBSs',
-    appId: '1:872460901191:android:8cf859f215e50b6431ca62',
-    messagingSenderId: '872460901191',
-    projectId: 'lets-chat-3da11',
-    storageBucket: 'lets-chat-3da11.appspot.com',
+    apiKey: 'AIzaSyBu_dntNlgfd_ZXqZDL1ENgVBc7eFsy9T0',
+    appId: '1:897933754185:android:119262b15986f3a2432498',
+    messagingSenderId: '897933754185',
+    projectId: 'chat-app-eb7b8',
+    storageBucket: 'chat-app-eb7b8.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBj9SUCOGTYhXThhAUfSaFdBE4xDmrdGzA',
-    appId: '1:872460901191:ios:4abd7f61093dd91831ca62',
-    messagingSenderId: '872460901191',
-    projectId: 'lets-chat-3da11',
-    storageBucket: 'lets-chat-3da11.appspot.com',
+    apiKey: 'AIzaSyClycpXUpQpnnY77lCeUD5PRd-62o0bCqA',
+    appId: '1:897933754185:ios:e9fcf72a978edf31432498',
+    messagingSenderId: '897933754185',
+    projectId: 'chat-app-eb7b8',
+    storageBucket: 'chat-app-eb7b8.appspot.com',
     iosBundleId: 'com.example.letsChat',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBj9SUCOGTYhXThhAUfSaFdBE4xDmrdGzA',
-    appId: '1:872460901191:ios:4abd7f61093dd91831ca62',
-    messagingSenderId: '872460901191',
-    projectId: 'lets-chat-3da11',
-    storageBucket: 'lets-chat-3da11.appspot.com',
+    apiKey: 'AIzaSyClycpXUpQpnnY77lCeUD5PRd-62o0bCqA',
+    appId: '1:897933754185:ios:e9fcf72a978edf31432498',
+    messagingSenderId: '897933754185',
+    projectId: 'chat-app-eb7b8',
+    storageBucket: 'chat-app-eb7b8.appspot.com',
     iosBundleId: 'com.example.letsChat',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBBhnIfLhm_0SUKpMFq7B4PVhPvgyXZiAE',
-    appId: '1:872460901191:web:5c64bfe5270992e331ca62',
-    messagingSenderId: '872460901191',
-    projectId: 'lets-chat-3da11',
-    authDomain: 'lets-chat-3da11.firebaseapp.com',
-    storageBucket: 'lets-chat-3da11.appspot.com',
-    measurementId: 'G-DZE4BQ5YFH',
+    apiKey: 'AIzaSyCSRVMEDVdFhIKFPMyuWzzkQ-eZODtrRoY',
+    appId: '1:897933754185:web:487ac43e47e1a96f432498',
+    messagingSenderId: '897933754185',
+    projectId: 'chat-app-eb7b8',
+    authDomain: 'chat-app-eb7b8.firebaseapp.com',
+    storageBucket: 'chat-app-eb7b8.appspot.com',
+    measurementId: 'G-ZXLGT6Q1L8',
   );
+
 }

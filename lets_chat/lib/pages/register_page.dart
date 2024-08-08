@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/const.dart';
+import 'package:lets_chat/models/users_profile.dart';
+import 'package:lets_chat/services/alert_service.dart';
 import 'package:lets_chat/services/auth_services.dart';
+import 'package:lets_chat/services/database_service.dart';
 import 'package:lets_chat/services/media_service.dart';
 import 'package:lets_chat/services/navigation_service.dart';
 import 'package:lets_chat/services/storage_service.dart';
@@ -22,6 +25,8 @@ class _RegisterPageState extends State<RegisterPage> {
   late MediaService _mediaService;
   late AuthService _authService;
   bool? _hidePassword = false;
+  late DatabaseService _databaseService;
+  late AlertService _alertService;
   GlobalKey<FormState> registerFormKey = GlobalKey();
 
   String? name, email, password;
@@ -35,6 +40,8 @@ class _RegisterPageState extends State<RegisterPage> {
     _mediaService = _getIt.get<MediaService>();
     _storageService = _getIt.get<StorageService>();
     _authService = _getIt.get<AuthService>();
+    _databaseService = _getIt.get<DatabaseService>();
+    _alertService = _getIt.get<AlertService>();
     super.initState();
   }
 
@@ -199,7 +206,25 @@ class _RegisterPageState extends State<RegisterPage> {
               bool result = await _authService.signup(email!, password!);
               if (result) {
                 String? pfpUrl = await _storageService.uploadUserPfp(
-                    file: selectedImage!, uid: _authService.user!.uid);
+                  file: selectedImage!,
+                  uid: _authService.user!.uid,
+                );
+                if (pfpUrl != null) {
+                  await _databaseService.createUserProfile(
+                    userProfile: UserProfile(
+                      name: name,
+                      pfpURL: pfpUrl,
+                      uid: _authService.user!.uid,
+                    ),
+                  );
+                }
+                _navigationService.pushReplacementNamed("/home");
+                _alertService.showAlert(
+                  text:
+                      "Account Registered Successfully!", //\n Welcome ${_authService.user!.displayName!.toUpperCase()}
+                  icon: Icons.check,
+                  iconColor: Colors.green,
+                );
               }
             }
           } catch (e) {

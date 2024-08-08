@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>872460901191-3knse5tml57oil6hs3aloi9clalp8d7q.apps.googleusercontent.com</string>
+	<string>897933754185-9mddd3uadp84c8fqbttpksgvuig58hkm.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.872460901191-3knse5tml57oil6hs3aloi9clalp8d7q</string>
+	<string>com.googleusercontent.apps.897933754185-9mddd3uadp84c8fqbttpksgvuig58hkm</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBj9SUCOGTYhXThhAUfSaFdBE4xDmrdGzA</string>
+	<string>AIzaSyClycpXUpQpnnY77lCeUD5PRd-62o0bCqA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>872460901191</string>
+	<string>897933754185</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.example.letsChat</string>
 	<key>PROJECT_ID</key>
-	<string>lets-chat-3da11</string>
+	<string>chat-app-eb7b8</string>
 	<key>STORAGE_BUCKET</key>
-	<string>lets-chat-3da11.appspot.com</string>
+	<string>chat-app-eb7b8.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:872460901191:ios:4abd7f61093dd91831ca62</string>
+	<string>1:897933754185:ios:e9fcf72a978edf31432498</string>
 </dict>
 </plist>

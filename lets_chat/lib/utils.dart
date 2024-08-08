@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:lets_chat/firebase_options.dart';
 import 'package:lets_chat/services/alert_service.dart';
 import 'package:lets_chat/services/auth_services.dart';
+import 'package:lets_chat/services/database_service.dart';
 import 'package:lets_chat/services/media_service.dart';
 import 'package:lets_chat/services/navigation_service.dart';
 import 'package:lets_chat/services/storage_service.dart';
@@ -29,5 +30,8 @@ Future<void> registerService() async {
   );
   getIt.registerSingleton<StorageService>(
     StorageService(),
+  );
+  getIt.registerSingleton<DatabaseService>(
+    DatabaseService(),
   );
 }
