@@ -218,17 +218,26 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   );
                 }
+                if (_authService.user != null) {
+                  String? userName = _authService.user!.email;
+                  _alertService.showAlert(
+                    text:
+                        "Account Registered Successfully! \n Welcome ${userName?.toUpperCase()}!",
+                    icon: Icons.check,
+                    iconColor: Colors.green,
+                  );
+                }
+                _navigationService.goBack();
                 _navigationService.pushReplacementNamed("/home");
-                _alertService.showAlert(
-                  text:
-                      "Account Registered Successfully!", //\n Welcome ${_authService.user!.displayName!.toUpperCase()}
-                  icon: Icons.check,
-                  iconColor: Colors.green,
-                );
               }
             }
           } catch (e) {
-            print(e);
+            _alertService.showAlert(
+              text:
+                  "Failed to Register User, Please try again later! \n Error Message:${e.toString()}",
+              icon: Icons.check,
+              iconColor: Colors.green,
+            );
           }
           setState(() {
             isLoading = false;

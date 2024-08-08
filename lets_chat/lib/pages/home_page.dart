@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(_authService.user!.email);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
