@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lets_chat/models/chat.dart';
 import 'package:lets_chat/models/messages.dart';
 import 'package:lets_chat/models/users_profile.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
@@ -68,18 +69,31 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget buildUI() {
-    return DashChat(
-      messageOptions: const MessageOptions(
-        showOtherUsersAvatar: true,
-        showCurrentUserAvatar: true,
-        showTime: true,
+    return StreamBuilder(
+      stream: _databaseService.getChatData(
+        currentUser!.id,
+        widget.userProfile.uid!, //otherUser!.id
       ),
-      inputOptions: const InputOptions(
-        alwaysShowSend: true,
-      ),
-      currentUser: currentUser!,
-      onSend: sendMessage,
-      messages: [],
+      builder: (context, snapshot) {
+        Chat? chat = snapshot.data?.data();
+        List<ChatMessage> messages = [];
+        if (chat != null && chat.messages != null) {
+          messages = _generateChatMessagesList(chat.messages!);
+        }
+        return DashChat(
+          messageOptions: const MessageOptions(
+            showOtherUsersAvatar: true,
+            showCurrentUserAvatar: true,
+            showTime: true,
+          ),
+          inputOptions: const InputOptions(
+            alwaysShowSend: true,
+          ),
+          currentUser: currentUser!,
+          onSend: sendMessage,
+          messages: messages,
+        );
+      },
     );
   }
 
@@ -95,5 +109,19 @@ class _ChatPageState extends State<ChatPage> {
       widget.userProfile.uid!,
       message,
     );
+  }
+
+  List<ChatMessage> _generateChatMessagesList(List<Message> messages) {
+    List<ChatMessage> chatMessages = messages.map((message) {
+      return ChatMessage(
+        user: currentUser!.id == message.senderID ? currentUser! : otherUser!,
+        text: message.content!,
+        createdAt: message.sentAt!.toDate(),
+      );
+    }).toList();
+    chatMessages.sort((firstMessage, lastMessage) {
+      return lastMessage.createdAt.compareTo(firstMessage.createdAt);
+    });
+    return chatMessages;
   }
 }

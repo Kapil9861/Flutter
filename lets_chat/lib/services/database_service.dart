@@ -72,11 +72,18 @@ class DatabaseService {
     String chatID = createChatId(uid1, uid2);
     final docRef = _chatReference!.doc(chatID);
     await docRef.update({
-      "message": FieldValue.arrayUnion(
+      "messages": FieldValue.arrayUnion(
         [
           message.toJson(),
         ],
       )
     });
+  }
+
+  Stream<DocumentSnapshot<Chat>> getChatData(String uid1, String uid2) {
+    String chatID = createChatId(uid1, uid2);
+
+    return _chatReference!.doc(chatID).snapshots()
+        as Stream<DocumentSnapshot<Chat>>;
   }
 }
