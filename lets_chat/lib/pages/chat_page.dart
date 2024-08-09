@@ -86,9 +86,8 @@ class _ChatPageState extends State<ChatPage> {
             showCurrentUserAvatar: true,
             showTime: true,
           ),
-          inputOptions: const InputOptions(
-            alwaysShowSend: true,
-          ),
+          inputOptions: InputOptions(
+              alwaysShowSend: true, trailing: [_mediaMessageButton()]),
           currentUser: currentUser!,
           onSend: sendMessage,
           messages: messages,
@@ -123,5 +122,9 @@ class _ChatPageState extends State<ChatPage> {
       return lastMessage.createdAt.compareTo(firstMessage.createdAt);
     });
     return chatMessages;
+  }
+
+  Widget _mediaMessageButton() {
+    return IconButton(onPressed: () {}, icon: const Icon(Icons.image));
   }
 }
