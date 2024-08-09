@@ -81,14 +81,25 @@ class _HomePageState extends State<HomePage> {
           }
           if (snapshot.data != null && snapshot.hasData) {
             final users = snapshot.data!.docs;
-            print(users.length);
             return ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) {
                 UserProfile user = users[index].data();
                 return ChatTile(
                   userProfile: user,
-                  onTap: () {},
+                  onTap: () async {
+                    final _chatExists = await _databaseService.checkChatExists(
+                      _authService.user!.uid,
+                      user.uid!,
+                    );
+                    if (_chatExists) {
+                    } else {
+                      await _databaseService.createNewChat(
+                        _authService.user!.uid,
+                        user.uid!,
+                      );
+                    }
+                  },
                 );
               },
             );
