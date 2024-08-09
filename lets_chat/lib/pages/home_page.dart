@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/models/users_profile.dart';
+import 'package:lets_chat/pages/chat_page.dart';
 import 'package:lets_chat/services/alert_service.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/database_service.dart';
@@ -92,13 +93,19 @@ class _HomePageState extends State<HomePage> {
                       _authService.user!.uid,
                       user.uid!,
                     );
-                    if (_chatExists) {
-                    } else {
+                    if (!_chatExists) {
                       await _databaseService.createNewChat(
                         _authService.user!.uid,
                         user.uid!,
                       );
                     }
+                    _navigationService.push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ChatPage(userProfile: user);
+                        },
+                      ),
+                    );
                   },
                 );
               },

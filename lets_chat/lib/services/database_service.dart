@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/models/chat.dart';
+import 'package:lets_chat/models/messages.dart';
 import 'package:lets_chat/models/users_profile.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/utils.dart';
@@ -64,5 +65,18 @@ class DatabaseService {
       messages: [],
     );
     await docRef.set(chat);
+  }
+
+  Future<void> sendChatMessage(
+      String uid1, String uid2, Message message) async {
+    String chatID = createChatId(uid1, uid2);
+    final docRef = _chatReference!.doc(chatID);
+    await docRef.update({
+      "message": FieldValue.arrayUnion(
+        [
+          message.toJson(),
+        ],
+      )
+    });
   }
 }
