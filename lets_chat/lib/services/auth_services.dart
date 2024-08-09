@@ -67,7 +67,6 @@ class AuthService {
     // } else {
     //   _user = null;
     // }
-    print(_user);
   }
 
   Future<bool> logout() async {
