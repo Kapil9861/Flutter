@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -7,6 +9,8 @@ import 'package:lets_chat/models/users_profile.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/database_service.dart';
+import 'package:lets_chat/services/media_service.dart';
+import 'package:lets_chat/services/storage_service.dart';
 
 class ChatPage extends StatefulWidget {
   final UserProfile userProfile;
@@ -24,12 +28,17 @@ class _ChatPageState extends State<ChatPage> {
   late AuthService _authService;
   ChatUser? currentUser, otherUser;
   late DatabaseService _databaseService;
+  late MediaService _mediaService;
+  late StorageService _storageService;
 
   @override
   void initState() {
     super.initState();
     _authService = _getIt.get<AuthService>();
     _databaseService = _getIt.get<DatabaseService>();
+    _mediaService = _getIt.get<MediaService>();
+    _storageService = _getIt.get<StorageService>();
+
     currentUser = ChatUser(
       id: _authService.user!.uid,
       firstName: _authService.user!.displayName,
@@ -86,8 +95,9 @@ class _ChatPageState extends State<ChatPage> {
             showCurrentUserAvatar: true,
             showTime: true,
           ),
-          inputOptions: InputOptions(
-              alwaysShowSend: true, trailing: [_mediaMessageButton()]),
+          inputOptions: InputOptions(alwaysShowSend: true, trailing: [
+            _mediaMessageButton(),
+          ]),
           currentUser: currentUser!,
           onSend: sendMessage,
           messages: messages,
@@ -125,6 +135,11 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _mediaMessageButton() {
-    return IconButton(onPressed: () {}, icon: const Icon(Icons.image));
+    return IconButton(
+        onPressed: () async {
+          File? file = await _mediaService.getImageFromGallery();
+          if (file != null) {}
+        },
+        icon: const Icon(Icons.image));
   }
 }
