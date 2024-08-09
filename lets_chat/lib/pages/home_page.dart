@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lets_chat/models/users_profile.dart';
 import 'package:lets_chat/services/alert_service.dart';
 import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/database_service.dart';
 import 'package:lets_chat/services/navigation_service.dart';
+import 'package:lets_chat/widgets/chat_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -78,8 +80,17 @@ class _HomePageState extends State<HomePage> {
             return const Text("Unable to load! Please try again later.");
           }
           if (snapshot.data != null && snapshot.hasData) {
+            final users = snapshot.data!.docs;
+            print(users.length);
             return ListView.builder(
-              itemBuilder: (context, index) {},
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                UserProfile user = users[index].data();
+                return ChatTile(
+                  userProfile: user,
+                  onTap: () {},
+                );
+              },
             );
           }
           return const Center(
