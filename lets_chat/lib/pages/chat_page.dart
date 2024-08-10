@@ -133,11 +133,25 @@ class _ChatPageState extends State<ChatPage> {
 
   List<ChatMessage> _generateChatMessagesList(List<Message> messages) {
     List<ChatMessage> chatMessages = messages.map((message) {
-      return ChatMessage(
-        user: currentUser!.id == message.senderID ? currentUser! : otherUser!,
-        text: message.content!,
-        createdAt: message.sentAt!.toDate(),
-      );
+      if (message.messageType == MessageType.Image) {
+        return ChatMessage(
+            user:
+                currentUser!.id == message.senderID ? currentUser! : otherUser!,
+            createdAt: message.sentAt!.toDate(),
+            medias: [
+              ChatMedia(
+                url: message.content!,
+                fileName: "",
+                type: MediaType.image,
+              )
+            ]);
+      } else {
+        return ChatMessage(
+          user: currentUser!.id == message.senderID ? currentUser! : otherUser!,
+          text: message.content!,
+          createdAt: message.sentAt!.toDate(),
+        );
+      }
     }).toList();
     chatMessages.sort((firstMessage, lastMessage) {
       return lastMessage.createdAt.compareTo(firstMessage.createdAt);

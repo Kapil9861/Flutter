@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Need for the access of the gallery or photos from the device for sending messages</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Need for the access of camera for sending images by directly capturing the images inside the application and for video calls</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Need the microphone access for voice calls and video calls in the future version</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
