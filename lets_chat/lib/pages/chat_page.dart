@@ -108,12 +108,22 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<void> sendMessage(ChatMessage chatMessage) async {
-    Message message = Message(
-      senderID: currentUser!.id,
-      content: chatMessage.text,
-      messageType: MessageType.Text,
-      sentAt: Timestamp.fromDate(chatMessage.createdAt),
-    );
+    Message message;
+    if (chatMessage.medias?.isNotEmpty ?? false) {
+      message = Message(
+        senderID: currentUser!.id,
+        content: chatMessage.medias!.first.url,
+        messageType: MessageType.Image,
+        sentAt: Timestamp.fromDate(chatMessage.createdAt),
+      );
+    } else {
+      message = Message(
+        senderID: currentUser!.id,
+        content: chatMessage.text,
+        messageType: MessageType.Text,
+        sentAt: Timestamp.fromDate(chatMessage.createdAt),
+      );
+    }
     await _databaseService.sendChatMessage(
       currentUser!.id,
       widget.userProfile.uid!,
