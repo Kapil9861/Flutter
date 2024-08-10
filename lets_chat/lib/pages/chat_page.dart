@@ -12,6 +12,8 @@ import 'package:lets_chat/services/database_service.dart';
 import 'package:lets_chat/services/media_service.dart';
 import 'package:lets_chat/services/storage_service.dart';
 import 'package:lets_chat/utils.dart';
+import 'package:mime/mime.dart';
+import 'package:path/path.dart' as path;
 
 class ChatPage extends StatefulWidget {
   final UserProfile userProfile;
@@ -31,6 +33,7 @@ class _ChatPageState extends State<ChatPage> {
   late DatabaseService _databaseService;
   late MediaService _mediaService;
   late StorageService _storageService;
+  bool isVideo = false;
 
   @override
   void initState() {
@@ -109,11 +112,18 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> sendMessage(ChatMessage chatMessage) async {
     Message message;
-    if (chatMessage.medias?.isNotEmpty ?? false) {
+    if ((!isVideo) && (chatMessage.medias?.isNotEmpty ?? false)) {
       message = Message(
         senderID: currentUser!.id,
         content: chatMessage.medias!.first.url,
         messageType: MessageType.Image,
+        sentAt: Timestamp.fromDate(chatMessage.createdAt),
+      );
+    } else if ((isVideo) && (chatMessage.medias?.isNotEmpty ?? false)) {
+      message = Message(
+        senderID: currentUser!.id,
+        content: chatMessage.medias!.first.url,
+        messageType: MessageType.Video,
         sentAt: Timestamp.fromDate(chatMessage.createdAt),
       );
     } else {
@@ -133,7 +143,12 @@ class _ChatPageState extends State<ChatPage> {
 
   List<ChatMessage> _generateChatMessagesList(List<Message> messages) {
     List<ChatMessage> chatMessages = messages.map((message) {
+      String? fileType = lookupMimeType(message.content!); // Detect MIME type
+      String fileExtension =
+          path.extension(message.content!).toLowerCase(); // Get file extension
+
       if (message.messageType == MessageType.Image) {
+        isVideo = false;
         return ChatMessage(
             user:
                 currentUser!.id == message.senderID ? currentUser! : otherUser!,
@@ -145,7 +160,26 @@ class _ChatPageState extends State<ChatPage> {
                 type: MediaType.image,
               )
             ]);
+      } else if ((message.messageType == MessageType.Video) ||
+          (fileType != null && fileType.startsWith('video/')) ||
+          fileExtension == '.mp4' ||
+          fileExtension == '.mov' ||
+          fileExtension == '.avi' ||
+          fileExtension == '.mkv') {
+        isVideo = true;
+        return ChatMessage(
+            user:
+                currentUser!.id == message.senderID ? currentUser! : otherUser!,
+            createdAt: message.sentAt!.toDate(),
+            medias: [
+              ChatMedia(
+                url: message.content!,
+                fileName: "",
+                type: MediaType.video,
+              )
+            ]);
       } else {
+        isVideo = false;
         return ChatMessage(
           user: currentUser!.id == message.senderID ? currentUser! : otherUser!,
           text: message.content!,
@@ -171,7 +205,7 @@ class _ChatPageState extends State<ChatPage> {
 
           String? downloadUrl =
               await _storageService.uploadImageToChat(file, chatID);
-          if (downloadUrl != null) {
+          if (downloadUrl != null && !isVideo) {
             ChatMessage chatMessage = ChatMessage(
               user: currentUser!,
               createdAt: DateTime.now(),
@@ -180,6 +214,19 @@ class _ChatPageState extends State<ChatPage> {
                   url: downloadUrl,
                   fileName: "",
                   type: MediaType.image,
+                )
+              ],
+            );
+            sendMessage(chatMessage);
+          } else if (isVideo && downloadUrl != null) {
+            ChatMessage chatMessage = ChatMessage(
+              user: currentUser!,
+              createdAt: DateTime.now(),
+              medias: [
+                ChatMedia(
+                  url: downloadUrl,
+                  fileName: "",
+                  type: MediaType.video,
                 )
               ],
             );
