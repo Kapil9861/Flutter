@@ -11,6 +11,7 @@ import 'package:lets_chat/services/auth_services.dart';
 import 'package:lets_chat/services/database_service.dart';
 import 'package:lets_chat/services/media_service.dart';
 import 'package:lets_chat/services/storage_service.dart';
+import 'package:lets_chat/utils.dart';
 
 class ChatPage extends StatefulWidget {
   final UserProfile userProfile;
@@ -136,10 +137,33 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _mediaMessageButton() {
     return IconButton(
-        onPressed: () async {
-          File? file = await _mediaService.getImageFromGallery();
-          if (file != null) {}
-        },
-        icon: const Icon(Icons.image));
+      onPressed: () async {
+        File? file = await _mediaService.getImageFromGallery();
+        if (file != null) {
+          String chatID = createChatId(
+            currentUser!.id,
+            otherUser!.id,
+          );
+
+          String? downloadUrl =
+              await _storageService.uploadImageToChat(file, chatID);
+          if (downloadUrl != null) {
+            ChatMessage chatMessage = ChatMessage(
+              user: currentUser!,
+              createdAt: DateTime.now(),
+              medias: [
+                ChatMedia(
+                  url: downloadUrl,
+                  fileName: "",
+                  type: MediaType.image,
+                )
+              ],
+            );
+            sendMessage(chatMessage);
+          }
+        }
+      },
+      icon: const Icon(Icons.image),
+    );
   }
 }
