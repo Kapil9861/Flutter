@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_picker/gallery_picker.dart' as p;
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/models/chat.dart';
 import 'package:lets_chat/models/messages.dart';
@@ -76,12 +77,12 @@ class _ChatPageState extends State<ChatPage> {
             )
           ],
         ),
-        body: buildUI(),
+        body: buildUI(context),
       ),
     );
   }
 
-  Widget buildUI() {
+  Widget buildUI(BuildContext context) {
     return StreamBuilder(
       stream: _databaseService.getChatData(
         currentUser!.id,
@@ -101,6 +102,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
           inputOptions: InputOptions(alwaysShowSend: true, trailing: [
             _mediaMessageButton(),
+            _videoMessageButton(context),
           ]),
           currentUser: currentUser!,
           onSend: sendMessage,
@@ -237,4 +239,15 @@ class _ChatPageState extends State<ChatPage> {
       icon: const Icon(Icons.image),
     );
   }
+}
+
+Widget _videoMessageButton(BuildContext context) {
+  return IconButton(
+    onPressed: () async {
+      p.MediaFile? singleMedia =
+          (await p.GalleryPicker.pickMedia(context: context, singleMedia: true))
+              as p.MediaFile?;
+    },
+    icon: const Icon(Icons.movie),
+  );
 }

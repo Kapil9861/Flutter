@@ -4,6 +4,10 @@
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need for the access of the gallery or photos from the device for sending messages</string>
+	<key>NSMotionUsageDescription</key>
+    <string>Motion usage description</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>NSPhotoLibraryAddUsageDescription</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Need for the access of camera for sending images by directly capturing the images inside the application and for video calls</string>
 	<key>NSMicrophoneUsageDescription</key>
