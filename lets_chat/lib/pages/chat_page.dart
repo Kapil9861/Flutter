@@ -145,17 +145,14 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessage> _generateChatMessagesList(List<Message> messages) {
     List<ChatMessage> chatMessages = messages.map((message) {
       String? fileType = lookupMimeType(message.content!); // Detect MIME type
-      print("File type: $fileType");
       String fileExtension =
           path.extension(message.content!).toLowerCase(); // Get file extension
-      print("File extension: $fileExtension");
       if ((message.messageType == MessageType.Image) &&
           (fileExtension.contains('.psd') ||
               fileExtension.contains('.jpg') ||
               fileExtension.contains('.jpeg') ||
               fileExtension.contains('.png') ||
               fileExtension.contains('.heif'))) {
-        print(message.messageType);
         return ChatMessage(
             user:
                 currentUser!.id == message.senderID ? currentUser! : otherUser!,
@@ -173,9 +170,6 @@ class _ChatPageState extends State<ChatPage> {
           fileExtension.contains('.avi') ||
           fileExtension.contains('.avi') ||
           fileExtension.contains('.mov')) {
-        print(message.messageType);
-
-        print("Video");
         return ChatMessage(
             user:
                 currentUser!.id == message.senderID ? currentUser! : otherUser!,

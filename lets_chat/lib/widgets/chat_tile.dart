@@ -22,6 +22,7 @@ class ChatTile extends StatelessWidget {
             "https://cdn-icons-png.flaticon.com/512/9131/9131529.png"),
       ),
       title: Text(userProfile.name!),
+      // subtitle: Text(userProfile.),
     );
   }
 }

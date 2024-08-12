@@ -5,7 +5,6 @@ import 'package:path/path.dart' as paths;
 
 class StorageService {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
-  StorageService() {}
   Future<String?> uploadUserPfp({
     required File file,
     required String uid,

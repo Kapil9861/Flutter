@@ -8,11 +8,11 @@ class NavigationService {
   late GlobalKey<NavigatorState> _navigatorKey;
 
   final Map<String, Widget Function(BuildContext)> _routes = {
-    "/login": (context) => LoginPage(),
-    "/home": (context) => HomePage(),
-    "/forgotPassword": (context) => ForgotPassword(),
-    "/register": (context) => RegisterPage(),
-    // "/chat": (context) => ChatPage(userProfile: ), 
+    "/login": (context) => const LoginPage(),
+    "/home": (context) => const HomePage(),
+    "/forgotPassword": (context) => const ForgotPassword(),
+    "/register": (context) => const RegisterPage(),
+    // "/chat": (context) => ChatPage(userProfile: ),
     //here we have to push to the user profile with the user profile because of that used the push function below.
   };
 
