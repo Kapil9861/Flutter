@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gallery_picker/gallery_picker.dart' as p;
 import 'package:get_it/get_it.dart';
 import 'package:lets_chat/models/chat.dart';
 import 'package:lets_chat/models/messages.dart';
@@ -114,14 +113,14 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> sendMessage(ChatMessage chatMessage) async {
     Message message;
-    if ((!isVideo) && (chatMessage.medias?.isNotEmpty ?? false)) {
+    if ((chatMessage.medias?.isNotEmpty ?? false) && !isVideo) {
       message = Message(
         senderID: currentUser!.id,
         content: chatMessage.medias!.first.url,
         messageType: MessageType.Image,
         sentAt: Timestamp.fromDate(chatMessage.createdAt),
       );
-    } else if ((isVideo) && (chatMessage.medias?.isNotEmpty ?? false)) {
+    } else if ((chatMessage.medias?.isNotEmpty ?? false) && isVideo) {
       message = Message(
         senderID: currentUser!.id,
         content: chatMessage.medias!.first.url,
@@ -146,11 +145,17 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatMessage> _generateChatMessagesList(List<Message> messages) {
     List<ChatMessage> chatMessages = messages.map((message) {
       String? fileType = lookupMimeType(message.content!); // Detect MIME type
+      print("File type: $fileType");
       String fileExtension =
           path.extension(message.content!).toLowerCase(); // Get file extension
-
-      if (message.messageType == MessageType.Image) {
-        isVideo = false;
+      print("File extension: $fileExtension");
+      if ((message.messageType == MessageType.Image) &&
+          (fileExtension.contains('.psd') ||
+              fileExtension.contains('.jpg') ||
+              fileExtension.contains('.jpeg') ||
+              fileExtension.contains('.png') ||
+              fileExtension.contains('.heif'))) {
+        print(message.messageType);
         return ChatMessage(
             user:
                 currentUser!.id == message.senderID ? currentUser! : otherUser!,
@@ -164,11 +169,13 @@ class _ChatPageState extends State<ChatPage> {
             ]);
       } else if ((message.messageType == MessageType.Video) ||
           (fileType != null && fileType.startsWith('video/')) ||
-          fileExtension == '.mp4' ||
-          fileExtension == '.mov' ||
-          fileExtension == '.avi' ||
-          fileExtension == '.mkv') {
-        isVideo = true;
+          fileExtension.contains('.mp4') ||
+          fileExtension.contains('.avi') ||
+          fileExtension.contains('.avi') ||
+          fileExtension.contains('.mov')) {
+        print(message.messageType);
+
+        print("Video");
         return ChatMessage(
             user:
                 currentUser!.id == message.senderID ? currentUser! : otherUser!,
@@ -181,7 +188,6 @@ class _ChatPageState extends State<ChatPage> {
               )
             ]);
       } else {
-        isVideo = false;
         return ChatMessage(
           user: currentUser!.id == message.senderID ? currentUser! : otherUser!,
           text: message.content!,
@@ -198,6 +204,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget _mediaMessageButton() {
     return IconButton(
       onPressed: () async {
+        isVideo = false;
         File? file = await _mediaService.getImageFromGallery();
         if (file != null) {
           String chatID = createChatId(
@@ -207,7 +214,7 @@ class _ChatPageState extends State<ChatPage> {
 
           String? downloadUrl =
               await _storageService.uploadImageToChat(file, chatID);
-          if (downloadUrl != null && !isVideo) {
+          if (downloadUrl != null) {
             ChatMessage chatMessage = ChatMessage(
               user: currentUser!,
               createdAt: DateTime.now(),
@@ -220,7 +227,26 @@ class _ChatPageState extends State<ChatPage> {
               ],
             );
             sendMessage(chatMessage);
-          } else if (isVideo && downloadUrl != null) {
+          }
+        }
+      },
+      icon: const Icon(Icons.image),
+    );
+  }
+
+  Widget _videoMessageButton(BuildContext context) {
+    return IconButton(
+      onPressed: () async {
+        isVideo = true;
+        File? file = await _mediaService.getVideoFromGallery();
+        if (file != null) {
+          String chatID = createChatId(
+            currentUser!.id,
+            otherUser!.id,
+          );
+          String? downloadUrl =
+              await _storageService.uploadImageToChat(file, chatID);
+          if (downloadUrl != null) {
             ChatMessage chatMessage = ChatMessage(
               user: currentUser!,
               createdAt: DateTime.now(),
@@ -236,18 +262,7 @@ class _ChatPageState extends State<ChatPage> {
           }
         }
       },
-      icon: const Icon(Icons.image),
+      icon: const Icon(Icons.movie),
     );
   }
-}
-
-Widget _videoMessageButton(BuildContext context) {
-  return IconButton(
-    onPressed: () async {
-      p.MediaFile? singleMedia =
-          (await p.GalleryPicker.pickMedia(context: context, singleMedia: true))
-              as p.MediaFile?;
-    },
-    icon: const Icon(Icons.movie),
-  );
 }
