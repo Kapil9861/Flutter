@@ -14,7 +14,7 @@ class GroceryData {
       "description": "Crisp and juicy apple from Kashmir",
       "price": 60.0,
       "imageUrl":
-          "https://blog-images-1.pharmeasy.in/blog/production/wp-content/uploads/2022/05/03114105/7-5.jpg"
+          "https://images.everydayhealth.com/images/diet-nutrition/apples-101-about-1440x810.jpg"
     },
     {
       "id": 3,
