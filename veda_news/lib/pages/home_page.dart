@@ -12,6 +12,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final NewsRepository _newsRepository = NewsRepository();
+
+  String category = "sports";
+  String sortBy = "popularity";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildUI(BuildContext context) {
     return FutureBuilder<NewsModel>(
-      future: _newsRepository.fetchNewsFromApi(),
+      future: _newsRepository.fetchNewsFromApi(category: category),
       builder: (context, snapshot) {
         print(snapshot);
         if (snapshot.connectionState == ConnectionState.waiting) {
