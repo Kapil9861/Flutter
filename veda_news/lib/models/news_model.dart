@@ -15,14 +15,21 @@ class NewsModel {
       : this(
           status: json['status'],
           totalResults: json['totalResults'],
-          articles: json['articles'],
+          articles: (json['articles'] as List<dynamic>?)
+              ?.map((article) =>
+                  Articles.fromJson(article as Map<String, dynamic>))
+              .toList(),
         );
 
   Map<String, dynamic> toJson() {
     return {
       'status': status,
       'totalResults': totalResults,
-      'articles': articles,
+      'articles': articles
+          ?.map(
+            (article) => article.toJson(),
+          )
+          .toList(),
     };
   }
 }
