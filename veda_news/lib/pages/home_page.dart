@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:veda_news/models/articles.dart';
 import 'package:veda_news/models/news_model.dart';
 import 'package:veda_news/repositories/news_repository.dart';
 
@@ -72,12 +73,9 @@ class _HomePageState extends State<HomePage> {
           return ListView.builder(
             itemCount: snapshot.data!.articles!.length,
             itemBuilder: (context, index) {
-              String? title = snapshot.data!.articles![index].title;
-              if (title != null) {
-                return ListTile(
-                  title: Text(title),
-                );
-              }
+              Articles? artiles = snapshot.data!.articles![index];
+              
+              return null;
             },
           );
         } else if (snapshot.data != null && snapshot.data!.articles == null) {
