@@ -20,8 +20,40 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Test"),
+          backgroundColor: Colors.white,
+          toolbarHeight: 56,
+          title: IconButton(
+            icon: Image.asset(
+              'assets/logo/Vector.png',
+              height: 30,
+              width: 99,
+            ),
+            onPressed: () {
+              setState(() {
+                category = "";
+                sortBy = "";
+                _fetchNews(category: category, sortBy: sortBy);
+              });
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: Image.asset(
+                'assets/icons/Frame.png',
+                height: 21.5,
+                width: 18,
+              ),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("This feature is unavailable for now!"),
+                  ),
+                );
+              },
+            )
+          ],
         ),
+        backgroundColor: Colors.white,
         body: _buildUI(context),
       ),
     );
@@ -29,9 +61,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildUI(BuildContext context) {
     return FutureBuilder<NewsModel>(
-      future: _newsRepository.fetchNewsFromApi(category: category),
+      future: _fetchNews(category: category, sortBy: sortBy),
       builder: (context, snapshot) {
-        print(snapshot);
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
@@ -66,5 +97,12 @@ class _HomePageState extends State<HomePage> {
         }
       },
     );
+  }
+
+  Future<NewsModel> _fetchNews({
+    required String category,
+    required String sortBy,
+  }) async {
+    return _newsRepository.fetchNewsFromApi(category: category, sortBy: sortBy);
   }
 }
