@@ -16,9 +16,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final NewsRepository _newsRepository = NewsRepository();
-
   String category = "";
   String sortBy = "";
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 showSnackbar(context, "This feature is not available yet!");
               },
-            )
+            ),
           ],
         ),
         backgroundColor: Colors.white,
@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Filters(
+                  selectedCategory: category.isEmpty ? "all" : category,
                   onCategorySelected: (String selectedCategory) {
                     setState(() {
                       category =
@@ -115,7 +116,9 @@ class _HomePageState extends State<HomePage> {
     required String sortBy,
   }) async {
     return _newsRepository.fetchNewsFromApi(
-      category: category.isEmpty ? null : category,
+      category: category.isEmpty
+          ? null
+          : category, // Adjust API call for "all" or empty category
       sortBy: sortBy,
     );
   }
