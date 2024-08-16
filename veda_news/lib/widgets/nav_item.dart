@@ -7,47 +7,42 @@ class NavItem extends StatefulWidget {
     super.key,
     required this.index,
     required this.category,
+    required this.isSelected,
+    required this.onTap,
   });
   final int index;
   final String category;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   State<NavItem> createState() => _NavItemState();
 }
 
 class _NavItemState extends State<NavItem> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    bool isSelected = _selectedIndex == widget.index;
-
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = widget.index; // Update selected index
-        });
-      },
+      onTap: widget.onTap,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.only(right: 6),
             child: Text(
               capitalize(widget.category),
               style: GoogleFonts.poppins(
-                color: isSelected ? Colors.blue : Colors.black,
+                color:
+                    widget.isSelected ? Colors.black : const Color(0xFF4E4B66),
                 fontSize: 16.0,
                 fontWeight: FontWeight.w400,
               ),
             ),
           ),
-          if (isSelected)
+          if (widget.isSelected)
             Container(
-              margin: const EdgeInsets.only(top: 4.0),
               height: 2.0,
-              width: 20.0,
-              color: Colors.blue, 
+              width: 19.0,
+              color: const Color(0xFF1877F2),
             ),
         ],
       ),

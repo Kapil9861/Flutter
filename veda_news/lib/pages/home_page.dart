@@ -32,13 +32,7 @@ class _HomePageState extends State<HomePage> {
               height: 30,
               width: 99,
             ),
-            onPressed: () {
-              setState(() {
-                category = "";
-                sortBy = "";
-                _fetchNews(category: category, sortBy: sortBy);
-              });
-            },
+            onPressed: _reloadHome,
           ),
           actions: [
             IconButton(
@@ -74,7 +68,15 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Filters(),
+                Filters(
+                  onCategorySelected: (String selectedCategory) {
+                    setState(() {
+                      category =
+                          selectedCategory == "all" ? "" : selectedCategory;
+                      _fetchNews(category: category, sortBy: sortBy);
+                    });
+                  },
+                ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: snapshot.data!.articles!.length,
@@ -113,8 +115,19 @@ class _HomePageState extends State<HomePage> {
     required String sortBy,
   }) async {
     return _newsRepository.fetchNewsFromApi(
-      category: category,
+      category: category.isEmpty ? null : category,
       sortBy: sortBy,
     );
+  }
+
+  void _reloadHome() {
+    setState(() {
+      category = "";
+      sortBy = "";
+      _fetchNews(
+        category: category,
+        sortBy: sortBy,
+      );
+    });
   }
 }
