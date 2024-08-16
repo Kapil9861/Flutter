@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/models/articles.dart';
 import 'package:veda_news/models/news_model.dart';
+import 'package:veda_news/widgets/article_tile.dart';
 import 'package:veda_news/repositories/news_repository.dart';
+import 'package:veda_news/core/utils.dart';
+import 'package:veda_news/widgets/filters.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +17,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final NewsRepository _newsRepository = NewsRepository();
 
-  String category = "sports";
-  String sortBy = "popularity";
+  String category = "";
+  String sortBy = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,11 +48,7 @@ class _HomePageState extends State<HomePage> {
                 width: 18,
               ),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("This feature is unavailable for now!"),
-                  ),
-                );
+                showSnackbar(context, "This feature is not available yet!");
               },
             )
           ],
@@ -70,13 +69,25 @@ class _HomePageState extends State<HomePage> {
           );
         }
         if (snapshot.data != null && snapshot.data!.articles != null) {
-          return ListView.builder(
-            itemCount: snapshot.data!.articles!.length,
-            itemBuilder: (context, index) {
-              Articles? artiles = snapshot.data!.articles![index];
-              
-              return null;
-            },
+          return Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Filters(),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.articles!.length,
+                    itemBuilder: (context, index) {
+                      Articles article = snapshot.data!.articles![index];
+                      return ArticleTile(
+                        article: article,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           );
         } else if (snapshot.data != null && snapshot.data!.articles == null) {
           return Center(
@@ -101,6 +112,9 @@ class _HomePageState extends State<HomePage> {
     required String category,
     required String sortBy,
   }) async {
-    return _newsRepository.fetchNewsFromApi(category: category, sortBy: sortBy);
+    return _newsRepository.fetchNewsFromApi(
+      category: category,
+      sortBy: sortBy,
+    );
   }
 }

@@ -13,7 +13,7 @@ class NewsRepository {
     if ((category == null || category.isEmpty) &&
         (sortBy == null || sortBy.isEmpty)) {
       url =
-          "https://newsapi.org/v2/top-headlines?country=us&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
+          "https://newsapi.org/v2/everything?q=general&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
     } else if ((category != null && category.isNotEmpty) &&
         (sortBy != null && category.isNotEmpty)) {
       url =
@@ -21,7 +21,7 @@ class NewsRepository {
     } else if ((category == null || category.isEmpty) &&
         (sortBy != null && sortBy.isNotEmpty)) {
       url =
-          "https://newsapi.org/v2/top-headlines?sortBy=$sortBy&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
+          "https://newsapi.org/v2/everything?q=general&sortBy=$sortBy&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
     } else {
       url =
           "https://newsapi.org/v2/top-headlines?category=$category&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
