@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:veda_news/presentation/widgets/styled_text.dart';
 
-class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+class DetailScreen extends StatefulWidget {
+  const DetailScreen({
+    super.key,
+    required this.imageUrl,
+    required this.logo,
+    required this.time,
+    required this.description,
+    required this.title,
+    required this.author,
+    required this.channelName,
+  });
+  final String imageUrl;
+  final String logo;
+  final String time;
+  final String description;
+  final String title;
+  final String author;
+  final String channelName;
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  String followButtonText = "Follow";
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +40,125 @@ class DetailScreen extends StatelessWidget {
             child: Icon(Icons.more_vert),
           ),
         ],
+      ),
+      body: _buildUI(context),
+    );
+  }
+
+  Widget _buildUI(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 380,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.transparent,
+                            ),
+                            borderRadius: BorderRadius.circular(60),
+                          ),
+                          child: Image.network(
+                            height: 50,
+                            width: 50,
+                            widget.logo,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 2),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StyledText(
+                              fontSize: 16,
+                              text: widget.channelName,
+                              fontWeight: FontWeight.w600,
+                              fontColor: Colors.black,
+                            ),
+                            StyledText(
+                              fontSize: 14,
+                              text: widget.time,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (followButtonText == "Following") {
+                          followButtonText = "Follow";
+                        } else {
+                          followButtonText = "Following";
+                        }
+                      });
+                    },
+                    child: Stack(
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 5.0,
+                              bottom: 5,
+                            ),
+                            child: Container(
+                              width: 102,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF1877F2),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  StyledText(
+                                    fontSize: 16,
+                                    text: followButtonText,
+                                    fontWeight: FontWeight.w600,
+                                    fontColor: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // ElevatedButton(
+                  //   style: const ButtonStyle(
+                  //     backgroundColor: WidgetStatePropertyAll<Color>(
+                  //       Color(0xFF1877F2),
+                  //     ),
+
+                  //   ),
+                  //   onPressed: () {
+
+                  //   },
+                  // ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

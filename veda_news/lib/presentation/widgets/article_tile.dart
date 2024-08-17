@@ -21,13 +21,30 @@ class _ArticleTileState extends State<ArticleTile> {
 
   @override
   Widget build(BuildContext context) {
-    String? logo = _logoProvider.getLogo(widget.article.source!.name ?? "");
+    String logo = _logoProvider.getLogo(widget.article.source!.name ?? "");
+    String imageUrl = widget.article.urlToImage ??
+        "https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg";
+    String channelName = widget.article.source!.name ?? "Independent";
+    String description =
+        widget.article.description ?? "Description is not available!";
+    String author = widget.article.author ?? "Independent";
+    String postDuration =
+        calculateTimeAgo(widget.article.publishedAt ?? "Unknown");
+    String title = widget.article.title ?? "Not very useful!";
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {
-              return const DetailScreen();
+              return DetailScreen(
+                author: author,
+                channelName: channelName,
+                logo: logo,
+                description: description,
+                time: postDuration,
+                imageUrl: imageUrl,
+                title: title,
+              );
             },
           ),
         );
@@ -55,8 +72,7 @@ class _ArticleTileState extends State<ArticleTile> {
                       height: 96,
                       width: 96,
                       image: NetworkImage(
-                        widget.article.urlToImage ??
-                            "https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg",
+                        imageUrl,
                       ),
                     ),
                   ),
@@ -77,11 +93,10 @@ class _ArticleTileState extends State<ArticleTile> {
                     children: [
                       StyledText(
                         fontSize: 13,
-                        text: widget.article.author ?? "Independent",
+                        text: author,
                       ),
                       StyledText(
-                        text: truncateWithEllipsis(
-                            widget.article.title ?? "Not very useful!", 45),
+                        text: truncateWithEllipsis(title, 45),
                         fontSize: 16,
                         fontColor: Colors.black,
                       ),
@@ -108,7 +123,7 @@ class _ArticleTileState extends State<ArticleTile> {
                               child: StyledText(
                                 fontSize: 13,
                                 text: truncateWithEllipsis(
-                                  widget.article.source!.name ?? "Independent",
+                                  channelName,
                                   16,
                                 ),
                               ),
@@ -122,8 +137,7 @@ class _ArticleTileState extends State<ArticleTile> {
                             ),
                             StyledText(
                               fontSize: 13,
-                              text: calculateTimeAgo(
-                                  widget.article.publishedAt ?? "Unknown"),
+                              text: postDuration,
                             )
                           ],
                         ),
