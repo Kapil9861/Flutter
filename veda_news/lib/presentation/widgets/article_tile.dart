@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/data/models/articles.dart';
-import 'package:veda_news/presentation/pages/detail_screen.dart';
-import 'package:veda_news/presentation/providers/logo_provider.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
+import 'package:veda_news/core/utils.dart'; // Assumed to have utility functions like calculateTimeAgo and truncateWithEllipsis
+import 'package:veda_news/data/models/articles.dart'; // Article model
+import 'package:veda_news/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
+import 'package:veda_news/presentation/providers/logo_provider.dart'; // Provider for logos
+import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
 
+/// [ArticleTile] is a widget that displays a summary of an article.
+/// It contains an image, title, author, source, and a short description.
+/// When tapped, it navigates to a detail screen with more information.
 class ArticleTile extends StatefulWidget {
   const ArticleTile({
     super.key,
     required this.article,
   });
+
+  /// The article data to be displayed.
   final Articles article;
 
   @override
@@ -17,10 +22,11 @@ class ArticleTile extends StatefulWidget {
 }
 
 class _ArticleTileState extends State<ArticleTile> {
-  final LogoProvider _logoProvider = LogoProvider();
+  final LogoProvider _logoProvider = LogoProvider(); // Instance to fetch logos
 
   @override
   Widget build(BuildContext context) {
+    // Fetching and assigning necessary data
     String logo = _logoProvider.getLogo(widget.article.source!.name ?? "");
     String imageUrl = widget.article.urlToImage ??
         "https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg";
@@ -31,8 +37,10 @@ class _ArticleTileState extends State<ArticleTile> {
     String postDuration =
         calculateTimeAgo(widget.article.publishedAt ?? "Unknown");
     String title = widget.article.title ?? "Not very useful!";
+
     return GestureDetector(
       onTap: () {
+        // Navigate to the DetailScreen when the tile is tapped
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) {

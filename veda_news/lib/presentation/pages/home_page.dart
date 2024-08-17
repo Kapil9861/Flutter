@@ -7,6 +7,9 @@ import 'package:veda_news/data/repositories/news_repository.dart';
 import 'package:veda_news/core/utils.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 
+/// The [HomePage] widget serves as the main screen of the Veda News Portal.
+/// It displays a list of news articles fetched from an API and allows users to filter
+/// articles by category and sort criteria.
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -15,13 +18,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  /// The [_newsRepository] is used to fetch news data from the API.
   final NewsRepository _newsRepository = NewsRepository();
+
+  /// The [category] variable stores the currently selected news category.
   String category = "";
+
+  /// The [sortBy] variable stores the sorting criteria for news articles.
   String sortBy = "";
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      // Navigation bar UI
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -53,6 +62,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Builds the main user interface of the home page.
+  ///
+  /// The UI is built based on the data fetched from the API.
   Widget _buildUI(BuildContext context) {
     return FutureBuilder<NewsModel>(
       future: _fetchNews(category: category, sortBy: sortBy),
@@ -111,6 +123,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Fetches news articles based on the selected [category] and [sortBy] criteria.
+  ///
+  /// This method interacts with the [NewsRepository] to retrieve the data.
+  ///
+  /// - [category]: The category of news articles to fetch.
+  /// - [sortBy]: The sorting criteria for news articles.
+  ///
+  /// Returns a [Future] that resolves to a [NewsModel] containing the news data.
   Future<NewsModel> _fetchNews({
     required String category,
     required String sortBy,
@@ -123,6 +143,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Reloads the home page by resetting the selected category and sort criteria.
+  ///
+  /// This method is triggered when the user taps the logo in the app bar.
   void _reloadHome() {
     setState(() {
       category = "";

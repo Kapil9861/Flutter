@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:veda_news/core/utils.dart';
+import 'package:veda_news/core/utils.dart'; // Assumed utility function `capitalize`
 
+/// [NavItem] is a widget that displays a category name as a selectable item in a navigation bar.
+/// It visually indicates whether it is selected and triggers a callback function when tapped.
 class NavItem extends StatefulWidget {
+  /// Index of the navigation item.
+  final int index;
+
+  /// The category name to be displayed.
+  final String category;
+
+  /// Indicates if this navigation item is currently selected.
+  final bool isSelected;
+
+  /// Callback function to be executed when the item is tapped.
+  final VoidCallback onTap;
+
   const NavItem({
     super.key,
     required this.index,
@@ -10,10 +24,6 @@ class NavItem extends StatefulWidget {
     required this.isSelected,
     required this.onTap,
   });
-  final int index;
-  final String category;
-  final bool isSelected;
-  final VoidCallback onTap;
 
   @override
   State<NavItem> createState() => _NavItemState();
@@ -27,22 +37,24 @@ class _NavItemState extends State<NavItem> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 6),
+            padding: const EdgeInsets.only(right: 6.0), // Adds padding to the right of the text
             child: Text(
-              capitalize(widget.category),
+              capitalize(widget.category), // Capitalizes the category name
               style: GoogleFonts.poppins(
-                color:
-                    widget.isSelected ? Colors.black : const Color(0xFF4E4B66),
-                fontSize: 16.0,
-                fontWeight: FontWeight.w400,
+                color: widget.isSelected
+                    ? Colors.black // Selected text color
+                    : const Color(0xFF4E4B66), // Unselected text color
+                fontSize: 16.0, // Font size for the text
+                fontWeight: FontWeight.w400, // Font weight
               ),
             ),
           ),
+          // Displays a blue underline when the item is selected
           if (widget.isSelected)
             Container(
-              height: 2.0,
-              width: 19.0,
-              color: const Color(0xFF1877F2),
+              height: 2.0, // Height of the underline
+              width: 19.0, // Width of the underline
+              color: const Color(0xFF1877F2), // Blue color for the underline
             ),
         ],
       ),

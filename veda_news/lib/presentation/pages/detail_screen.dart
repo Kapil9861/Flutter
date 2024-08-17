@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
+/// The [DetailScreen] widget displays the details of a selected news article.
+/// It shows the article's image, title, content, author, and related information
+/// such as the channel name and time of publication.
 class DetailScreen extends StatefulWidget {
   const DetailScreen({
     super.key,
@@ -12,18 +15,34 @@ class DetailScreen extends StatefulWidget {
     required this.author,
     required this.channelName,
   });
+
+  /// The URL of the article's main image.
   final String imageUrl;
+
+  /// The URL of the logo for the news source.
   final String logo;
+
+  /// The publication time of the article.
   final String time;
+
+  /// The main content of the article.
   final String content;
+
+  /// The title of the article.
   final String title;
+
+  /// The author of the article.
   final String author;
+
+  /// The name of the news channel or source.
   final String channelName;
+
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  /// The text displayed on the follow button, toggles between "Follow" and "Following".
   String followButtonText = "Follow";
 
   @override
@@ -45,16 +64,18 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
+  /// Builds the main UI for the detail screen, including the article image,
+  /// title, content, author, channel name, and a follow button.
   Widget _buildUI(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            /// Displays the news source's logo, channel name, publication time,
+            /// and a follow button.
             SizedBox(
               width: 380,
               child: Row(
@@ -104,20 +125,16 @@ class _DetailScreenState extends State<DetailScreen> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        if (followButtonText == "Following") {
-                          followButtonText = "Follow";
-                        } else {
-                          followButtonText = "Following";
-                        }
+                        // Toggles the follow button text between "Follow" and "Following"
+                        followButtonText = followButtonText == "Following"
+                            ? "Follow"
+                            : "Following";
                       });
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(6),
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 5.0,
-                          bottom: 5,
-                        ),
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 5),
                         child: Container(
                           width: 102,
                           height: 34,
@@ -143,6 +160,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 ],
               ),
             ),
+
+            /// Displays the main image of the article.
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Image.network(
@@ -152,6 +171,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 fit: BoxFit.fill,
               ),
             ),
+
+            /// Displays the article's title and author.
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Column(
@@ -166,6 +187,8 @@ class _DetailScreenState extends State<DetailScreen> {
                 ],
               ),
             ),
+
+            /// Displays the main content of the article.
             StyledText(
               fontSize: 16,
               text: widget.content,

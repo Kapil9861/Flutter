@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/presentation/widgets/nav_item.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:veda_news/core/utils.dart'; // Assumed utility functions and data like `categories`
+import 'package:veda_news/presentation/widgets/nav_item.dart'; // Custom NavItem widget
+import 'package:google_fonts/google_fonts.dart'; // For custom fonts
 
+/// [Filters] widget is used to display a list of selectable categories.
+/// It includes a section with "Latest" and "See all" buttons and a horizontal list of categories.
 class Filters extends StatefulWidget {
+  /// The currently selected category.
   final String selectedCategory;
+
+  /// Callback function to handle category selection.
   final Function(String) onCategorySelected;
 
   const Filters({
@@ -24,6 +29,7 @@ class _FiltersState extends State<Filters> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        // Section with "Latest" and "See all" buttons
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: SizedBox(
@@ -31,7 +37,9 @@ class _FiltersState extends State<Filters> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Handle "Latest" button press
+                  },
                   child: Text(
                     "Latest",
                     style: GoogleFonts.poppins(
@@ -41,7 +49,9 @@ class _FiltersState extends State<Filters> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Handle "See all" button press
+                  },
                   child: Text(
                     "See all",
                     style: GoogleFonts.poppins(
@@ -55,6 +65,8 @@ class _FiltersState extends State<Filters> {
             ),
           ),
         ),
+        
+        // Horizontal list of categories
         Padding(
           padding: const EdgeInsets.only(top: 10, left: 10),
           child: SizedBox(
@@ -69,6 +81,7 @@ class _FiltersState extends State<Filters> {
                     index: index,
                     isSelected: widget.selectedCategory == category,
                     onTap: () {
+                      // Call the callback function with the selected category
                       widget.onCategorySelected(category);
                     },
                   );
