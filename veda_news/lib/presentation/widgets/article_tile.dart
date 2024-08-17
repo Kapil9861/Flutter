@@ -58,7 +58,7 @@ class _ArticleTileState extends State<ArticleTile> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4.5),
         child: SizedBox(
           height: 112,
           width: 380,

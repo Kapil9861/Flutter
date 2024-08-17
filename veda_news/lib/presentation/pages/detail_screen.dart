@@ -189,9 +189,12 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
 
             /// Displays the main content of the article.
-            StyledText(
-              fontSize: 16,
-              text: widget.content,
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: StyledText(
+                fontSize: 16,
+                text: widget.content,
+              ),
             ),
           ],
         ),

@@ -29,36 +29,35 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      // Navigation bar UI
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          toolbarHeight: 56,
-          title: IconButton(
-            icon: Image.asset(
-              'assets/logo/Vector.png',
-              height: 30,
-              width: 99,
-            ),
-            onPressed: _reloadHome,
-          ),
-          actions: [
-            IconButton(
-              icon: Image.asset(
-                'assets/icons/Frame.png',
-                height: 21.5,
-                width: 18,
-              ),
-              onPressed: () {
-                showSnackbar(context, "This feature is not available yet!");
-              },
-            ),
-          ],
-        ),
+    return
+        // Navigation bar UI
+        Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        body: _buildUI(context),
+        toolbarHeight: 56,
+        title: IconButton(
+          icon: Image.asset(
+            'assets/logo/Vector.png',
+            height: 30,
+            width: 99,
+          ),
+          onPressed: _reloadHome,
+        ),
+        actions: [
+          IconButton(
+            icon: Image.asset(
+              'assets/icons/Frame.png',
+              height: 21.5,
+              width: 18,
+            ),
+            onPressed: () {
+              showSnackbar(context, "This feature is not available yet!");
+            },
+          ),
+        ],
       ),
+      backgroundColor: Colors.white,
+      body: _buildUI(context),
     );
   }
 

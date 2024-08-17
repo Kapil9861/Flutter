@@ -29,21 +29,21 @@ class NewsRepository {
         (sortBy == null || sortBy.isEmpty)) {
       // Case: No category or sortBy specified, fetch general news
       url =
-          "https://newsapi.org/v2/everything?q=general&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
+          "https://newsapi.org/v2/everything?q=general&apiKey=70b4404cf5dd41829dc005be379e9afb";
     } else if ((category != null && category.isNotEmpty) &&
         (sortBy != null && category.isNotEmpty)) {
       // Case: Both category and sortBy are specified
       url =
-          "https://newsapi.org/v2/top-headlines?category=$category&sortBy=$sortBy&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
+          "https://newsapi.org/v2/top-headlines?category=$category&sortBy=$sortBy&apiKey=70b4404cf5dd41829dc005be379e9afb";
     } else if ((category == null || category.isEmpty) &&
         (sortBy != null && sortBy.isNotEmpty)) {
       // Case: Only sortBy is specified, fetch general news sorted by the specified order
       url =
-          "https://newsapi.org/v2/everything?q=general&sortBy=$sortBy&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
+          "https://newsapi.org/v2/everything?q=general&sortBy=$sortBy&apiKey=70b4404cf5dd41829dc005be379e9afb";
     } else {
       // Case: Only category is specified, fetch news for that category
       url =
-          "https://newsapi.org/v2/top-headlines?category=$category&apiKey=978e0e0d995f4a23a96280fcf53ffbef";
+          "https://newsapi.org/v2/top-headlines?category=$category&apiKey=70b4404cf5dd41829dc005be379e9afb";
     }
 
     // Sends an HTTP GET request to the API
