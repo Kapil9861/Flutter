@@ -24,11 +24,25 @@ class _ArticleTileState extends State<ArticleTile> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image(
-                height: 96,
-                width: 96,
-                image: NetworkImage(widget.article.urlToImage ??
-                    "https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.transparent,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image(
+                    fit: BoxFit.cover,
+                    height: 96,
+                    width: 96,
+                    image: NetworkImage(
+                      widget.article.urlToImage ??
+                          "https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg",
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(
@@ -41,6 +55,7 @@ class _ArticleTileState extends State<ArticleTile> {
                 height: 96,
                 width: 264,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [],
                 ),
               ),
