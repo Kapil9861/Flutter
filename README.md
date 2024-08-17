@@ -1,7 +1,10 @@
 This is the repostory for storing all the Flutter based porjects whose objective is to learn Dart and Flutter. 
-Homepage:
 
-![Screenshot_1723890598](https://github.com/user-attachments/assets/1cda8944-60d4-4412-98e9-5dc52ae281d9)
+
+Homepage:
+![Screenshot_1723890594](https://github.com/user-attachments/assets/694a0279-1a08-4ba8-9ed6-c0b58151ff2e)
+
+
 
 DetailScreen:
 
