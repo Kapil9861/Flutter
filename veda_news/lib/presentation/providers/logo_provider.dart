@@ -6,7 +6,7 @@ class LogoProvider {
       "Business Insider":
           "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Business_Insider_Logo.svg/1280px-Business_Insider_Logo.svg.png",
       "BBC News":
-          "https://w7.pngwing.com/pngs/393/802/png-transparent-bbc-news-online-logo-of-the-bbc-hbo-logo-television-text-rectangle-thumbnail.png",
+          "https://cdn.icon-icons.com/icons2/70/PNG/512/bbc_news_14062.png",
       "Yahoo Entertainment":
           "https://cdn.prod.website-files.com/62b4f04befbe455f681f5197/632503e3acd3d815315269ad_yahoo-entertainment.jpg",
       "NPR":
