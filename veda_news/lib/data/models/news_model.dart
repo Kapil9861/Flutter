@@ -1,4 +1,4 @@
-import 'package:veda_news/models/articles.dart';
+import 'package:veda_news/data/models/articles.dart';
 
 class NewsModel {
   final String? status;

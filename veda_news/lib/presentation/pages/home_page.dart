@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:veda_news/models/articles.dart';
-import 'package:veda_news/models/news_model.dart';
-import 'package:veda_news/widgets/article_tile.dart';
-import 'package:veda_news/repositories/news_repository.dart';
+import 'package:veda_news/data/models/articles.dart';
+import 'package:veda_news/data/models/news_model.dart';
+import 'package:veda_news/presentation/widgets/article_tile.dart';
+import 'package:veda_news/data/repositories/news_repository.dart';
 import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/widgets/filters.dart';
+import 'package:veda_news/presentation/widgets/filters.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

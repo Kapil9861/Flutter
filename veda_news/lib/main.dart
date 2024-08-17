@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/pages/home_page.dart';
+import 'package:veda_news/presentation/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());

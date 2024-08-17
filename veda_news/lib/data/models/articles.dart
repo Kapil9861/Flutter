@@ -1,4 +1,4 @@
-import 'package:veda_news/models/source.dart';
+import 'package:veda_news/data/models/source.dart';
 
 class Articles {
   Source? source;

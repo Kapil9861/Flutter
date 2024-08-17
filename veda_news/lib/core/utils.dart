@@ -32,3 +32,11 @@ String capitalize(String text) {
   if (text.isEmpty) return text;
   return text[0].toUpperCase() + text.substring(1);
 }
+
+String truncateWithEllipsis(String text, int cutoff) {
+  if (text.length <= cutoff) {
+    return text;
+  } else {
+    return '${text.substring(0, cutoff)}...';
+  }
+}

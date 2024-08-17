@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/widgets/nav_item.dart';
+import 'package:veda_news/presentation/widgets/nav_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Filters extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:veda_news/models/news_model.dart';
+import 'package:veda_news/data/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
 class NewsRepository {
