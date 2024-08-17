@@ -26,7 +26,7 @@ class _ArticleTileState extends State<ArticleTile> {
         "https://www.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg";
     String channelName = widget.article.source!.name ?? "Independent";
     String description =
-        widget.article.description ?? "Description is not available!";
+        widget.article.content ?? "Description is not available!";
     String author = widget.article.author ?? "Independent";
     String postDuration =
         calculateTimeAgo(widget.article.publishedAt ?? "Unknown");
@@ -40,7 +40,7 @@ class _ArticleTileState extends State<ArticleTile> {
                 author: author,
                 channelName: channelName,
                 logo: logo,
-                description: description,
+                content: description,
                 time: postDuration,
                 imageUrl: imageUrl,
                 title: title,

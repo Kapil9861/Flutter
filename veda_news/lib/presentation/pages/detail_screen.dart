@@ -7,7 +7,7 @@ class DetailScreen extends StatefulWidget {
     required this.imageUrl,
     required this.logo,
     required this.time,
-    required this.description,
+    required this.content,
     required this.title,
     required this.author,
     required this.channelName,
@@ -15,7 +15,7 @@ class DetailScreen extends StatefulWidget {
   final String imageUrl;
   final String logo;
   final String time;
-  final String description;
+  final String content;
   final String title;
   final String author;
   final String channelName;
@@ -49,10 +49,11 @@ class _DetailScreenState extends State<DetailScreen> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 16,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               width: 380,
@@ -110,52 +111,64 @@ class _DetailScreenState extends State<DetailScreen> {
                         }
                       });
                     },
-                    child: Stack(
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              top: 5.0,
-                              bottom: 5,
-                            ),
-                            child: Container(
-                              width: 102,
-                              height: 34,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF1877F2),
-                                borderRadius: BorderRadius.circular(6),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 5.0,
+                          bottom: 5,
+                        ),
+                        child: Container(
+                          width: 102,
+                          height: 34,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1877F2),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              StyledText(
+                                fontSize: 16,
+                                text: followButtonText,
+                                fontWeight: FontWeight.w600,
+                                fontColor: Colors.white,
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  StyledText(
-                                    fontSize: 16,
-                                    text: followButtonText,
-                                    fontWeight: FontWeight.w600,
-                                    fontColor: Colors.white,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                  // ElevatedButton(
-                  //   style: const ButtonStyle(
-                  //     backgroundColor: WidgetStatePropertyAll<Color>(
-                  //       Color(0xFF1877F2),
-                  //     ),
-
-                  //   ),
-                  //   onPressed: () {
-
-                  //   },
-                  // ),
                 ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Image.network(
+                height: 248,
+                width: 380,
+                widget.imageUrl,
+                fit: BoxFit.fill,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  StyledText(fontSize: 14, text: widget.author),
+                  StyledText(
+                    fontSize: 24,
+                    text: widget.title,
+                    fontColor: Colors.black,
+                  )
+                ],
+              ),
+            ),
+            StyledText(
+              fontSize: 16,
+              text: widget.content,
             ),
           ],
         ),
