@@ -9,4 +9,8 @@ class NewsArticle extends Model
 {
     use HasFactory;
     protected $fillable=['id','title','description','author','url','urlToImage','publishedAt','content',];
+
+    public function source(){
+        return $this->belongsTo(Source::class);
+    }
 }
