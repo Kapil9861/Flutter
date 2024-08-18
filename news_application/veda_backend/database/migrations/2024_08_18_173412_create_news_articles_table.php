@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id')->nullable()->constrained()->onDelete('cascade');
             $table->string('title')->nullable();
+            $table->string('author')->nullable();
             $table->text('description')->nullable();
             $table->string('url')->nullable();
-            $table->string('url_to_image')->nullable();
-            $table->timestamp('published_at')->nullable();
+            $table->string('urlToImage')->nullable();
+            $table->timestamp('publishedAt')->nullable();
             $table->text('content')->nullable();
             $table->timestamps();
         });
