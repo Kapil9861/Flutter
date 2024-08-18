@@ -13,13 +13,8 @@ return new class extends Migration
     {
         Schema::create('news_articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id')->nullable()->constrained()->onDelete('cascade');
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('url')->nullable();
-            $table->string('url_to_image')->nullable();
-            $table->timestamp('published_at')->nullable();
-            $table->text('content')->nullable();
+            $table->string('id')->nullable();
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('news_articles');
+        //
     }
 };
