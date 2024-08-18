@@ -15,12 +15,12 @@ class NewsArticleController extends Controller
                     'id' => $article->source->id ?? null,
                     'name' => $article->source->name ?? null,
                 ],
-                'author' => $article->author ?? null,,
-                'title' => $article->title ?? null,,
-                'description' => $article->description ?? null,,
-                'url' => $article->url ?? null,,
-                'urlToImage' => $article->urlToImage ?? null,,
-                'publishedAt' => $article->publishedAt ?? null,,
+                'author' => $article->author ?? null,
+                'title' => $article->title ?? null,
+                'description' => $article->description ?? null,
+                'url' => $article->url ?? null,
+                'urlToImage' => $article->urlToImage ?? null,
+                'publishedAt' => $article->publishedAt ?? null,
                 'content' => $article->content ?? null,
             ];
         });
