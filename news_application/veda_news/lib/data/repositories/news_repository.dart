@@ -23,19 +23,15 @@ class NewsRepository {
     String? category,
   }) async {
     String url = "http://10.0.2.2:8000/api/getData";
-    print(url);
 
     // bool checkEmulator = await isEmulator();
 
     // Sends an HTTP GET request to the API
     try {
       var response = await http.get(Uri.parse(url));
-      print(response);
 
-      if (response.statusCode == 200) {
+      if (response != null) {
         final content = jsonDecode(response.body);
-        print(content);
-        print(NewsModel.fromJson(content));
         return NewsModel.fromJson(content);
       } else {
         return Future.error("Server error");
