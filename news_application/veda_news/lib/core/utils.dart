@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 /// Enum representing the filter options for a list.
 ///
@@ -94,4 +97,23 @@ String calculateTimeAgo(String publishedAt) {
   } else {
     return '${difference.inDays}d ago';
   }
+}
+
+///Checks if the current device is an emulator or the real physical device
+///Returns: emulator infor if the current device is an emulator and false if it is the real physical
+Future<bool> isEmulator() async {
+  final deviceInfo = DeviceInfoPlugin();
+
+  if (Platform.isAndroid) {
+    final androidInfo = await deviceInfo.androidInfo;
+    // Android Emulator identifiers
+    return androidInfo.isPhysicalDevice == false ||
+        androidInfo.model.contains('google_sdk') ||
+        androidInfo.model.contains('sdk_gphone');
+  } else if (Platform.isIOS) {
+    final iosInfo = await deviceInfo.iosInfo;
+    // iOS Simulator identifiers
+    return iosInfo.isPhysicalDevice == false;
+  }
+  return false;
 }

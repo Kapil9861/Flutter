@@ -22,41 +22,29 @@ class NewsRepository {
     String? sortBy,
     String? category,
   }) async {
-    String url;
+    String url = "http://10.0.2.2:8000/api/getData";
+    print(url);
 
-    // Determines the correct API URL based on the provided filters.
-    if ((category == null || category.isEmpty) &&
-        (sortBy == null || sortBy.isEmpty)) {
-      // Case: No category or sortBy specified, fetch general news
-      url =
-          "https://newsapi.org/v2/everything?q=general&apiKey=70b4404cf5dd41829dc005be379e9afb";
-    } else if ((category != null && category.isNotEmpty) &&
-        (sortBy != null && category.isNotEmpty)) {
-      // Case: Both category and sortBy are specified
-      url =
-          "https://newsapi.org/v2/top-headlines?category=$category&sortBy=$sortBy&apiKey=70b4404cf5dd41829dc005be379e9afb";
-    } else if ((category == null || category.isEmpty) &&
-        (sortBy != null && sortBy.isNotEmpty)) {
-      // Case: Only sortBy is specified, fetch general news sorted by the specified order
-      url =
-          "https://newsapi.org/v2/everything?q=general&sortBy=$sortBy&apiKey=70b4404cf5dd41829dc005be379e9afb";
-    } else {
-      // Case: Only category is specified, fetch news for that category
-      url =
-          "https://newsapi.org/v2/top-headlines?category=$category&apiKey=70b4404cf5dd41829dc005be379e9afb";
-    }
+    // bool checkEmulator = await isEmulator();
 
     // Sends an HTTP GET request to the API
-    final response = await http.get(Uri.parse(url));
+    try {
+      var response = await http.get(Uri.parse(url));
+      print(response);
 
-    // Checks if the API call was successful
-    if (response.statusCode == 200) {
-      final content = jsonDecode(response.body);
-      return NewsModel.fromJson(content);
+      if (response.statusCode == 200) {
+        final content = jsonDecode(response.body);
+        print(content);
+        print(NewsModel.fromJson(content));
+        return NewsModel.fromJson(content);
+      } else {
+        return Future.error("Server error");
+      }
+    } catch (e) {
+      return Future.error("The error is:$e");
     }
+    // Checks if the API call was successful
 
     // Throws an error if the API call fails
-    throw ErrorDescription(
-        "Could not connect to the source!\n Please try again later");
   }
 }
