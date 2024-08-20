@@ -31,4 +31,14 @@ class NewsArticleController extends Controller
             'articles'=>$formattedArticles,
         ]);
     }
+
+    public function delete($id){
+        $article=NewsArticle::find($id);
+        if($article){
+            $article->delete();
+            return response()->json(['message'=>"Article was deleted successfully!"]);
+        }
+        return response()->json(['message'=>"404: Article not found!"]);
+
+    }
 }
