@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NewsArticle extends Model
 {
     use HasFactory;
-    protected $fillable=['source_id','title','description','author','url','urlToImage','publishedAt','content',];
+    protected $fillable=['source_id','category','user_id','title','description','author','url','urlToImage','publishedAt','content',];
 
     public function source(){
         return $this->belongsTo(Source::class);
