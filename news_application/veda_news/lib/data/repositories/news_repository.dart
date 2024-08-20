@@ -30,7 +30,7 @@ class NewsRepository {
     try {
       var response = await http.get(Uri.parse(url));
 
-      if (response != null) {
+      if (response.statusCode == 200) {
         final content = jsonDecode(response.body);
         return NewsModel.fromJson(content);
       } else {
@@ -42,5 +42,18 @@ class NewsRepository {
     // Checks if the API call was successful
 
     // Throws an error if the API call fails
+  }
+
+  Future<String> deleteArticle(int id) async {
+    String api = "http://10.0.2.2:800/api/deleteArticle/$id";
+
+    try {
+      var response = await http.delete(Uri.parse(api));
+      var jsonBody = jsonDecode(response.body);
+      String message = jsonBody['message'];
+      return message;
+    } catch (e) {
+      return Future.error("Error:$e");
+    }
   }
 }
