@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:veda_news/core/utils.dart';
 import 'package:veda_news/data/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -44,14 +45,15 @@ class NewsRepository {
     // Throws an error if the API call fails
   }
 
-  Future<String> deleteArticle(int id) async {
-    String api = "http://10.0.2.2:800/api/deleteArticle/$id";
+  void deleteArticle(BuildContext context, int id) async {
+    String api = "http://10.0.2.2:8000/api/deleteArticle/$id";
 
     try {
       var response = await http.delete(Uri.parse(api));
       var jsonBody = jsonDecode(response.body);
       String message = jsonBody['message'];
-      return message;
+      // ignore: use_build_context_synchronously
+      showSnackbar(context, message);
     } catch (e) {
       return Future.error("Error:$e");
     }

@@ -73,7 +73,9 @@ class _HomePageState extends State<HomePage> {
             child: CircularProgressIndicator(),
           );
         }
-        if (snapshot.data != null && snapshot.data!.articles != null) {
+        if (snapshot.data != null &&
+            snapshot.data!.articles != null &&
+            snapshot.data!.articles!.isNotEmpty) {
           return Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Column(
@@ -94,8 +96,15 @@ class _HomePageState extends State<HomePage> {
                     itemCount: snapshot.data!.articles!.length,
                     itemBuilder: (context, index) {
                       Articles article = snapshot.data!.articles![index];
-                      return ArticleTile(
-                        article: article,
+                      int id = article.id;
+                      return Dismissible(
+                        key: ValueKey(article),
+                        onDismissed: (direction) {
+                          _newsRepository.deleteArticle(context, id);
+                        },
+                        child: ArticleTile(
+                          article: article,
+                        ),
                       );
                     },
                   ),
@@ -107,6 +116,13 @@ class _HomePageState extends State<HomePage> {
           return Center(
             child: Text(
               "No articles found! \n Notes: 1. Please check your internet connection!\n",
+              style: GoogleFonts.poppins(),
+            ),
+          );
+        } else if (snapshot.data != null && snapshot.data!.articles!.isEmpty) {
+          return Center(
+            child: Text(
+              "Articles are still to be added!",
               style: GoogleFonts.poppins(),
             ),
           );

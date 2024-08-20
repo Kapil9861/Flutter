@@ -7,6 +7,8 @@ import 'package:veda_news/data/models/source.dart';
 /// and content.
 
 class Articles {
+  final int id;
+
   /// The source of the article.
   final Source? source;
 
@@ -36,6 +38,7 @@ class Articles {
   ///
   /// All fields are optional and can be `null`.
   Articles({
+    required this.id,
     required this.source,
     required this.author,
     required this.title,
@@ -52,7 +55,9 @@ class Articles {
   /// `url`, `urlToImage`, `publishedAt`, and `content` fields.
   /// If the `source` field is present, it will be parsed into a [Source] object.
   Articles.fromJson(Map<String, dynamic> json)
-      : source = json['source'] != null ? Source.fromJson(json['source']) : null,
+      : id = json['id'],
+        source =
+            json['source'] != null ? Source.fromJson(json['source']) : null,
         author = json['author'],
         title = json['title'],
         description = json['description'],
@@ -68,6 +73,7 @@ class Articles {
   /// If the `source` is not `null`, it will be converted to a JSON object.
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     if (source != null) {
       data['source'] = source!.toJson();
     }

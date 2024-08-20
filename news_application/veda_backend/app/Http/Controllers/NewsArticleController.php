@@ -11,6 +11,7 @@ class NewsArticleController extends Controller
         $articles=NewsArticle::with('source')->get();
         $formattedArticles=$articles->map(function ($article){
             return [
+                'id'=>$article->id,
                 'source'=>[
                     'id' => $article->source->id ?? null,
                     'name' => $article->source->name ?? null,
