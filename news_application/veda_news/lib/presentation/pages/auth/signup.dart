@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veda_news/presentation/pages/auth/login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -168,10 +169,8 @@ class _SignUpState extends State<SignUp> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Scaffold()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const LogIn()));
                   },
                   child: const Text(
                     "LogIn",

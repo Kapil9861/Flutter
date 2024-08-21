@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:veda_news/presentation/pages/auth/forgot_password.dart';
+import 'package:veda_news/presentation/pages/auth/signup.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -124,8 +126,10 @@ class _LogInState extends State<LogIn> {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Scaffold()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPassword()));
               },
               child: const Text("Forgot Password?",
                   style: TextStyle(
@@ -152,7 +156,7 @@ class _LogInState extends State<LogIn> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Scaffold()));
+                            builder: (context) => const SignUp()));
                   },
                   child: const Text(
                     "SignUp",
