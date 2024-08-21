@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/presentation/pages/home_page.dart';
+import 'package:veda_news/presentation/pages/auth/login.dart';
 
 // Entry point of the application
 void main() {
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme,
       ),
       debugShowCheckedModeBanner: false, // Hides the debug banner in the app.
-      home: const HomePage(), // Sets the home page of the app to `HomePage`.
+      home: const LogIn(), // Sets the home page of the app to `HomePage`.
     );
   }
 }
