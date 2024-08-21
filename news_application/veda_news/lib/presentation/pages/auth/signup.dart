@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:veda_news/presentation/pages/auth/login.dart';
+import 'package:veda_news/presentation/widgets/styled_text.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -15,6 +16,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController mailController = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
+  String? selectedValue;
 
   Future<void> register() async {
     if (password != "" &&
@@ -27,6 +29,20 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  List<String> items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchItemsFromDatabase();
+  }
+
+  Future<void> fetchItemsFromDatabase() async {
+    setState(() {
+      items = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,6 +52,7 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             children: [
               SizedBox(
+                  height: 250,
                   width: MediaQuery.of(context).size.width,
                   child: Image.asset(
                     "assets/images/news1.jpg",
@@ -43,6 +60,43 @@ class _SignUpState extends State<SignUp> {
                   )),
               const SizedBox(
                 height: 15.0,
+              ),
+              SizedBox(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const StyledText(
+                        fontSize: 16,
+                        text: "Company Name : ",
+                        fontWeight: FontWeight.bold,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: DropdownButton<String>(
+                          focusColor: Colors.blue[400],
+                          dropdownColor: Colors.blue[200],
+                          value: selectedValue,
+                          hint: const Text('Select an item'),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedValue = newValue;
+                            });
+                          },
+                          items: items
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
