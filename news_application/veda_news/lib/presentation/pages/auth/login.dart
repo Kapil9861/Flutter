@@ -1,29 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class LogIn extends StatefulWidget {
+  const LogIn({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<LogIn> createState() => _LogInState();
 }
 
-class _SignUpState extends State<SignUp> {
-  String email = "", password = "", name = "";
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController mailController = TextEditingController();
+class _LogInState extends State<LogIn> {
+  String email = "", password = "";
 
-  final _formkey = GlobalKey<FormState>();
+  TextEditingController passController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  Future<void> register() async {
-    if (password != "" &&
-        name != "" &&
-        email != "" &&
-        password.isNotEmpty &&
-        name.isNotEmpty &&
-        email.isNotEmpty) {
-      try {} catch (e) {}
-    }
+  Future<void> userLogin() async {
+    try {} catch (e) {}
   }
 
   @override
@@ -40,12 +32,12 @@ class _SignUpState extends State<SignUp> {
                   fit: BoxFit.cover,
                 )),
             const SizedBox(
-              height: 15.0,
+              height: 30.0,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               child: Form(
-                key: _formkey,
+                key: _formKey,
                 child: Column(
                   children: [
                     Container(
@@ -57,35 +49,11 @@ class _SignUpState extends State<SignUp> {
                       child: TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please Enter Name';
+                            return 'Please Enter E-mail';
                           }
                           return null;
                         },
-                        controller: nameController,
-                        decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Name",
-                            hintStyle: TextStyle(
-                                color: Color(0xFFb2b7bf), fontSize: 18.0)),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 2.0, horizontal: 30.0),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFedf0f8),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Email';
-                          }
-                          return null;
-                        },
-                        controller: mailController,
+                        controller: emailController,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Email",
@@ -94,7 +62,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     const SizedBox(
-                      height: 15.0,
+                      height: 30.0,
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -103,13 +71,13 @@ class _SignUpState extends State<SignUp> {
                           color: const Color(0xFFedf0f8),
                           borderRadius: BorderRadius.circular(30)),
                       child: TextFormField(
+                        controller: passController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Password';
                           }
                           return null;
                         },
-                        controller: passwordController,
                         decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Password",
@@ -119,29 +87,28 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     const SizedBox(
-                      height: 15.0,
+                      height: 30.0,
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (_formkey.currentState!.validate()) {
-                          setState(() {
-                            email = mailController.text;
-                            name = nameController.text;
-                            password = passwordController.text;
-                          });
-                          register();
-                        }
+                        setState(() {
+                          if (_formKey.currentState!.validate()) {
+                            email = emailController.text;
+                            password = passController.text;
+                          }
+                        });
+                        userLogin();
                       },
                       child: Container(
                           width: MediaQuery.of(context).size.width,
                           padding: const EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 30.0),
+                              vertical: 13.0, horizontal: 30.0),
                           decoration: BoxDecoration(
                               color: const Color(0xFF273671),
                               borderRadius: BorderRadius.circular(30)),
                           child: const Center(
                               child: Text(
-                            "Sign Up",
+                            "Sign In",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22.0,
@@ -153,12 +120,26 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             const SizedBox(
-              height: 40.0,
+              height: 20.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Scaffold()));
+              },
+              child: const Text("Forgot Password?",
+                  style: TextStyle(
+                      color: Color(0xFF8c8e98),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500)),
+            ),
+            const SizedBox(
+              height: 50.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Already have an account?",
+                const Text("Don't have an account?",
                     style: TextStyle(
                         color: Color(0xFF8c8e98),
                         fontSize: 18.0,
@@ -174,10 +155,10 @@ class _SignUpState extends State<SignUp> {
                             builder: (context) => const Scaffold()));
                   },
                   child: const Text(
-                    "LogIn",
+                    "SignUp",
                     style: TextStyle(
                         color: Color(0xFF273671),
-                        fontSize: 18.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.w500),
                   ),
                 ),
