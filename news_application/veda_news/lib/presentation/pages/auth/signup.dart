@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:veda_news/data/models/source.dart';
+import 'package:veda_news/data/repositories/source_repository.dart';
 import 'package:veda_news/presentation/pages/auth/login.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
@@ -17,6 +19,7 @@ class _SignUpState extends State<SignUp> {
 
   final _formkey = GlobalKey<FormState>();
   String? selectedValue;
+  final SourceRepository _sourceRepository = SourceRepository();
 
   Future<void> register() async {
     if (password != "" &&
@@ -37,10 +40,8 @@ class _SignUpState extends State<SignUp> {
     fetchItemsFromDatabase();
   }
 
-  Future<void> fetchItemsFromDatabase() async {
-    setState(() {
-      items = [];
-    });
+  Future<Source> fetchItemsFromDatabase() async {
+    return _sourceRepository.fetchSourceFromApi();
   }
 
   @override
@@ -73,26 +74,31 @@ class _SignUpState extends State<SignUp> {
                         text: "Company Name : ",
                         fontWeight: FontWeight.bold,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: DropdownButton<String>(
-                          focusColor: Colors.blue[400],
-                          dropdownColor: Colors.blue[200],
-                          value: selectedValue,
-                          hint: const Text('Select an item'),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedValue = newValue;
-                            });
-                          },
-                          items: items
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
+                      FutureBuilder(
+                        future: fetchItemsFromDatabase(),
+                        builder: (context, snapshot) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: DropdownButton<String>(
+                              focusColor: Colors.blue[400],
+                              dropdownColor: Colors.blue[200],
+                              value: selectedValue,
+                              hint: const Text('Select an item'),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedValue = newValue;
+                                });
+                              },
+                              items: items.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
