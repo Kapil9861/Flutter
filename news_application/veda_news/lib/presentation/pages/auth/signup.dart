@@ -32,8 +32,6 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  List<String> items = [];
-
   @override
   void initState() {
     super.initState();
@@ -77,29 +75,49 @@ class _SignUpState extends State<SignUp> {
                       FutureBuilder(
                         future: fetchItemsFromDatabase(),
                         builder: (context, snapshot) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 20.0),
-                            // have to make adjustments to display data
-                            child: DropdownButton<String>(
-                              focusColor: Colors.blue[400],
-                              dropdownColor: Colors.blue[200],
-                              value: selectedValue,
-                              hint: const Text('Select an item'),
-                              onChanged: (String? newValue) {
-                                //here
-                                setState(() {
-                                  selectedValue = newValue;
-                                });
-                              },
-                              items: items.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                          );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.data != null &&
+                              snapshot.data!.id!.isNotEmpty &&
+                              snapshot.hasData) {
+                            List<Source> source = [snapshot.data!];
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              // have to make adjustments to display data
+                              child: DropdownButton<String>(
+                                focusColor: Colors.blue[400],
+                                dropdownColor: Colors.blue[200],
+                                value: selectedValue,
+                                hint: const Text('Select an item'),
+                                onChanged: (String? newValue) {
+                                  //here
+                                  setState(() {
+                                    selectedValue = newValue;
+                                  });
+                                },
+                                items: source.map<DropdownMenuItem<String>>(
+                                    (Source source) {
+                                  return DropdownMenuItem<String>(
+                                    value: source.id,
+                                    child: Text(source.name ?? 'Unknown'),
+                                  );
+                                }).toList(),
+                              ),
+                            );
+                          } else if (snapshot.data == null &&
+                              snapshot.data!.id!.isEmpty) {
+                            return const Center(
+                              child: Text("Data not available!"),
+                            );
+                          } else {
+                            return const Center(
+                              child: Text("Something went wrong"),
+                            );
+                          }
                         },
                       ),
                     ],
