@@ -79,12 +79,14 @@ class _SignUpState extends State<SignUp> {
                         builder: (context, snapshot) {
                           return Padding(
                             padding: const EdgeInsets.only(left: 20.0),
+                            // have to make adjustments to display data
                             child: DropdownButton<String>(
                               focusColor: Colors.blue[400],
                               dropdownColor: Colors.blue[200],
                               value: selectedValue,
                               hint: const Text('Select an item'),
                               onChanged: (String? newValue) {
+                                //here
                                 setState(() {
                                   selectedValue = newValue;
                                 });
