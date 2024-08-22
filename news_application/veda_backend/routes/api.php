@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsArticleController;
+use App\Http\Controllers\SourceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/getData",[NewsArticleController::class,'index']);
 
 Route::delete("deleteArticle/{id}",[NewsArticleController::class,"delete"]);
+
+Route::get("/getCompanies",[SourceController::class,'index']);
