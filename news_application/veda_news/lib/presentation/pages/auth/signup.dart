@@ -38,7 +38,7 @@ class _SignUpState extends State<SignUp> {
     fetchItemsFromDatabase();
   }
 
-  Future<Source> fetchItemsFromDatabase() async {
+  Future<List<Source>> fetchItemsFromDatabase() async {
     return _sourceRepository.fetchSourceFromApi();
   }
 
@@ -81,10 +81,12 @@ class _SignUpState extends State<SignUp> {
                               child: CircularProgressIndicator(),
                             );
                           }
+
                           if (snapshot.data != null &&
-                              snapshot.data!.id!.isNotEmpty &&
+                              snapshot.data!.isNotEmpty &&
                               snapshot.hasData) {
-                            List<Source> source = [snapshot.data!];
+                            List<Source> source =
+                                snapshot.data! as List<Source>;
                             return Padding(
                               padding: const EdgeInsets.only(left: 20.0),
                               // have to make adjustments to display data
@@ -109,7 +111,7 @@ class _SignUpState extends State<SignUp> {
                               ),
                             );
                           } else if (snapshot.data == null &&
-                              snapshot.data!.id!.isEmpty) {
+                              snapshot.data!.isEmpty) {
                             return const Center(
                               child: Text("Data not available!"),
                             );
@@ -215,20 +217,22 @@ class _SignUpState extends State<SignUp> {
                           }
                         },
                         child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 30.0),
-                            decoration: BoxDecoration(
-                                color: const Color(0xFF273671),
-                                borderRadius: BorderRadius.circular(30)),
-                            child: const Center(
-                                child: Text(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 30.0),
+                          decoration: BoxDecoration(
+                              color: const Color(0xFF273671),
+                              borderRadius: BorderRadius.circular(30)),
+                          child: const Center(
+                            child: Text(
                               "Sign Up",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22.0,
                                   fontWeight: FontWeight.w500),
-                            ))),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
