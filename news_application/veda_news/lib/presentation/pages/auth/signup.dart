@@ -20,6 +20,8 @@ class _SignUpState extends State<SignUp> {
   final _formkey = GlobalKey<FormState>();
   String? selectedValue;
   final SourceRepository _sourceRepository = SourceRepository();
+  TextEditingController companyName = TextEditingController();
+  bool enableCompanyName = false;
 
   Future<void> register() async {
     if (password != "" &&
@@ -35,28 +37,26 @@ class _SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
-    fetchItemsFromDatabase();
-  }
-
-  Future<List<Source>> fetchItemsFromDatabase() async {
-    return _sourceRepository.fetchSourceFromApi();
+    _sourceRepository.fetchSourceFromApi();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SizedBox(
           child: Column(
             children: [
               SizedBox(
-                  height: 250,
-                  width: MediaQuery.of(context).size.width,
-                  child: Image.asset(
-                    "assets/images/news1.jpg",
-                    fit: BoxFit.cover,
-                  )),
+                height: 250,
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  "assets/images/news1.jpg",
+                  fit: BoxFit.cover,
+                ),
+              ),
               const SizedBox(
                 height: 15.0,
               ),
@@ -73,7 +73,7 @@ class _SignUpState extends State<SignUp> {
                         fontWeight: FontWeight.bold,
                       ),
                       FutureBuilder(
-                        future: fetchItemsFromDatabase(),
+                        future: _sourceRepository.fetchSourceFromApi(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -85,20 +85,18 @@ class _SignUpState extends State<SignUp> {
                           if (snapshot.data != null &&
                               snapshot.data!.isNotEmpty &&
                               snapshot.hasData) {
-                            List<Source> source =
-                                snapshot.data! as List<Source>;
+                            List<Source> source = snapshot.data!;
                             return Padding(
                               padding: const EdgeInsets.only(left: 20.0),
-                              // have to make adjustments to display data
                               child: DropdownButton<String>(
                                 focusColor: Colors.blue[400],
                                 dropdownColor: Colors.blue[200],
                                 value: selectedValue,
                                 hint: const Text('Select an item'),
                                 onChanged: (String? newValue) {
-                                  //here
                                   setState(() {
                                     selectedValue = newValue;
+                                    enableCompanyName = false;
                                   });
                                 },
                                 items: source.map<DropdownMenuItem<String>>(
@@ -110,8 +108,7 @@ class _SignUpState extends State<SignUp> {
                                 }).toList(),
                               ),
                             );
-                          } else if (snapshot.data == null &&
-                              snapshot.data!.isEmpty) {
+                          } else if (snapshot.data == null) {
                             return const Center(
                               child: Text("Data not available!"),
                             );
@@ -123,6 +120,33 @@ class _SignUpState extends State<SignUp> {
                         },
                       ),
                     ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                  child: Center(
+                    child: StyledText(
+                      fontSize: 16,
+                      text: "Didn't find your company? ",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                child: TextFormField(
+                  enabled: enableCompanyName,
+                  controller: companyName,
+                  decoration: InputDecoration(
+                    fillColor: Colors.grey[350],
+                    border: InputBorder.none,
+                    helperText: "Add your company!",
+                    helperStyle: const TextStyle(fontSize: 14),
+                    hintText: "Company Name",
                   ),
                 ),
               ),
@@ -147,10 +171,13 @@ class _SignUpState extends State<SignUp> {
                           },
                           controller: nameController,
                           decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Name",
-                              hintStyle: TextStyle(
-                                  color: Color(0xFFb2b7bf), fontSize: 18.0)),
+                            border: InputBorder.none,
+                            hintText: "Name",
+                            hintStyle: TextStyle(
+                              color: Color(0xFFb2b7bf),
+                              fontSize: 18.0,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(
