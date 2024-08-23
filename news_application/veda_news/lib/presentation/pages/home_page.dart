@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                       return Dismissible(
                         key: ValueKey(article),
                         onDismissed: (direction) {
-                          // _newsRepository.deleteArticle(context, id);
+                          _newsRepository.deleteArticle(context, id);
                         },
                         child: ArticleTile(
                           article: article,

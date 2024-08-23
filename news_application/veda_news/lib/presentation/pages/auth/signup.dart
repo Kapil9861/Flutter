@@ -21,7 +21,8 @@ class _SignUpState extends State<SignUp> {
   String? selectedValue;
   final SourceRepository _sourceRepository = SourceRepository();
   TextEditingController companyName = TextEditingController();
-  bool enableCompanyName = false;
+  bool companyNotListed = true;
+  bool _isVisible = false;
 
   Future<void> register() async {
     if (password != "" &&
@@ -38,6 +39,12 @@ class _SignUpState extends State<SignUp> {
   void initState() {
     super.initState();
     _sourceRepository.fetchSourceFromApi();
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
   }
 
   @override
@@ -96,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     selectedValue = newValue;
-                                    enableCompanyName = false;
+                                    companyNotListed = false;
                                   });
                                 },
                                 items: source.map<DropdownMenuItem<String>>(
@@ -123,29 +130,27 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
-              const SizedBox(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-                  child: Center(
-                    child: StyledText(
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                child: Row(
+                  children: [
+                    StyledText(
                       fontSize: 16,
                       text: "Didn't find your company? ",
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
+                  ],
                 ),
               ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                 child: TextFormField(
-                  enabled: enableCompanyName,
+                  enabled: companyNotListed,
                   controller: companyName,
                   decoration: InputDecoration(
                     fillColor: Colors.grey[350],
                     border: InputBorder.none,
-                    helperText: "Add your company!",
-                    helperStyle: const TextStyle(fontSize: 14),
                     hintText: "Company Name",
                   ),
                 ),
