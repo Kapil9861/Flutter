@@ -25,3 +25,5 @@ Route::get("/getData",[NewsArticleController::class,'index']);
 Route::delete("deleteArticle/{id}",[NewsArticleController::class,"delete"]);
 
 Route::get("/getCompanies",[SourceController::class,'index']);
+
+Route::post("/addCompany",[SourceController::class,"store"]);
