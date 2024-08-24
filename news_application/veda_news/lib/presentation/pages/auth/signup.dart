@@ -16,13 +16,16 @@ class _SignUpState extends State<SignUp> {
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController mailController = TextEditingController();
+  DropdownMenuItem<String> notFound = const DropdownMenuItem<String>(
+    value: "not-found",
+    child: Text("Not found"),
+  );
 
   final _formkey = GlobalKey<FormState>();
   String? selectedValue;
   final SourceRepository _sourceRepository = SourceRepository();
   TextEditingController companyName = TextEditingController();
-  bool companyNotListed = true;
-  bool _isVisible = false;
+  bool _isVisible = true;
 
   Future<void> register() async {
     if (password != "" &&
@@ -39,12 +42,6 @@ class _SignUpState extends State<SignUp> {
   void initState() {
     super.initState();
     _sourceRepository.fetchSourceFromApi();
-  }
-
-  void _toggleVisibility() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
   }
 
   @override
@@ -88,7 +85,6 @@ class _SignUpState extends State<SignUp> {
                               child: CircularProgressIndicator(),
                             );
                           }
-
                           if (snapshot.data != null &&
                               snapshot.data!.isNotEmpty &&
                               snapshot.hasData) {
@@ -103,16 +99,17 @@ class _SignUpState extends State<SignUp> {
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     selectedValue = newValue;
-                                    companyNotListed = false;
+                                    _isVisible = newValue == 'not-found';
                                   });
                                 },
                                 items: source.map<DropdownMenuItem<String>>(
-                                    (Source source) {
-                                  return DropdownMenuItem<String>(
-                                    value: source.id,
-                                    child: Text(source.name ?? 'Unknown'),
-                                  );
-                                }).toList(),
+                                        (Source source) {
+                                      return DropdownMenuItem<String>(
+                                        value: source.id,
+                                        child: Text(source.name ?? 'Unknown'),
+                                      );
+                                    }).toList() +
+                                    [notFound],
                               ),
                             );
                           } else if (snapshot.data == null) {
@@ -130,30 +127,52 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-                child: Row(
+              Visibility(
+                visible: _isVisible,
+                child: Column(
                   children: [
-                    StyledText(
-                      fontSize: 16,
-                      text: "Didn't find your company? ",
-                      fontWeight: FontWeight.bold,
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+                      child: Row(
+                        children: [
+                          StyledText(
+                            fontSize: 16,
+                            text: "Didn't find your company? ",
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30.0, vertical: 10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 2.0, horizontal: 30.0),
+                        decoration: BoxDecoration(
+                            color: const Color(0xFFedf0f8),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: TextFormField(
+                          controller: nameController,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Company Name",
+                            hintStyle: TextStyle(
+                              color: Color.fromARGB(255, 136, 139, 144),
+                              fontSize: 17.0,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-                child: TextFormField(
-                  enabled: companyNotListed,
-                  controller: companyName,
-                  decoration: InputDecoration(
-                    fillColor: Colors.grey[350],
-                    border: InputBorder.none,
-                    hintText: "Company Name",
-                  ),
-                ),
+              const StyledText(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                text: "Personal Information",
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
