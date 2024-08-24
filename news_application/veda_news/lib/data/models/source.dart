@@ -23,7 +23,7 @@ class Source {
   /// The [json] map should contain the `id` and `name` fields.
   /// If any of these fields are missing, they will be set to `null`.
   Source.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toString();
+    id = json['id']?.toString();
     name = json['name'];
   }
 

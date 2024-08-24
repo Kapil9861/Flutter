@@ -20,4 +20,21 @@ class SourceRepository {
       return Future.error("The error is: $e");
     }
   }
+
+  Future<String> addSource(Source source) async {
+    try {
+      var response = await http.post(
+        Uri.parse("http://10.0.2.2:8000/api/addCompany"),
+        body: {'name': source.name},
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['message'];
+      } else {
+        return Future.error("Server Error: ${response.statusCode}");
+      }
+    } catch (e) {
+      return Future.error("The error is: $e");
+    }
+  }
 }

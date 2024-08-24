@@ -38,6 +38,18 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  Future<void> addCompany() async {
+    if (companyName.text.isNotEmpty) {
+      Source newSource = Source(name: companyName.text, id: '');
+      String result = await _sourceRepository.addSource(newSource);
+      
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Company name cannot be empty")),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -131,16 +143,21 @@ class _SignUpState extends State<SignUp> {
                 visible: _isVisible,
                 child: Column(
                   children: [
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 5),
                       child: Row(
                         children: [
-                          StyledText(
+                          const StyledText(
                             fontSize: 16,
                             text: "Didn't find your company? ",
                             fontWeight: FontWeight.bold,
                           ),
+                          TextButton(
+                              onPressed: () {
+                                addCompany();
+                              },
+                              child: const Text("Add Company"))
                         ],
                       ),
                     ),
