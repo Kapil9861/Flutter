@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Source;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SourceController extends Controller
 {
@@ -13,16 +14,16 @@ class SourceController extends Controller
     }
 
     public function store(Request $request){
-        $validatedData= $request->validate(["name"=>"required|string|max:30|unique:sources,name"]);
-        $existingSource = Source::where('name', $validatedData['name'])->first();
-        if ($existingSource) {
-            // If the source already exists, return an error message or redirect back
-             return response()->json([
-                'error' => 'The source name already exists!',
-            ], 409);
+        $validator = Validator::make($request->all(),[
+            'name' => "required|string|max:30|unique:sources,name"
+        ]);
+        if($validator->fails())
+        {
+            return response()->json(['error'=>true, 'message'=>"Invalid! Please check your company again!"],400);
         }
+        
         $source=new Source;
-        $source->name=$validatedData['name'];
+        $source->name=$request->name;
         $source->save();
         return response()->json([
             'success' => 'Source created successfully.',

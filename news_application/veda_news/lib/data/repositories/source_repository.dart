@@ -35,10 +35,14 @@ class SourceRepository {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+
         return data['success'];
-      } else if (response.statusCode == 409) {
+      } else if (response.statusCode == 400) {
         final data = jsonDecode(response.body);
-        return data['error'];
+        return data['message'];
+      } else if (response.statusCode == 302) {
+        // Handle the redirection, perhaps by following the redirect or informing the user
+        return 'Redirection detected. Please check the server configuration.';
       } else {
         return "Server Error: ${response.statusCode} - ${response.body}";
       }
