@@ -27,6 +27,7 @@ class _SignUpState extends State<SignUp> {
   final SourceRepository _sourceRepository = SourceRepository();
   TextEditingController companyName = TextEditingController();
   bool _isVisible = true;
+  FocusNode sourceFocusNode = FocusNode();
 
   Future<void> register() async {
     if (password != "" &&
@@ -39,22 +40,19 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  Future<String> addCompany() async {
-    Source newSource = Source(
-      name: companyName.text,
-      id: '',
-    );
-    String result = await _sourceRepository.addSource(newSource);
-    print(result);
-    showSnackbar(context, result);
+  Future<void> addCompany() async {
+    final sourceName = companyName.text.trim();
+    if (sourceName.isNotEmpty) {
+      Source newSource = Source(
+        name: sourceName,
+      );
 
-    return result;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _sourceRepository.fetchSourceFromApi();
+      String result = await _sourceRepository.addSource(newSource);
+      print(result);
+      showSnackbar(context, result);
+    } else {
+      FocusScope.of(context).requestFocus(sourceFocusNode);
+    }
   }
 
   @override
@@ -172,7 +170,8 @@ class _SignUpState extends State<SignUp> {
                             color: const Color(0xFFedf0f8),
                             borderRadius: BorderRadius.circular(30)),
                         child: TextFormField(
-                          controller: nameController,
+                          focusNode: sourceFocusNode,
+                          controller: companyName,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "Company Name",

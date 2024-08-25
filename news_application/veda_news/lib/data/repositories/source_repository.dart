@@ -25,19 +25,25 @@ class SourceRepository {
     try {
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/addCompany"),
-        body: {
-          'name': source.name,
+        headers: {
+          'Content-Type': 'application/json',
         },
+        body: jsonEncode({
+          'name': source.name,
+        }),
       );
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print(data);
-        return data['message'];
+        return data['success'];
+      } else if (response.statusCode == 409) {
+        final data = jsonDecode(response.body);
+        return data['error'];
       } else {
-        return ("Server Error: ${response.statusCode}${response.body}");
+        return "Server Error: ${response.statusCode} - ${response.body}";
       }
     } catch (e) {
-      return ("The error is: $e");
+      return "Error: $e";
     }
   }
 }

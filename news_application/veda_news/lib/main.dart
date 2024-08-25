@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:veda_news/presentation/pages/auth/login.dart';
-import 'package:veda_news/presentation/pages/home_page.dart';
 
 // Entry point of the application
 void main() {
