@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:veda_news/core/utils.dart';
 import 'package:veda_news/data/models/source.dart';
 import 'package:veda_news/data/repositories/source_repository.dart';
 import 'package:veda_news/presentation/pages/auth/login.dart';
@@ -38,16 +39,16 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  Future<void> addCompany() async {
-    if (companyName.text.isNotEmpty) {
-      Source newSource = Source(name: companyName.text, id: '');
-      String result = await _sourceRepository.addSource(newSource);
-      
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Company name cannot be empty")),
-      );
-    }
+  Future<String> addCompany() async {
+    Source newSource = Source(
+      name: companyName.text,
+      id: '',
+    );
+    String result = await _sourceRepository.addSource(newSource);
+    print(result);
+    showSnackbar(context, result);
+
+    return result;
   }
 
   @override
