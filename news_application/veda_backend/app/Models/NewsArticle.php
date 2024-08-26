@@ -13,4 +13,7 @@ class NewsArticle extends Model
     public function source(){
         return $this->belongsTo(Source::class);
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
