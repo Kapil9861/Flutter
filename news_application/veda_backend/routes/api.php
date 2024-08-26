@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsArticleController;
 use App\Http\Controllers\SourceController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,6 @@ Route::delete("deleteArticle/{id}",[NewsArticleController::class,"delete"]);
 Route::get("/getCompanies",[SourceController::class,'index']);
 
 Route::post("/addCompany",[SourceController::class,"store"]);
+
+Route::post("/addUser",[UserController::class,"store"]);
+
