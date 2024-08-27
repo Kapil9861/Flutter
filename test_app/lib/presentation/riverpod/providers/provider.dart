@@ -13,6 +13,6 @@ final helloWorldProvider = StateProvider<String?>((ref) {
 // });
 
 // Condition 1
-final userProvider = StateNotifierProvider<StudentNotifier, Student>((ref) {
+final studentProvider = StateNotifierProvider<StudentNotifier, Student>((ref) {
   return StudentNotifier(Student(id: "0", username: "Not Available"));
 });

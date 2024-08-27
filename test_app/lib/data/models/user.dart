@@ -1,21 +1,21 @@
-class Student {
+class User {
   final String id;
   final String username;
 
-  Student({
+  User({
     required this.id,
     required this.username,
   });
 
-  // Factory constructor to create a Student from a JSON map
-  factory Student.fromJson(Map<String, dynamic> json) {
-    return Student(
+  // Factory constructor to create a User from a JSON map
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       id: json['id'],
       username: json['username'],
     );
   }
 
-  // Method to convert a Student instance to a JSON map
+  // Method to convert a User instance to a JSON map
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -23,12 +23,12 @@ class Student {
     };
   }
 
-  // Method to copy a Student instance with updated fields
-  Student copyWith({
+  // Method to copy a User instance with updated fields
+  User copyWith({
     String? id,
     String? username,
   }) {
-    return Student(
+    return User(
       id: id ?? this.id,
       username: username ?? this.username,
     );
@@ -36,14 +36,14 @@ class Student {
 
   @override
   String toString() {
-    return 'Student{id: $id, username: $username}';
+    return 'User{id: $id, username: $username}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Student && other.id == id && other.username == username;
+    return other is User && other.id == id && other.username == username;
   }
 
   @override
