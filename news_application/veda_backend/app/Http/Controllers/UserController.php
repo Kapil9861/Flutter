@@ -14,6 +14,7 @@ class UserController extends Controller
         $validator=Validator::make($request->all,[
             'source_id'=>"required|exists:sources,id",
             'name'=>'required|string|max:45',
+            'phone'=>'required|string|max:13|unique:users,phone',
             'email'=>'required|string|email|max:255|unique:users,email',
             "password"=>"required|string|min:8",
         ]);
@@ -24,6 +25,7 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->phone=$request->phone;
         $user->password = Hash::make($request->password);
         $user->source_id = $request->source_id; // Save the source ID if provided
         $user->save();

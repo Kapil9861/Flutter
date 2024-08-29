@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:veda_news/data/models/source.dart';
 import 'package:http/http.dart' as http;
+import 'package:veda_news/data/models/user_model.dart';
 
 class UserRepository {
-  Future<String> addSource(User user) async {
+  Future<String> register(User user) async {
     try {
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/addUser"),
