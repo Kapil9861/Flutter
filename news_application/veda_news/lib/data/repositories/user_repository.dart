@@ -13,6 +13,11 @@ class UserRepository {
         },
         body: jsonEncode({
           'name': user.name,
+          'email': user.email,
+          'password': user.password,
+          'source_id': user.sourceId,
+          'email_verified_at': user.emailVerifiedAt?.toIso8601String(),
+          'remember_token': user.rememberToken
         }),
       );
 
