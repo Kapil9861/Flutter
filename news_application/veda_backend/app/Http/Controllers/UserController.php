@@ -24,7 +24,6 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => true, 'message' => $validator->errors()->first()], 400);
         }
-        $user=new User();
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -59,5 +58,16 @@ class UserController extends Controller
      
         return $user->createToken($request->device_name)->plainTextToken;
     }
+
+    public function logout(Request $request){
+        $user=new User();
+        
+        $tokenId = $request->remember_token;
+        $user->tokens()->where('id', $tokenId)->delete();
+
+        return response()->json([
+            'success' => 'User logged out!',
+        ], 201);
+    } 
     
 }
