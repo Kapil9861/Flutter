@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_tutorial/data/models/student.dart';
-import 'package:riverpod_tutorial/presentation/riverpod/providers/student_notifier.dart';
+import 'package:test_app/data/models/student.dart';
+import 'package:test_app/presentation/riverpod/providers/student_notifier.dart';
 
 final helloWorldProvider = StateProvider<String?>((ref) {
   return null;

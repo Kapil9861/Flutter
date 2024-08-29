@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:riverpod_tutorial/presentation/riverpod/providers/user_notifier.dart';
+import 'package:test_app/presentation/riverpod/providers/user_notifier.dart';
 
 class ProviderClassValues extends StatefulWidget {
   const ProviderClassValues({super.key});

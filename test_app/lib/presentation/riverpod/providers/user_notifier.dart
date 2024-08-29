@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:riverpod_tutorial/data/models/user.dart';
+import 'package:test_app/data/models/user.dart';
 
 class UserNotifier extends ChangeNotifier {
   UserNotifier(this._user);

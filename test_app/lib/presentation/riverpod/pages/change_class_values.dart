@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_tutorial/presentation/riverpod/providers/provider.dart';
+import 'package:test_app/presentation/riverpod/providers/provider.dart';
 
 class ChangeClassValues extends StatefulWidget {
   const ChangeClassValues({super.key});

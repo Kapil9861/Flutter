@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_tutorial/data/models/student.dart';
+import 'package:test_app/data/models/student.dart';
 
 class StudentNotifier extends StateNotifier<Student> {
   // Condition 1
