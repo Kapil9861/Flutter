@@ -11,12 +11,12 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request){        
         
-        $validator=Validator::make($request->all,[
+        $validator=Validator::make($request->all(),[
             'source_id'=>"required|exists:sources,id",
             'name'=>'required|string|max:45',
-            'phone'=>'required|string|max:13|unique:users',
+            'phone'=>'required|string|max:14|unique:users',
             'email'=>'required|string|email|max:255|unique:users,email',
             "password"=>"required|string|min:8",
             'device_name' => 'required|string',

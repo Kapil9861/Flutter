@@ -1,24 +1,26 @@
 class User {
-  final int id;
+  final int? id;
   final String? sourceId;
   final String name;
   final String email;
+  final String phoneNumber;
   final DateTime? emailVerifiedAt;
   final String password;
   final String? rememberToken;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   User({
-    required this.id,
+    this.id,
     this.sourceId,
     required this.name,
     required this.email,
+    required this.phoneNumber,
     this.emailVerifiedAt,
     required this.password,
     this.rememberToken,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   // Factory method to create a User instance from JSON
@@ -28,6 +30,7 @@ class User {
       sourceId: json['source_id'],
       name: json['name'],
       email: json['email'],
+      phoneNumber: json['phone_number'],
       emailVerifiedAt: json['email_verified_at'] != null
           ? DateTime.parse(json['email_verified_at'])
           : null,
@@ -41,15 +44,13 @@ class User {
   // Method to convert User instance to JSON
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'source_id': sourceId,
       'name': name,
       'email': email,
+      'phoneNumber': phoneNumber,
       'email_verified_at': emailVerifiedAt?.toIso8601String(),
       'password': password,
       'remember_token': rememberToken,
-      'created_at': createdAt.toIso8601String(),
-      'updated_at': updatedAt.toIso8601String(),
     };
   }
 }

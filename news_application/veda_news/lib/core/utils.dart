@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
+final deviceInfo = DeviceInfoPlugin();
+
 /// Enum representing the filter options for a list.
 ///
 /// - [latest]: Represents the latest items.
@@ -102,8 +104,6 @@ String calculateTimeAgo(String publishedAt) {
 ///Checks if the current device is an emulator or the real physical device
 ///Returns: emulator infor if the current device is an emulator and false if it is the real physical
 Future<bool> isEmulator() async {
-  final deviceInfo = DeviceInfoPlugin();
-
   if (Platform.isAndroid) {
     final androidInfo = await deviceInfo.androidInfo;
     // Android Emulator identifiers
@@ -116,4 +116,25 @@ Future<bool> isEmulator() async {
     return iosInfo.isPhysicalDevice == false;
   }
   return false;
+}
+
+Future<String> deviceData() async {
+  if (Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    return '${androidInfo.manufacturer} ${androidInfo.model}'; // Example: Samsung Galaxy S21
+  } else if (Platform.isIOS) {
+    IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+    return '${iosInfo.name} ${iosInfo.model}'; // Example: iPhone 13 Pro
+  } else if (Platform.isWindows) {
+    WindowsDeviceInfo windowsInfo = await deviceInfo.windowsInfo;
+    return windowsInfo.computerName; // Example: DESKTOP-XXXXX
+  } else if (Platform.isMacOS) {
+    MacOsDeviceInfo macInfo = await deviceInfo.macOsInfo;
+    return macInfo.computerName; // Example: MacBook Pro
+  } else if (Platform.isLinux) {
+    LinuxDeviceInfo linuxInfo = await deviceInfo.linuxInfo;
+    return linuxInfo.name; // Example: Ubuntu 20.04
+  } else {
+    return 'Unknown device';
+  }
 }
