@@ -29,7 +29,6 @@ class _LogInState extends State<LogIn> {
   Future<void> userLogin() async {
     try {
       deviceName = await deviceData();
-      
     } catch (e) {}
   }
 
