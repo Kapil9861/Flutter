@@ -47,10 +47,15 @@ class User {
       'source_id': sourceId,
       'name': name,
       'email': email,
-      'phoneNumber': phoneNumber,
+      'phone_number': phoneNumber,
       'email_verified_at': emailVerifiedAt?.toIso8601String(),
       'password': password,
       'remember_token': rememberToken,
     };
+  }
+
+  @override
+  String toString() {
+    return 'User{sourceId: $sourceId, name: $name, email: $email, phone_number: $phoneNumber, emailVerifiedAt: ${emailVerifiedAt?.toIso8601String()}, password: $password, rememberToken: $rememberToken}';
   }
 }

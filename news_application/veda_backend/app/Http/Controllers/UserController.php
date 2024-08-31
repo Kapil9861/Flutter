@@ -16,7 +16,7 @@ class UserController extends Controller
         $validator=Validator::make($request->all(),[
             'source_id'=>"required|exists:sources,id",
             'name'=>'required|string|max:45',
-            'phone'=>'required|string|max:14|unique:users',
+            'phone_number'=>'required|string|max:14|unique:users',
             'email'=>'required|string|email|max:255|unique:users,email',
             "password"=>"required|string|min:8",
             'device_name' => 'required|string',

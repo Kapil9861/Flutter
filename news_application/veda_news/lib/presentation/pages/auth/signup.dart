@@ -66,7 +66,8 @@ class _SignUpState extends State<SignUp> {
         deviceName = await deviceData();
         _userRepository.register(
           User(
-            name: email,
+            sourceId: selectedValue,
+            name: name,
             email: email,
             password: password,
             phoneNumber: phoneNumber,
@@ -333,6 +334,7 @@ class _SignUpState extends State<SignUp> {
                                 email = mailController.text;
                                 name = nameController.text;
                                 password = passwordController.text;
+                                phoneNumber = phoneController.text;
                               });
                               register();
                             }

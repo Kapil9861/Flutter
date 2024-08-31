@@ -6,6 +6,7 @@ import 'package:veda_news/data/models/user_model.dart';
 class UserRepository {
   Future<String> register(User user, String deviceName) async {
     try {
+      print(user.toString());
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/addUser"),
         headers: {
@@ -19,6 +20,7 @@ class UserRepository {
           'email_verified_at': user.emailVerifiedAt?.toIso8601String(),
           'remember_token': user.rememberToken,
           'device_name': deviceName,
+          "phone_number": user.phoneNumber,
         }),
       );
       print(response.body);
