@@ -6,7 +6,6 @@ import 'package:veda_news/data/models/user_model.dart';
 class UserRepository {
   Future<String> register(User user, String deviceName) async {
     try {
-      print(user.toString());
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/addUser"),
         headers: {
@@ -21,6 +20,38 @@ class UserRepository {
           'remember_token': user.rememberToken,
           'device_name': deviceName,
           "phone_number": user.phoneNumber,
+        }),
+      );
+      print(response.body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        return data['success'];
+      } else if (response.statusCode == 400) {
+        final data = jsonDecode(response.body);
+        return data['message'];
+      } else if (response.statusCode == 302) {
+        // Handle the redirection, perhaps by following the redirect or informing the user
+        return 'Redirection detected. Please check the server configuration.';
+      } else {
+        return "Server Error: ${response.statusCode} - ${response.body}";
+      }
+    } catch (e) {
+      return "Error: $e";
+    }
+  }
+
+  Future<String> login(String email, String password, String deviceName) async {
+    try {
+      var response = await http.post(
+        Uri.parse("http://10.0.2.2:8000/api/login"),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+          'password': password,
+          'device_name': deviceName,
         }),
       );
       print(response.body);
