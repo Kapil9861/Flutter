@@ -13,7 +13,8 @@ import 'package:veda_news/presentation/widgets/filters.dart';
 /// It displays a list of news articles fetched from an API and allows users to filter
 /// articles by category and sort criteria.
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, this.token});
+  final String? token;
 
   @override
   State<HomePage> createState() => _HomePageState();

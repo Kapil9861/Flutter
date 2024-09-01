@@ -3,6 +3,7 @@ import 'package:veda_news/core/utils.dart';
 import 'package:veda_news/data/repositories/user_repository.dart';
 import 'package:veda_news/presentation/pages/auth/forgot_password.dart';
 import 'package:veda_news/presentation/pages/auth/signup.dart';
+import 'package:veda_news/presentation/pages/home_page.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -29,11 +30,14 @@ class _LogInState extends State<LogIn> {
   Future<void> userLogin() async {
     try {
       deviceName = await deviceData();
-      _userRepository.login(
+      String token = await _userRepository.login(
         email,
         password,
         deviceName!,
       );
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+        return HomePage(token: token);
+      }));
     } catch (e) {}
   }
 
