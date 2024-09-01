@@ -30,7 +30,7 @@ class User {
       sourceId: json['source_id'],
       name: json['name'],
       email: json['email'],
-      phoneNumber: json['phone_number'],
+      phoneNumber: json['phone'],
       emailVerifiedAt: json['email_verified_at'] != null
           ? DateTime.parse(json['email_verified_at'])
           : null,
@@ -47,7 +47,7 @@ class User {
       'source_id': sourceId,
       'name': name,
       'email': email,
-      'phone_number': phoneNumber,
+      'phone': phoneNumber,
       'email_verified_at': emailVerifiedAt?.toIso8601String(),
       'password': password,
       'remember_token': rememberToken,

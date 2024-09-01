@@ -267,7 +267,7 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
-                            controller: mailController,
+                            controller: phoneController,
                             decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "+977 9876543210",
@@ -291,7 +291,7 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
-                            controller: phoneController,
+                            controller: mailController,
                             decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Email",

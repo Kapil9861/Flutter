@@ -17,9 +17,8 @@ class UserRepository {
           'password': user.password,
           'source_id': user.sourceId,
           'email_verified_at': user.emailVerifiedAt?.toIso8601String(),
-          'remember_token': user.rememberToken,
           'device_name': deviceName,
-          "phone_number": user.phoneNumber,
+          'phone': user.phoneNumber,
         }),
       );
       print(response.body);
