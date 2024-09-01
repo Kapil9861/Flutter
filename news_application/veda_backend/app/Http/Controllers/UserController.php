@@ -40,13 +40,13 @@ class UserController extends Controller
             'token' => $token,
         ], 201);
     }
-
     public function login(Request $request){
-        $validator=Validator::make($request->all,[
-            'email' => 'required|email',
-            'password' => 'required',
-            'device_name' => 'required',
+        $validator=Validator::make($request->all(),[
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string',
+            'device_name' => 'required|string',
         ]);
+
         if($validator->fails()){
             return response()->json(['error' => true, 'message' => $validator->errors()->first()], 400);
         }
@@ -61,7 +61,12 @@ class UserController extends Controller
     }
 
     public function logout(Request $request){
-        $request->user()->currentAccessToken()->delete();
+        $user=new User();
+        
+        $tokenId = $request->remember_token;
+        $user->tokens()->where('id', $tokenId)->delete();
+        // $request->user()->currentAccessToken()->delete();  //GPT le deko yo herna baki cha
+        
 
         return response()->json([
             'success' => 'User logged out!',
