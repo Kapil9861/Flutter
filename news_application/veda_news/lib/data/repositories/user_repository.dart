@@ -43,6 +43,7 @@ class UserRepository {
 
   Future<String> login(String email, String password, String deviceName) async {
     try {
+      print(email + " " + password + " " + deviceName);
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/login"),
         headers: {

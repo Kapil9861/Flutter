@@ -12,11 +12,10 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     public function store(Request $request){        
-        
         $validator=Validator::make($request->all(),[
             'source_id'=>"required|exists:sources,id",
             'name'=>'required|string|max:45',
-            'phone_number'=>'required|string|max:14|unique:users',
+            'phone'=>'required|string|max:14|unique:users',
             'email'=>'required|string|email|max:255|unique:users,email',
             "password"=>"required|string|min:8",
             'device_name' => 'required|string',
@@ -32,7 +31,7 @@ class UserController extends Controller
         $user->remember_token = $request->remember_token;
         $user->source_id = $request->source_id; // Save the source ID if provided
         $user->save();
-        $token = $user->createToken($request->device)->plainTextToken;
+        $token = $user->createToken($request->device_name)->plainTextToken;
 
         return response()->json([
             'success' => 'User created successfully.',
