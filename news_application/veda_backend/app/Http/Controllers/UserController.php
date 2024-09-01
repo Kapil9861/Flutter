@@ -66,7 +66,6 @@ class UserController extends Controller
         $tokenId = $request->remember_token;
         $user->tokens()->where('id', $tokenId)->delete();
         // $request->user()->currentAccessToken()->delete();  //GPT le deko yo herna baki cha
-        
 
         return response()->json([
             'success' => 'User logged out!',

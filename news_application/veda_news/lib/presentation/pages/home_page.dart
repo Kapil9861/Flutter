@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/data/models/news_model.dart';
+import 'package:veda_news/data/repositories/user_repository.dart';
+import 'package:veda_news/presentation/pages/auth/login.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/data/repositories/news_repository.dart';
 import 'package:veda_news/core/utils.dart';
@@ -20,6 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   /// The [_newsRepository] is used to fetch news data from the API.
   final NewsRepository _newsRepository = NewsRepository();
+  final UserRepository _userRepository = UserRepository();
 
   /// The [category] variable stores the currently selected news category.
   String category = "";
@@ -52,6 +55,19 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () {
               showSnackbar(context, "This feature is not available yet!");
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () async {
+              final message = await _userRepository.logout();
+              showSnackbar(context, message);
+              if (message == "Logged out successfully!") {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return const LogIn();
+                }));
+              }
             },
           ),
         ],

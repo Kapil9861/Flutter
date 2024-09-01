@@ -72,4 +72,20 @@ class UserRepository {
       return "Error: $e";
     }
   }
+
+  Future<String> logout() async {
+    var response = await http.get(Uri.parse("http://10.0.2.2:8000/api/logout"));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['message'];
+    } else if (response.statusCode == 400) {
+      final data = jsonDecode(response.body);
+      return data['message'];
+    } else if (response.statusCode == 302) {
+      // Handle the redirection, perhaps by following the redirect or informing the user
+      return 'Redirection detected. Please check the server configuration.';
+    } else {
+      return "Server Error: ${response.statusCode} - ${response.body}";
+    }
+  }
 }
