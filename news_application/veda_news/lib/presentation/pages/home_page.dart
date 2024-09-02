@@ -13,8 +13,8 @@ import 'package:veda_news/presentation/widgets/filters.dart';
 /// It displays a list of news articles fetched from an API and allows users to filter
 /// articles by category and sort criteria.
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, this.token});
-  final String? token;
+  const HomePage({super.key, required this.token});
+  final String token;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.token);
     return
         // Navigation bar UI
         Scaffold(
@@ -61,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.exit_to_app),
             onPressed: () async {
-              final message = await _userRepository.logout();
+              final message = await _userRepository.logout(widget.token);
               showSnackbar(context, message);
               if (message == "Logged out successfully!") {
                 Navigator.of(context)

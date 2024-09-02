@@ -21,7 +21,6 @@ class UserRepository {
           'phone': user.phoneNumber,
         }),
       );
-      print(response.body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
@@ -42,7 +41,6 @@ class UserRepository {
 
   Future<String> login(String email, String password, String deviceName) async {
     try {
-      print(email + " " + password + " " + deviceName);
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/login"),
         headers: {
@@ -73,14 +71,28 @@ class UserRepository {
     }
   }
 
-  Future<String> logout() async {
-    var response = await http.get(Uri.parse("http://10.0.2.2:8000/api/logout"));
+  Future<String> logout(String token) async {
+    var response = await http.post(
+      Uri.parse("http://10.0.2.2:8000/api/logout"),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'token': token,
+      }),
+    );
+
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      return data['message'];
+      return data['success'];
+    } else if (response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      print(data);
+      return data['success'];
     } else if (response.statusCode == 400) {
       final data = jsonDecode(response.body);
-      return data['message'];
+
+      return data['success'];
     } else if (response.statusCode == 302) {
       // Handle the redirection, perhaps by following the redirect or informing the user
       return 'Redirection detected. Please check the server configuration.';

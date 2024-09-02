@@ -68,7 +68,7 @@ class UserController extends Controller
         // $request->user()->currentAccessToken()->delete();  //GPT le deko yo herna baki cha
 
         return response()->json([
-            'success' => 'User logged out!',
+            'success' => 'Logged out successfully!',
         ], 201);
     } 
     
