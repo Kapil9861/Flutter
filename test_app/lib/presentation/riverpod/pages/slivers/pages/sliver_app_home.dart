@@ -7,13 +7,13 @@ class SliverAppHome extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SliverAppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       pinned: true, // Ensures the AppBar stays visible at the top
       expandedHeight: size.height * 0.50,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsetsDirectional.only(
-          bottom: size.height * 0.10,
-          start: size.width * 0.03,
+          bottom: size.height * 0.01,
+          start: size.width * 0.1,
         ),
         title: RichText(
           text: const TextSpan(
@@ -33,7 +33,7 @@ class SliverAppHome extends StatelessWidget {
         ),
         background: Image.network(
           "https://thewatchlounge.co/wp-content/uploads/2020/12/2-37-300x300.jpg",
-          fit: BoxFit.cover,
+          fit: BoxFit.fitWidth,
         ),
       ),
       actions: [

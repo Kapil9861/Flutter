@@ -30,14 +30,16 @@ class _LogInState extends State<LogIn> {
   Future<void> userLogin() async {
     try {
       deviceName = await deviceData();
-      String token = await _userRepository.login(
-        email,
-        password,
-        deviceName!,
-      );
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-        return HomePage(token: token);
-      }));
+      if (email != "" && password != "") {
+        String token = await _userRepository.login(
+          email,
+          password,
+          deviceName!,
+        );
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+          return HomePage(token: token);
+        }));
+      }
     } catch (e) {}
   }
 

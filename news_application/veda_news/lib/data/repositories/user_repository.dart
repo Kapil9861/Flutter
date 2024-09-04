@@ -97,6 +97,7 @@ class UserRepository {
       // Handle the redirection, perhaps by following the redirect or informing the user
       return 'Redirection detected. Please check the server configuration.';
     } else {
+      print("Server Error: ${response.statusCode} - ${response.body}");
       return "Server Error: ${response.statusCode} - ${response.body}";
     }
   }
