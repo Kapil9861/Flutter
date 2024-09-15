@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:veda_news/data/models/source.dart';
 import 'package:http/http.dart' as http;
 
-class UserRepository {
+class UserDatasource {
   Future<String> addSource(User user) async {
     try {
       var response = await http.post(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:veda_news/core/utils.dart';
 import 'package:veda_news/data/models/source.dart';
 import 'package:veda_news/data/repositories/source_repository.dart';
-import 'package:veda_news/presentation/pages/auth/login.dart';
+import 'package:veda_news/authentication/presentation/pages/login.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
 class SignUp extends StatefulWidget {
