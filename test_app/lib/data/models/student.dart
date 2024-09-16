@@ -43,9 +43,7 @@ class Student {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Student &&
-        other.id == id &&
-        other.username == username;
+    return other is Student && other.id == id && other.username == username;
   }
 
   @override

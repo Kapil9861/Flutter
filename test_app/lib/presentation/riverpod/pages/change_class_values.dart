@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_tutorial/presentation/riverpod/providers/provider.dart';
+import 'package:test_app/presentation/riverpod/providers/provider.dart';
 
 class ChangeClassValues extends StatefulWidget {
   const ChangeClassValues({super.key});
@@ -14,21 +14,21 @@ class _ChangeClassValuesState extends State<ChangeClassValues> {
   final TextEditingController _idController = TextEditingController();
 
   void onNameSubmit(WidgetRef ref, String value) {
-    ref.read(userProvider.notifier).updateName(value);
+    ref.read(studentProvider.notifier).updateName(value);
   }
 
   void onIdSubmit(WidgetRef ref, String value) {
-    ref.read(userProvider.notifier).updateId(value);
+    ref.read(studentProvider.notifier).updateId(value);
   }
 
   void onStudentSubmit(WidgetRef ref, String name, String id) {
-    ref.read(userProvider.notifier).updateStudent(name, id);
+    ref.read(studentProvider.notifier).updateStudent(name, id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ref, build) {
-      final student = ref.watch(userProvider);
+      final student = ref.watch(studentProvider);
       return Scaffold(
         appBar: AppBar(
           title: Text(student.username),

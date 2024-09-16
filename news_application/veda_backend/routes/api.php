@@ -31,3 +31,8 @@ Route::post("/addCompany",[SourceController::class,"store"]);
 
 Route::post("/addUser",[UserController::class,"store"]);
 
+Route::post("/login",[UserController::class,"login"]);
+
+Route::post("/logout",[UserController::class,"logout"]);
+
+
