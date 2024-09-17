@@ -1,5 +1,11 @@
+import 'package:veda_news/data/models/user_model.dart';
+
 abstract class UserRepository {
-  Future<void> login();
-  Future<void> register();
-  Future<void> logout();
+  Future<Map<String, dynamic>> login({
+    required String email,
+    required String password,
+    required String deviceName,
+  });
+  Future<String> logout(String token);
+  Future<void> register(User user, String deviceName);
 }

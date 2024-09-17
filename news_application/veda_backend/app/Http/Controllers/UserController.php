@@ -41,6 +41,7 @@ class UserController extends Controller
             'user' => $user,
         ], 201);
     }
+    
     public function login(Request $request){
         $validator=Validator::make($request->all(),[
             'email' => 'required|string|email|max:255|min:11',
@@ -54,7 +55,7 @@ class UserController extends Controller
         $user=User::where('email',$request->email)->first();
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => 'The provided credentials are incorrect.',
             ]);
         }
      
