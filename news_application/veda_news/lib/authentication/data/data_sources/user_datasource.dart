@@ -39,7 +39,8 @@ class UserDatasource {
     }
   }
 
-  Future<String> login(String email, String password, String deviceName) async {
+  Future<dynamic> login(
+      String email, String password, String deviceName) async {
     try {
       var response = await http.post(
         Uri.parse("http://10.0.2.2:8000/api/login"),
@@ -56,7 +57,7 @@ class UserDatasource {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        return data['success'];
+        return data;
       } else if (response.statusCode == 400) {
         final data = jsonDecode(response.body);
         return data['message'];
