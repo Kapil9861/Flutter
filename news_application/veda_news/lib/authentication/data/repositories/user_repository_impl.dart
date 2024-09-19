@@ -1,5 +1,5 @@
 import 'package:veda_news/authentication/data/data_sources/user_datasource.dart';
-import 'package:veda_news/data/models/user_model.dart';
+import 'package:veda_news/news_articles/data/models/user_model.dart';
 import 'package:veda_news/authentication/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {

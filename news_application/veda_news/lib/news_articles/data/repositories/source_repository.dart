@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:veda_news/data/models/source.dart';
+import 'package:veda_news/news_articles/data/models/source.dart';
 import 'package:http/http.dart' as http;
 
 class SourceRepository {

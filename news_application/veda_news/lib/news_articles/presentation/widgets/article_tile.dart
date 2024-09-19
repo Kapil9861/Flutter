@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:veda_news/core/utils.dart'; // Assumed to have utility functions like calculateTimeAgo and truncateWithEllipsis
-import 'package:veda_news/data/models/articles.dart'; // Article model
-import 'package:veda_news/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
-import 'package:veda_news/presentation/providers/logo_provider.dart'; // Provider for logos
-import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
+import 'package:veda_news/news_articles/data/models/articles.dart'; // Article model
+import 'package:veda_news/news_articles/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
+import 'package:veda_news/news_articles/presentation/providers/logo_provider.dart'; // Provider for logos
+import 'package:veda_news/news_articles/presentation/widgets/styled_text.dart'; // Custom text widget
 
 /// [ArticleTile] is a widget that displays a summary of an article.
 /// It contains an image, title, author, source, and a short description.

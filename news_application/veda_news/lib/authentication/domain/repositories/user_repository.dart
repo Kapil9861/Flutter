@@ -1,4 +1,4 @@
-import 'package:veda_news/data/models/user_model.dart';
+import 'package:veda_news/news_articles/data/models/user_model.dart';
 
 abstract class UserRepository {
   Future<Map<String, dynamic>> login({

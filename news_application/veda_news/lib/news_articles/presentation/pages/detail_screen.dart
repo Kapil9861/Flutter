@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
+import 'package:veda_news/news_articles/presentation/widgets/styled_text.dart';
 
 /// The [DetailScreen] widget displays the details of a selected news article.
 /// It shows the article's image, title, content, author, and related information

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:veda_news/data/models/user_model.dart';
+import 'package:veda_news/news_articles/data/models/user_model.dart';
 
 class UserDatasource {
   Future<Map<String, dynamic>> register(User user, String deviceName) async {

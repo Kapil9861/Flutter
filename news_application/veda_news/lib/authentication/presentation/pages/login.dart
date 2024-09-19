@@ -3,7 +3,7 @@ import 'package:veda_news/authentication/data/data_sources/user_datasource.dart'
 import 'package:veda_news/authentication/presentation/pages/forgot_password.dart';
 import 'package:veda_news/authentication/presentation/pages/signup.dart';
 import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/presentation/pages/home_page.dart';
+import 'package:veda_news/news_articles/presentation/pages/home_page.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});

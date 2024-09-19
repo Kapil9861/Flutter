@@ -1,4 +1,4 @@
-import 'package:veda_news/data/models/articles.dart';
+import 'package:veda_news/news_articles/data/models/articles.dart';
 
 /// A class representing a news response.
 ///

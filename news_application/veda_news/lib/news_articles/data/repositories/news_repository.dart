@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/data/models/news_model.dart';
+import 'package:veda_news/news_articles/data/models/news_model.dart';
 import 'package:http/http.dart' as http;
 
 /// The [NewsRepository] class is responsible for fetching news data from an external API.

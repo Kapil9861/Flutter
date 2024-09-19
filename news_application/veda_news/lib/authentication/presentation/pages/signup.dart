@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:veda_news/authentication/data/data_sources/user_datasource.dart';
 import 'package:veda_news/authentication/presentation/pages/login.dart';
 import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/data/models/source.dart';
-import 'package:veda_news/data/models/user_model.dart';
-import 'package:veda_news/data/repositories/source_repository.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
+import 'package:veda_news/news_articles/data/models/source.dart';
+import 'package:veda_news/news_articles/data/models/user_model.dart';
+import 'package:veda_news/news_articles/data/repositories/source_repository.dart';
+import 'package:veda_news/news_articles/presentation/widgets/styled_text.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

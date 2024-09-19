@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:veda_news/core/utils.dart'; // Assumed utility functions and data like `categories`
-import 'package:veda_news/presentation/widgets/nav_item.dart'; // Custom NavItem widget
+import 'package:veda_news/news_articles/presentation/widgets/nav_item.dart'; // Custom NavItem widget
 import 'package:google_fonts/google_fonts.dart'; // For custom fonts
 
 /// [Filters] widget is used to display a list of selectable categories.

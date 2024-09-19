@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/authentication/data/data_sources/user_datasource.dart';
 import 'package:veda_news/authentication/presentation/pages/login.dart';
-import 'package:veda_news/data/models/articles.dart';
-import 'package:veda_news/data/models/news_model.dart';
-import 'package:veda_news/presentation/widgets/article_tile.dart';
-import 'package:veda_news/data/repositories/news_repository.dart';
+import 'package:veda_news/news_articles/data/models/articles.dart';
+import 'package:veda_news/news_articles/data/models/news_model.dart';
+import 'package:veda_news/news_articles/presentation/widgets/article_tile.dart';
+import 'package:veda_news/news_articles/data/repositories/news_repository.dart';
 import 'package:veda_news/core/utils.dart';
-import 'package:veda_news/presentation/widgets/filters.dart';
+import 'package:veda_news/news_articles/presentation/widgets/filters.dart';
 
 /// The [HomePage] widget serves as the main screen of the Veda News Portal.
 /// It displays a list of news articles fetched from an API and allows users to filter

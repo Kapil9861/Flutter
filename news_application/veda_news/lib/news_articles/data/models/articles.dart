@@ -1,4 +1,4 @@
-import 'package:veda_news/data/models/source.dart';
+import 'package:veda_news/news_articles/data/models/source.dart';
 
 /// A class representing an individual article.
 ///
