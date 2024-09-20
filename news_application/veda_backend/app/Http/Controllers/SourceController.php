@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Validator;
 
 class SourceController extends Controller
 {
+    public function remove(Request $request){
+        if($request->name!=null){
+            return response()->json([
+                'success' => 'Source created successfully.',
+            ], 200);
+        }else{
+            return response()->json([
+                'success' => 'Source could not be deleted.',
+            ], 200);
+        }
+    }
+
     public function index(){
         $companies=Source::all();
         return $companies;
@@ -29,4 +41,5 @@ class SourceController extends Controller
             'success' => 'Source created successfully.',
         ], 200);
     }
+    
 }
