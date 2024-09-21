@@ -32,7 +32,6 @@ class LoginStateNotifier extends StateNotifier<User> {
       showSnackbar(context, authData['message']);
       final user = User.fromJson(authData['user']);
       final token = authData['token'];
-      ref.read(tokenProvider.notifier).state = token;
       state = user;
     } else {
       showSnackbar(context, "Something went wrong at authentication provider!");
