@@ -50,12 +50,12 @@ class UserController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['error' => true, 'message' => $validator->errors()->first()], 400);
+            return response()->json(['error' => true, 'errorMessage' => $validator->errors()->first()], 400);
         }
         $user=User::where('email',$request->email)->first();
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => 'The provided credentials are incorrect.',
+                'errorMessage' => 'The provided credentials are incorrect.',
             ]);
         }
      
