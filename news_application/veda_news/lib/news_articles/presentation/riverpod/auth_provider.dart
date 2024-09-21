@@ -10,9 +10,13 @@ final loginProvider = StateNotifierProvider<LoginStateNotifier, User>((ref) {
   );
 });
 
+final tokenProvider = StateProvider<String>((ref) {
+  return "";
+});
+
 class LoginStateNotifier extends StateNotifier<User> {
   LoginStateNotifier(super.state);
-  Future login(BuildContext context,
+  Future login(BuildContext context, WidgetRef ref,
       {required String email,
       required String password,
       required String deviceName}) async {
@@ -27,6 +31,8 @@ class LoginStateNotifier extends StateNotifier<User> {
     } else if (authData['message'] != null) {
       showSnackbar(context, authData['message']);
       final user = User.fromJson(authData['user']);
+      final token = authData['token'];
+      ref.read(tokenProvider.notifier).state = token;
       state = user;
     } else {
       showSnackbar(context, "Something went wrong at authentication provider!");
