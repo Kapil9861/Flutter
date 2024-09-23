@@ -1,7 +1,9 @@
-import 'package:veda_news/authentication/data/repositories/user_repository_impl.dart';
+import 'package:veda_news/authentication/domain/repositories/user_repository.dart';
 
 class Login {
-  final repository = UserRepositoryImpl();
+  final UserRepository repository;
+
+  Login(this.repository);
   Future<Map<String, dynamic>> login({
     required String email,
     required String password,
