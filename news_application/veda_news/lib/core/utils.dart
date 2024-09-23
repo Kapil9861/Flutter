@@ -138,3 +138,8 @@ Future<String> deviceData() async {
     return 'Unknown device';
   }
 }
+
+
+enum Genders{
+  male,female,others
+}
