@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme,
       ),
       debugShowCheckedModeBanner: false, // Hides the debug banner in the app.
-      home: const LogIn(), // Sets the home page of the app to `HomePage`.
+      home: const Practice(), // Sets the home page of the app to `HomePage`.
     );
   }
 }

@@ -139,7 +139,4 @@ Future<String> deviceData() async {
   }
 }
 
-
-enum Genders{
-  male,female,others
-}
+enum Genders { male, female, others }
