@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/core/utils.dart'; // Assumed utility functions and data like `categories`
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/presentation/widgets/nav_item.dart'; // Custom NavItem widget
 import 'package:google_fonts/google_fonts.dart'; // For custom fonts
+import 'package:core/core.dart';
 
 /// [Filters] widget is used to display a list of selectable categories.
 /// It includes a section with "Latest" and "See all" buttons and a horizontal list of categories.
-class Filters extends StatefulWidget {
+class Filters extends ConsumerStatefulWidget {
   /// The currently selected category.
   final String selectedCategory;
 
@@ -19,10 +20,10 @@ class Filters extends StatefulWidget {
   });
 
   @override
-  State<Filters> createState() => _FiltersState();
+  ConsumerState<Filters> createState() => _FiltersState();
 }
 
-class _FiltersState extends State<Filters> {
+class _FiltersState extends ConsumerState<Filters> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -65,7 +66,7 @@ class _FiltersState extends State<Filters> {
             ),
           ),
         ),
-        
+
         // Horizontal list of categories
         Padding(
           padding: const EdgeInsets.only(top: 10, left: 10),

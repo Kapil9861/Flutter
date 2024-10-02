@@ -4,5 +4,6 @@
 library;
 
 export 'src/resources_base.dart';
+export 'src/assets.dart';
 
 // TODO: Export any libraries intended for clients of this package.

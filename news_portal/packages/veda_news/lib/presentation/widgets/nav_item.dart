@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:veda_news/core/utils.dart'; // Assumed utility function `capitalize`
+import 'package:core/core.dart';
 
 /// [NavItem] is a widget that displays a category name as a selectable item in a navigation bar.
 /// It visually indicates whether it is selected and triggers a callback function when tapped.
-class NavItem extends StatefulWidget {
+class NavItem extends ConsumerStatefulWidget {
   /// Index of the navigation item.
   final int index;
 
@@ -26,10 +27,10 @@ class NavItem extends StatefulWidget {
   });
 
   @override
-  State<NavItem> createState() => _NavItemState();
+  ConsumerState<NavItem> createState() => _NavItemState();
 }
 
-class _NavItemState extends State<NavItem> {
+class _NavItemState extends ConsumerState<NavItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -37,7 +38,8 @@ class _NavItemState extends State<NavItem> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(right: 6.0), // Adds padding to the right of the text
+            padding: const EdgeInsets.only(
+                right: 6.0), // Adds padding to the right of the text
             child: Text(
               capitalize(widget.category), // Capitalizes the category name
               style: GoogleFonts.poppins(

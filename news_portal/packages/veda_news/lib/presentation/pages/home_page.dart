@@ -1,23 +1,24 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/data/models/news_model.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/data/repositories/news_repository.dart';
-import 'package:veda_news/core/utils.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 
 /// The [HomePage] widget serves as the main screen of the Veda News Portal.
 /// It displays a list of news articles fetched from an API and allows users to filter
 /// articles by category and sort criteria.
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   /// The [_newsRepository] is used to fetch news data from the API.
   final NewsRepository _newsRepository = NewsRepository();
 
@@ -51,7 +52,8 @@ class _HomePageState extends State<HomePage> {
               width: 18,
             ),
             onPressed: () {
-              showSnackbar(context, "This feature is not available yet!");
+              CustomSnackbar()
+                  .show(context, "This feature is not available yet!");
             },
           ),
         ],

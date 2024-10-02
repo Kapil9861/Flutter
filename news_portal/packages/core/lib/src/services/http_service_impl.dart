@@ -12,7 +12,8 @@ class HttpServiceImpl implements HttpService {
   @override
   Future delete(String endPoint, identifier) async {
     try {
-      final result = await dio.delete(endPoint);
+      final result =
+          await dio.delete(endPoint, queryParameters: {"id": identifier});
       return result.data;
     } on Exception catch (e) {
       return e;
@@ -20,9 +21,12 @@ class HttpServiceImpl implements HttpService {
   }
 
   @override
-  Future get(String endPoint) async {
+  Future get(String endPoint, {String? filter1, String? filter2}) async {
     try {
-      final response = await dio.get(endPoint, queryParameters: {});
+      final response = await dio.get(
+        endPoint,
+        queryParameters: {},
+      );
       return response.data;
     } on Exception catch (e) {
       return e;
@@ -42,8 +46,11 @@ class HttpServiceImpl implements HttpService {
   @override
   Future update(String endPoint, Object object, dynamic data) async {
     try {
-      final response = await dio
-          .post(endPoint, queryParameters: {"id": object, "data": data});
+      final response = await dio.post(endPoint, queryParameters: {
+        "id": object,
+      }, data: {
+        "data": data,
+      });
       return response.data;
     } on Exception catch (e) {
       return e;

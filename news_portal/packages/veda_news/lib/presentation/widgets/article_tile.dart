@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:veda_news/core/utils.dart'; // Assumed to have utility functions like calculateTimeAgo and truncateWithEllipsis
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/models/articles.dart'; // Article model
 import 'package:veda_news/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
 import 'package:veda_news/presentation/providers/logo_provider.dart'; // Provider for logos
 import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
+import 'package:core/core.dart';
 
 /// [ArticleTile] is a widget that displays a summary of an article.
 /// It contains an image, title, author, source, and a short description.
 /// When tapped, it navigates to a detail screen with more information.
-class ArticleTile extends StatefulWidget {
+class ArticleTile extends ConsumerStatefulWidget {
   const ArticleTile({
     super.key,
     required this.article,
@@ -18,10 +19,10 @@ class ArticleTile extends StatefulWidget {
   final Articles article;
 
   @override
-  State<ArticleTile> createState() => _ArticleTileState();
+  ConsumerState<ArticleTile> createState() => _ArticleTileState();
 }
 
-class _ArticleTileState extends State<ArticleTile> {
+class _ArticleTileState extends ConsumerState<ArticleTile> {
   final LogoProvider _logoProvider = LogoProvider(); // Instance to fetch logos
 
   @override

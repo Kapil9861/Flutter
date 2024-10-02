@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
+import 'package:resources/resources.dart';
 
 /// The [DetailScreen] widget displays the details of a selected news article.
 /// It shows the article's image, title, content, author, and related information
 /// such as the channel name and time of publication.
-class DetailScreen extends StatefulWidget {
+class DetailScreen extends ConsumerStatefulWidget {
   const DetailScreen({
     super.key,
     required this.imageUrl,
@@ -38,12 +41,11 @@ class DetailScreen extends StatefulWidget {
   final String channelName;
 
   @override
-  State<DetailScreen> createState() => _DetailScreenState();
+  ConsumerState<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailScreenState extends ConsumerState<DetailScreen> {
   /// The text displayed on the follow button, toggles between "Follow" and "Following".
-  String followButtonText = "Follow";
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,7 @@ class _DetailScreenState extends State<DetailScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(top: 2.0, left: 2),
-            child: Image.asset(width: 19, height: 20, "assets/icons/share.png"),
+            child: Image.asset(width: 19, height: 20, Assets.share),
           ),
           const Padding(
             padding: EdgeInsets.only(right: 10.5, top: 3),
@@ -124,12 +126,12 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        // Toggles the follow button text between "Follow" and "Following"
-                        followButtonText = followButtonText == "Following"
-                            ? "Follow"
-                            : "Following";
-                      });
+                      ref.read(followButtonTextProvider.notifier).state ==
+                              "Following"
+                          ? ref.read(followButtonTextProvider.notifier).state =
+                              "Follow"
+                          : ref.read(followButtonTextProvider.notifier).state =
+                              "Following";
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(6),
@@ -147,7 +149,7 @@ class _DetailScreenState extends State<DetailScreen> {
                             children: [
                               StyledText(
                                 fontSize: 16,
-                                text: followButtonText,
+                                text: ref.watch(followButtonTextProvider),
                                 fontWeight: FontWeight.w600,
                                 fontColor: Colors.white,
                               ),
