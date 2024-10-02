@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/packages/components/melos_components.iml" filepath="$PROJECT_DIR$/packages/components/melos_components.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/core/melos_core.iml" filepath="$PROJECT_DIR$/packages/core/melos_core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/resources/melos_resources.iml" filepath="$PROJECT_DIR$/packages/resources/melos_resources.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/veda_news/melos_veda_news.iml" filepath="$PROJECT_DIR$/packages/veda_news/melos_veda_news.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_my_project.iml" filepath="$PROJECT_DIR$/melos_my_project.iml" />
+    </modules>
+  </component>
+</project>
