@@ -20,7 +20,6 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   /// The [_newsRepository] is used to fetch news data from the API.
-  final NewsRepository _newsRepository = NewsRepository();
 
   /// The [category] variable stores the currently selected news category.
   String category = "";
