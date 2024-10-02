@@ -1,0 +1,8 @@
+name: melos_monorepo
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+dev_dependencies:
+  melos: ^6.1.0

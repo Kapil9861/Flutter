@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Debug ",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_debug.dart",
+            "args": ["--flavor", "dev", "--target", "lib/main_debug.dart" ]
+          },
+          {
+            "name": "Launch Release",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_release.dart",
+            "args": ["--flavor", "prod", "--target", "lib/main_release.dart" ]
+          }
+    ]
+}

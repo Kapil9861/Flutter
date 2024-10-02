@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: components,resources
+dependency_overrides:
+  components:
+    path: ..\\components
+  resources:
+    path: ..\\resources
