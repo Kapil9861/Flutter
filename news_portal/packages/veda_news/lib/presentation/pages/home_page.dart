@@ -43,7 +43,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             height: 30,
             width: 99,
           ),
-          onPressed: (){},
+          onPressed: () {},
         ),
         actions: [
           IconButton(
@@ -60,82 +60,43 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: fetchLiveNews.articles!.isNotEmpty>0?:;
-      // _buildUI(context),
+      body: fetchLiveNews.articles != null && fetchLiveNews.articles!.isNotEmpty
+          ? Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Filters(
+                    selectedCategory: category.isEmpty ? "all" : category,
+                    onCategorySelected: (String selectedCategory) {
+                      ref
+                          .read(newsArticlesProvider.notifier)
+                          .fetchNewsArticles(context, category: category);
+                    },
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: fetchLiveNews.articles!.length,
+                      itemBuilder: (context, index) {
+                        Articles article = fetchLiveNews.articles![index];
+                        return ArticleTile(
+                          article: article,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : fetchLiveNews.articles != null &&
+                  (fetchLiveNews.articles == null ||
+                      fetchLiveNews.articles!.isEmpty)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : const Center(
+                  child: Text("Something went wrong!"),
+                ),
     );
   }
-
-
-
-  //////////
-  ///
-  /// 
 }
-  // // Builds the main user interface of the home page.
-  // //
-  // // The UI is built based on the data fetched from the API.
-  // Widget _buildUI(BuildContext context) {
-  //   return FutureBuilder<NewsModel>(
-  //     future:_fetchNews(category: category, sortBy: sortBy),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.waiting) {
-  //         return const Center(
-  //           child: CircularProgressIndicator(),
-  //         );
-  //       }
-  //       if (snapshot.data != null && snapshot.data!.articles != null) {
-  //         return ;
-  //       } else if (snapshot.data != null && snapshot.data!.articles == null) {
-  //         return Center(
-  //           child: Text(
-  //             "No articles found! \n Notes: 1. Please check your internet connection!\n",
-  //             style: GoogleFonts.poppins(),
-  //           ),
-  //         );
-  //       } else {
-  //         return Center(
-  //           child: Text(
-  //             "Something went wrong!",
-  //             style: GoogleFonts.poppins(),
-  //           ),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
-
-  /// Fetches news articles based on the selected [category] and [sortBy] criteria.
-  ///
-  /// This method interacts with the [NewsRepository] to retrieve the data.
-  ///
-  /// - [category]: The category of news articles to fetch.
-  /// - [sortBy]: The sorting criteria for news articles.
-  ///
-  /// Returns a [Future] that resolves to a [NewsModel] containing the news data.
-//   Future<NewsModel> _fetchNews({
-//     required String category,
-//     required String sortBy,
-//   }) async {
-//     ref.read(newsArticlesProvider.notifier).fetchNewsArticles(
-//           context,
-//           category: category.isEmpty
-//               ? null
-//               : category, // Adjust API call for "all" or empty category
-//           sortBy: sortBy,
-//         );
-//   }
-
-//   /// Reloads the home page by resetting the selected category and sort criteria.
-//   ///
-//   /// This method is triggered when the user taps the logo in the app bar.
-//   void _reloadHome() {
-//     setState(() {
-//       category = "";
-//       sortBy = "";
-//       _fetchNews(
-//         category: category,
-//         sortBy: sortBy,
-//       );
-//     });
-//   }
-// }
