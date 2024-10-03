@@ -7,13 +7,15 @@ class NewsArticleDatasource {
   Future<Map<String, dynamic>> fetchNews({
     String? sortBy,
     String? category,
+    String? sources,
   }) async {
     String endPoint;
     Map<String, dynamic> queryParameters = {};
 
     // Determines the correct API URL based on the provided filters.
     if ((category == "all" || category == null || category.isEmpty) &&
-        (sortBy == null || sortBy.isEmpty)) {
+        (sortBy == null || sortBy.isEmpty) &&
+        (sources == null || sources.isEmpty)) {
       // Case: No category or sortBy specified, fetch general news
       endPoint = "everything";
       queryParameters['q'] = "general";
@@ -31,6 +33,12 @@ class NewsArticleDatasource {
       endPoint = "everything";
       queryParameters['q'] = "general";
       queryParameters['sortBy'] = sortBy;
+      queryParameters["apiKey"] = apiKey;
+    } else if ((category == null || category.isEmpty) &&
+        (sortBy == null || sortBy.isEmpty) &&
+        (sources != null && sources.isNotEmpty)) {
+      endPoint = "top-headlines";
+      queryParameters["sources"] = sources;
       queryParameters["apiKey"] = apiKey;
     } else {
       // Case: Only category is specified, fetch news for that category

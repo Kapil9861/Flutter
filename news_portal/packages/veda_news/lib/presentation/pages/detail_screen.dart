@@ -46,9 +46,9 @@ class DetailScreen extends ConsumerStatefulWidget {
 
 class _DetailScreenState extends ConsumerState<DetailScreen> {
   /// The text displayed on the follow button, toggles between "Follow" and "Following".
-  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
+    bool isLiked = ref.watch(isLikedProvider);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -62,13 +62,13 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
           ),
         ],
       ),
-      body: _buildUI(context),
+      body: _buildUI(context, isLiked),
     );
   }
 
   /// Builds the main UI for the detail screen, including the article image,
   /// title, content, author, channel name, and a follow button.
-  Widget _buildUI(BuildContext context) {
+  Widget _buildUI(BuildContext context, bool isLiked) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -126,12 +126,17 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                   ),
                   if (widget.channelName != "[Removed]" &&
                       widget.channelName.isNotEmpty)
-                    isLiked
-                        ? const Icon(
-                            Icons.favorite,
-                            color: Colors.pink,
-                          )
-                        : const Icon(Icons.favorite_outline),
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(isLikedProvider.notifier).state = !isLiked;
+                      },
+                      child: isLiked
+                          ? const Icon(
+                              Icons.favorite,
+                              color: Colors.pink,
+                            )
+                          : const Icon(Icons.favorite_outline),
+                    ),
                   if (widget.channelName != "[Removed]" &&
                       widget.channelName.isNotEmpty)
                     GestureDetector(

@@ -7,3 +7,7 @@ final followButtonTextProvider = StateProvider<String>((ref) {
 final selectedCategoryProvider = StateProvider<String>((ref) {
   return "";
 });
+
+final isLikedProvider = StateProvider((ref) {
+  return false;
+});

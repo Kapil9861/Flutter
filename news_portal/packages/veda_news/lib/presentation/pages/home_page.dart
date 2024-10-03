@@ -25,7 +25,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   /// The [sortBy] variable stores the sorting criteria for news articles.
   String sortBy = "";
-  bool isLiked = false;
 
   @override
   void initState() {
@@ -35,12 +34,11 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLiked = ref.watch(isLikedProvider);
     String category = ref.watch(selectedCategoryProvider);
     final fetchLiveNews = ref.watch(newsArticlesProvider).newsModel;
 
-    return
-        // Navigation bar UI
-        Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         toolbarHeight: 56,
@@ -96,12 +94,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                               article: article,
                             ),
                             Center(
-                              child: isLiked
-                                  ? const Icon(
-                                      Icons.favorite,
-                                      color: Colors.pink,
-                                    )
-                                  : const Icon(Icons.favorite_outline),
+                              child: GestureDetector(
+                                onTap: () {
+                                  ref.read(isLikedProvider.notifier).state =
+                                      !isLiked;
+                                },
+                                child: isLiked
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: Colors.pink,
+                                      )
+                                    : const Icon(Icons.favorite_outline),
+                              ),
                             )
                           ],
                         );

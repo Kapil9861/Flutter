@@ -24,6 +24,12 @@ class LogoProvider {
           "https://www.vhv.rs/dpng/d/525-5258184_npr-logo-png-transparent-png.png",
       "CNET":
           "https://www.cnet.com/a/fly/bundles/cnetcss/images/core/logo/cnet_og.png",
+      "Slashdot.org":
+          "https://cdn.icon-icons.com/icons2/642/PNG/512/slashdot_icon-icons.com_59246.png",
+      "The Verge":
+          "https://cdn.freelogovectors.net/wp-content/uploads/2023/03/the-verge-logo-freelogovectors.net_.png",
+      "Time":
+          "https://www.mactavishgroup.com/wp-content/uploads/2020/11/Times.png",
     };
 
     // Check if the company name exists in the map.
