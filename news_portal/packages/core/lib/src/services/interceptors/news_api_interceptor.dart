@@ -3,9 +3,8 @@ import 'package:dio/dio.dart';
 class NewsApiInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    try {} on DioException catch (e) {
-      print(e.message);
-    }
+    print("On the error from dio Interceptor and it is: ${err.message}");
+    return super.onError(err, handler);
   }
 
   @override
@@ -16,7 +15,7 @@ class NewsApiInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(response);
+    // print(response);
     return super.onResponse(response, handler);
   }
 }

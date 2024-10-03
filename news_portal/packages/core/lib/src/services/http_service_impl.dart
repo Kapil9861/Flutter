@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:core/src/services/http_service.dart';
 import 'package:core/src/services/interceptors/news_api_interceptor.dart';
 import 'package:dio/dio.dart';
 
@@ -21,15 +20,22 @@ class HttpServiceImpl implements HttpService {
   }
 
   @override
-  Future get(String endPoint, {String? filter1, String? filter2}) async {
+  Future<Map<String, dynamic>> get(
+      String endPoint, Map<String, dynamic> queryParameters) async {
     try {
       final response = await dio.get(
         endPoint,
-        queryParameters: {},
+        queryParameters: queryParameters,
       );
-      return response.data;
+      return {
+        "data": response.data,
+        "error": null,
+      };
     } on Exception catch (e) {
-      return e;
+      return {
+        "error": e,
+        "data": null,
+      };
     }
   }
 

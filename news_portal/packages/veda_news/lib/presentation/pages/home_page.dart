@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/data/models/news_model.dart';
+import 'package:veda_news/presentation/providers/news_articles_providers.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
-import 'package:veda_news/data/repositories/news_repository.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 
 /// The [HomePage] widget serves as the main screen of the Veda News Portal.
@@ -29,6 +29,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.read(newsArticlesProvider.notifier).fetchNewsArticles(context);
+    final fetchLiveNews = ref.watch(newsArticlesProvider).newsModel;
     return
         // Navigation bar UI
         Scaffold(
@@ -41,7 +43,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             height: 30,
             width: 99,
           ),
-          onPressed: _reloadHome,
+          onPressed: (){},
         ),
         actions: [
           IconButton(
@@ -58,70 +60,49 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: _buildUI(context),
+      body: fetchLiveNews.articles!.isNotEmpty>0?:;
+      // _buildUI(context),
     );
   }
 
-  /// Builds the main user interface of the home page.
+
+
+  //////////
   ///
-  /// The UI is built based on the data fetched from the API.
-  Widget _buildUI(BuildContext context) {
-    return FutureBuilder<NewsModel>(
-      future: _fetchNews(category: category, sortBy: sortBy),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (snapshot.data != null && snapshot.data!.articles != null) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Filters(
-                  selectedCategory: category.isEmpty ? "all" : category,
-                  onCategorySelected: (String selectedCategory) {
-                    setState(() {
-                      category =
-                          selectedCategory == "all" ? "" : selectedCategory;
-                      _fetchNews(category: category, sortBy: sortBy);
-                    });
-                  },
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: snapshot.data!.articles!.length,
-                    itemBuilder: (context, index) {
-                      Articles article = snapshot.data!.articles![index];
-                      return ArticleTile(
-                        article: article,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else if (snapshot.data != null && snapshot.data!.articles == null) {
-          return Center(
-            child: Text(
-              "No articles found! \n Notes: 1. Please check your internet connection!\n",
-              style: GoogleFonts.poppins(),
-            ),
-          );
-        } else {
-          return Center(
-            child: Text(
-              "Something went wrong!",
-              style: GoogleFonts.poppins(),
-            ),
-          );
-        }
-      },
-    );
-  }
+  /// 
+}
+  // // Builds the main user interface of the home page.
+  // //
+  // // The UI is built based on the data fetched from the API.
+  // Widget _buildUI(BuildContext context) {
+  //   return FutureBuilder<NewsModel>(
+  //     future:_fetchNews(category: category, sortBy: sortBy),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return const Center(
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       }
+  //       if (snapshot.data != null && snapshot.data!.articles != null) {
+  //         return ;
+  //       } else if (snapshot.data != null && snapshot.data!.articles == null) {
+  //         return Center(
+  //           child: Text(
+  //             "No articles found! \n Notes: 1. Please check your internet connection!\n",
+  //             style: GoogleFonts.poppins(),
+  //           ),
+  //         );
+  //       } else {
+  //         return Center(
+  //           child: Text(
+  //             "Something went wrong!",
+  //             style: GoogleFonts.poppins(),
+  //           ),
+  //         );
+  //       }
+  //     },
+  //   );
+  // }
 
   /// Fetches news articles based on the selected [category] and [sortBy] criteria.
   ///
@@ -131,29 +112,30 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// - [sortBy]: The sorting criteria for news articles.
   ///
   /// Returns a [Future] that resolves to a [NewsModel] containing the news data.
-  Future<NewsModel> _fetchNews({
-    required String category,
-    required String sortBy,
-  }) async {
-    return _newsRepository.fetchNewsFromApi(
-      category: category.isEmpty
-          ? null
-          : category, // Adjust API call for "all" or empty category
-      sortBy: sortBy,
-    );
-  }
+//   Future<NewsModel> _fetchNews({
+//     required String category,
+//     required String sortBy,
+//   }) async {
+//     ref.read(newsArticlesProvider.notifier).fetchNewsArticles(
+//           context,
+//           category: category.isEmpty
+//               ? null
+//               : category, // Adjust API call for "all" or empty category
+//           sortBy: sortBy,
+//         );
+//   }
 
-  /// Reloads the home page by resetting the selected category and sort criteria.
-  ///
-  /// This method is triggered when the user taps the logo in the app bar.
-  void _reloadHome() {
-    setState(() {
-      category = "";
-      sortBy = "";
-      _fetchNews(
-        category: category,
-        sortBy: sortBy,
-      );
-    });
-  }
-}
+//   /// Reloads the home page by resetting the selected category and sort criteria.
+//   ///
+//   /// This method is triggered when the user taps the logo in the app bar.
+//   void _reloadHome() {
+//     setState(() {
+//       category = "";
+//       sortBy = "";
+//       _fetchNews(
+//         category: category,
+//         sortBy: sortBy,
+//       );
+//     });
+//   }
+// }
