@@ -49,7 +49,9 @@ class NewsArticlesNotifier extends ChangeNotifier {
     if (data != null && error == null) {
       newsModel = NewsModel.fromJson(data);
     } else {
-      CustomSnackbar().show(context, error);
+      if (context.mounted) {
+        CustomSnackbar().show(context, error);
+      }
     }
     notifyListeners();
   }
