@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:core/core.dart';
+// import 'package:veda_news/presentation/providers/small_providers.dart';
 
 /// [NavItem] is a widget that displays a category name as a selectable item in a navigation bar.
 /// It visually indicates whether it is selected and triggers a callback function when tapped.

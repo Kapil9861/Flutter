@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/nav_item.dart'; // Custom NavItem widget
 import 'package:google_fonts/google_fonts.dart'; // For custom fonts
 import 'package:core/core.dart';
@@ -10,7 +11,6 @@ class Filters extends ConsumerStatefulWidget {
   /// The currently selected category.
   final String selectedCategory;
 
-  /// Callback function to handle category selection.
   final Function(String) onCategorySelected;
 
   const Filters({
@@ -26,6 +26,7 @@ class Filters extends ConsumerStatefulWidget {
 class _FiltersState extends ConsumerState<Filters> {
   @override
   Widget build(BuildContext context) {
+    String selectedCategory = ref.watch(selectedCategoryProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -38,9 +39,7 @@ class _FiltersState extends ConsumerState<Filters> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Handle "Latest" button press
-                  },
+                  onPressed: () {},
                   child: Text(
                     "Latest",
                     style: GoogleFonts.poppins(
@@ -50,9 +49,7 @@ class _FiltersState extends ConsumerState<Filters> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {
-                    // Handle "See all" button press
-                  },
+                  onPressed: () {},
                   child: Text(
                     "See all",
                     style: GoogleFonts.poppins(
@@ -80,9 +77,8 @@ class _FiltersState extends ConsumerState<Filters> {
                   return NavItem(
                     category: category,
                     index: index,
-                    isSelected: widget.selectedCategory == category,
+                    isSelected: selectedCategory == category,
                     onTap: () {
-                      // Call the callback function with the selected category
                       widget.onCategorySelected(category);
                     },
                   );

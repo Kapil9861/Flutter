@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
-import 'package:veda_news/data/models/news_model.dart';
 import 'package:veda_news/presentation/providers/news_articles_providers.dart';
+import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 
@@ -22,15 +22,21 @@ class _HomePageState extends ConsumerState<HomePage> {
   /// The [_newsRepository] is used to fetch news data from the API.
 
   /// The [category] variable stores the currently selected news category.
-  String category = "";
 
   /// The [sortBy] variable stores the sorting criteria for news articles.
   String sortBy = "";
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     ref.read(newsArticlesProvider.notifier).fetchNewsArticles(context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String category = ref.watch(selectedCategoryProvider);
     final fetchLiveNews = ref.watch(newsArticlesProvider).newsModel;
+
     return
         // Navigation bar UI
         Scaffold(
@@ -43,7 +49,9 @@ class _HomePageState extends ConsumerState<HomePage> {
             height: 30,
             width: 99,
           ),
-          onPressed: () {},
+          onPressed: () {
+            ref.read(newsArticlesProvider.notifier).fetchNewsArticles(context);
+          },
         ),
         actions: [
           IconButton(
@@ -69,9 +77,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                   Filters(
                     selectedCategory: category.isEmpty ? "all" : category,
                     onCategorySelected: (String selectedCategory) {
-                      ref
-                          .read(newsArticlesProvider.notifier)
-                          .fetchNewsArticles(context, category: category);
+                      ref.read(selectedCategoryProvider.notifier).state =
+                          selectedCategory;
+                      ref.read(newsArticlesProvider.notifier).fetchNewsArticles(
+                          context,
+                          category: selectedCategory);
                     },
                   ),
                   Expanded(
@@ -94,8 +104,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : const Center(
-                  child: Text("Something went wrong!"),
+              : Center(
+                  child: Text(
+                    "Something went wrong!",
+                    style: GoogleFonts.lato(),
+                  ),
                 ),
     );
   }

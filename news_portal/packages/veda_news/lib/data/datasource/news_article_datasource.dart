@@ -12,7 +12,7 @@ class NewsArticleDatasource {
     Map<String, dynamic> queryParameters = {};
 
     // Determines the correct API URL based on the provided filters.
-    if ((category == null || category.isEmpty) &&
+    if ((category == "all" || category == null || category.isEmpty) &&
         (sortBy == null || sortBy.isEmpty)) {
       // Case: No category or sortBy specified, fetch general news
       endPoint = "everything";

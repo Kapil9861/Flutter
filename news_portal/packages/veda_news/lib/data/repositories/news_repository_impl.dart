@@ -14,6 +14,6 @@ class NewsRepositoryImpl implements NewsRepository {
     String? sortBy,
     String? category,
   }) async {
-    return await source.fetchNews();
+    return await source.fetchNews(category: category, sortBy: sortBy);
   }
 }
