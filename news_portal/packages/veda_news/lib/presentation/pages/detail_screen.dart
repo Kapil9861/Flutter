@@ -46,7 +46,7 @@ class DetailScreen extends ConsumerStatefulWidget {
 
 class _DetailScreenState extends ConsumerState<DetailScreen> {
   /// The text displayed on the follow button, toggles between "Follow" and "Following".
-
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +79,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
             /// Displays the news source's logo, channel name, publication time,
             /// and a follow button.
             SizedBox(
-              width: 380,
+              width: MediaQuery.of(context).size.width - 35,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -124,41 +124,53 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      ref.read(followButtonTextProvider.notifier).state ==
-                              "Following"
-                          ? ref.read(followButtonTextProvider.notifier).state =
-                              "Follow"
-                          : ref.read(followButtonTextProvider.notifier).state =
-                              "Following";
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                        child: Container(
-                          width: 102,
-                          height: 34,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF1877F2),
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              StyledText(
-                                fontSize: 16,
-                                text: ref.watch(followButtonTextProvider),
-                                fontWeight: FontWeight.w600,
-                                fontColor: Colors.white,
-                              ),
-                            ],
+                  if (widget.channelName != "[Removed]" &&
+                      widget.channelName.isNotEmpty)
+                    isLiked
+                        ? const Icon(
+                            Icons.favorite,
+                            color: Colors.pink,
+                          )
+                        : const Icon(Icons.favorite_outline),
+                  if (widget.channelName != "[Removed]" &&
+                      widget.channelName.isNotEmpty)
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(followButtonTextProvider.notifier).state ==
+                                "Following"
+                            ? ref
+                                .read(followButtonTextProvider.notifier)
+                                .state = "Follow"
+                            : ref
+                                .read(followButtonTextProvider.notifier)
+                                .state = "Following";
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 5.0, bottom: 5),
+                          child: Container(
+                            width: 102,
+                            height: 34,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF1877F2),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                StyledText(
+                                  fontSize: 16,
+                                  text: ref.watch(followButtonTextProvider),
+                                  fontWeight: FontWeight.w600,
+                                  fontColor: Colors.white,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -168,7 +180,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
               padding: const EdgeInsets.only(top: 16.0),
               child: Image.network(
                 height: 248,
-                width: 380,
+                width: MediaQuery.of(context).size.width - 35,
                 widget.imageUrl,
                 fit: BoxFit.fill,
               ),

@@ -25,6 +25,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   /// The [sortBy] variable stores the sorting criteria for news articles.
   String sortBy = "";
+  bool isLiked = false;
 
   @override
   void initState() {
@@ -89,8 +90,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                       itemCount: fetchLiveNews.articles!.length,
                       itemBuilder: (context, index) {
                         Articles article = fetchLiveNews.articles![index];
-                        return ArticleTile(
-                          article: article,
+                        return Row(
+                          children: [
+                            ArticleTile(
+                              article: article,
+                            ),
+                            Center(
+                              child: isLiked
+                                  ? const Icon(
+                                      Icons.favorite,
+                                      color: Colors.pink,
+                                    )
+                                  : const Icon(Icons.favorite_outline),
+                            )
+                          ],
                         );
                       },
                     ),
