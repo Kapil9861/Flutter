@@ -1,4 +1,6 @@
+import 'package:components/components.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/data/datasource/drift/followed_source_datasource.dart';
@@ -44,12 +46,14 @@ class RemoveFollowedSourceNotifier extends ChangeNotifier {
   RemoveFollowedSourceNotifier(this.useCase);
   String message = "";
 
-  Future<void> remove(int id) async {
+  Future<void> remove(BuildContext context, int id) async {
     final result = await useCase.call(id);
     if (result > 0) {
       message = "Removed Followed Source Successfully!";
+      CustomSnackbar().show(context, message);
     } else {
       message = "Could Not Delete Followed Source!";
+      CustomSnackbar().show(context, message);
     }
     notifyListeners();
   }
@@ -60,15 +64,18 @@ class AddFollowedSourceNotifier extends StateNotifier<String> {
 
   AddFollowedSourceNotifier(this.useCase) : super("");
 
-  Future<void> add(FollowedSourceCompanion source) async {
+  Future<void> add(BuildContext context, FollowedSourceCompanion source) async {
     String message = "Could not update!";
     final result = await useCase.call(source);
     if (result > 0) {
       message = "Followed Successfully!";
+      CustomSnackbar().show(context, message);
     } else if (result == 0) {
       message = "Could not update!";
+      CustomSnackbar().show(context, message);
     } else {
       message = "Something went wrong! Could not follow.";
+      CustomSnackbar().show(context, message);
     }
     state = message;
   }

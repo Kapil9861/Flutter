@@ -60,6 +60,7 @@ class FavouriteArticles extends ConsumerWidget {
               );
             } else {
               return ListView.builder(
+                itemCount: articles.length,
                 itemBuilder: (context, index) {
                   Favourite favourite = articles[index];
                   Articles article = Articles(

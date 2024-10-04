@@ -5,7 +5,7 @@ import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/presentation/pages/favourites_news_channel_article.dart';
 import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
-import 'package:veda_news/presentation/widgets/favourite_articles.dart';
+import 'package:veda_news/presentation/pages/favourite_articles.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
 class ChannelsScreen extends ConsumerWidget {
@@ -54,27 +54,28 @@ class ChannelsScreen extends ConsumerWidget {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10),
-          child: followedChannels.maybeWhen(
-            orElse: () {
+        body: followedChannels.maybeWhen(
+          orElse: () {
+            return const Center(
+              child: StyledText(
+                  fontSize: 13,
+                  text: "Something went worng! Please try again later!"),
+            );
+          },
+          data: (data) {
+            if (data.isEmpty) {
               return const Center(
-                child: StyledText(
-                    fontSize: 13,
-                    text: "Something went worng! Please try again later!"),
+                child:
+                    StyledText(fontSize: 13, text: "No channels followed yet!"),
               );
-            },
-            data: (data) {
-              if (data.isEmpty) {
-                return const Center(
-                  child: StyledText(
-                      fontSize: 13, text: "No channels followed yet!"),
-                );
-              } else {
-                return ListView.builder(
+            } else {
+              return Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: data.length,
                   itemBuilder: (context, index) {
                     FollowedSourceData source = data[index];
-
+                
                     return GestureDetector(
                       onTap: () {
                         ref
@@ -90,21 +91,21 @@ class ChannelsScreen extends ConsumerWidget {
                       ),
                     );
                   },
-                );
-              }
-            },
-            error: (error, stackTrace) => Center(
-              child: StyledText(
-                fontSize: 13,
-                text: error.toString(),
-              ),
-            ),
-            loading: () {
-              return const Center(
-                child: CircularProgressIndicator(),
+                ),
               );
-            },
+            }
+          },
+          error: (error, stackTrace) => Center(
+            child: StyledText(
+              fontSize: 13,
+              text: error.toString(),
+            ),
           ),
+          loading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );

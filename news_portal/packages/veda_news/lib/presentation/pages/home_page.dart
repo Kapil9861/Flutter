@@ -7,7 +7,7 @@ import 'package:veda_news/presentation/providers/news_articles_providers.dart';
 import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/channels_screen.dart';
-import 'package:veda_news/presentation/widgets/favourite_articles.dart';
+import 'package:veda_news/presentation/pages/favourite_articles.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
@@ -37,7 +37,6 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLiked = ref.watch(isLikedProvider);
     String category = ref.watch(selectedCategoryProvider);
     final fetchLiveNews = ref.watch(newsArticlesProvider).newsModel;
 

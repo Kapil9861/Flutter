@@ -60,17 +60,21 @@ String truncateWithEllipsis(String text, int cutoff) {
 ///
 /// Returns: A string representing the time elapsed since the publication.
 String calculateTimeAgo(String publishedAt) {
-  final dateTime = DateTime.parse(publishedAt);
-  final now = DateTime.now();
-  final difference = now.difference(dateTime);
-
-  if (difference.inSeconds < 60) {
-    return '${difference.inSeconds}s ago';
-  } else if (difference.inMinutes < 60) {
-    return '${difference.inMinutes}m ago';
-  } else if (difference.inHours < 24) {
-    return '${difference.inHours}h ago';
+  if (publishedAt.contains("ago")) {
+    return publishedAt;
   } else {
-    return '${difference.inDays}d ago';
+    final dateTime = DateTime.parse(publishedAt);
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inSeconds < 60) {
+      return '${difference.inSeconds}s ago';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}m ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}h ago';
+    } else {
+      return '${difference.inDays}d ago';
+    }
   }
 }

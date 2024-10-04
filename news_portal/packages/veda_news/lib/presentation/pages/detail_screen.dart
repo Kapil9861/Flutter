@@ -1,3 +1,4 @@
+import 'package:components/components.dart';
 import 'package:drift/drift.dart' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,6 +137,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       onTap: () {
                         ref.read(isLikedProvider.notifier).state = !isLiked;
                         ref.read(addFavouriteArticleProvider.notifier).add(
+                              context,
                               FavouritesCompanion(
                                 author: d.Value(widget.author),
                                 content: d.Value(widget.content),
@@ -171,6 +173,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
 
                         if (widget.sourceId != "independent") {
                           ref.read(addFollowedSourceProvider.notifier).add(
+                                context,
                                 FollowedSourceCompanion(
                                   sourceId: d.Value(widget.sourceId),
                                   sourceName:
@@ -179,6 +182,11 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                                           : d.Value(widget.sourceId),
                                 ),
                               );
+                        } else {
+                          CustomSnackbar().show(
+                            context,
+                            "The channel does not have a valid source.",
+                          );
                         }
                       },
                       child: ClipRRect(
