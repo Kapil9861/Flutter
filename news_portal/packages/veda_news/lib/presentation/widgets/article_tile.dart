@@ -1,8 +1,12 @@
+import 'package:drift/drift.dart' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/data/models/articles.dart'; // Article model
 import 'package:veda_news/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
+import 'package:veda_news/presentation/providers/drift/favourites_provider.dart';
 import 'package:veda_news/presentation/providers/logo_provider.dart'; // Provider for logos
+import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
 import 'package:core/core.dart';
 
@@ -27,6 +31,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
 
   @override
   Widget build(BuildContext context) {
+    final isLiked = ref.watch(isLikedProvider);
     // Fetching and assigning necessary data
     String logo = _logoProvider.getLogo(widget.article.source!.name ?? "");
     String imageUrl = widget.article.urlToImage ??
@@ -38,6 +43,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
     String postDuration =
         calculateTimeAgo(widget.article.publishedAt ?? "Unknown");
     String title = widget.article.title ?? "Not very useful!";
+    String sourceId = widget.article.source!.id ?? "independent";
 
     return GestureDetector(
       onTap: () {
@@ -53,6 +59,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                 time: postDuration,
                 imageUrl: imageUrl,
                 title: title,
+                sourceId: sourceId,
               );
             },
           ),
@@ -61,7 +68,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
       child: Padding(
         padding: const EdgeInsets.all(4.5),
         child: SizedBox(
-          height: 112,
+          height: 116,
           width: MediaQuery.of(context).size.width - 50,
           child: Row(
             children: [
@@ -94,8 +101,8 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                   right: 8,
                 ),
                 child: SizedBox(
-                  height: 196,
-                  width: 270,
+                  height: 200,
+                  width: 250,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,6 +160,32 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                       )
                     ],
                   ),
+                ),
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    ref.read(isLikedProvider.notifier).state = !isLiked;
+                    ref.read(addFavouriteArticleProvider.notifier).add(
+                          FavouritesCompanion(
+                            author: d.Value(author),
+                            content: d.Value(description),
+                            description: d.Value(description),
+                            publishedAt: d.Value(postDuration),
+                            sourceId: d.Value(sourceId),
+                            sourceName: d.Value(channelName),
+                            title: d.Value(channelName),
+                            url: d.Value(imageUrl),
+                            urlToImage: d.Value(imageUrl),
+                          ),
+                        );
+                  },
+                  child: isLiked
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.pink,
+                        )
+                      : const Icon(Icons.favorite_outline),
                 ),
               )
             ],

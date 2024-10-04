@@ -1,5 +1,9 @@
+import 'package:drift/drift.dart' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:veda_news/data/database/news_portal_database.dart';
+import 'package:veda_news/presentation/providers/drift/favourites_provider.dart';
+import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 import 'package:resources/resources.dart';
@@ -17,6 +21,7 @@ class DetailScreen extends ConsumerStatefulWidget {
     required this.title,
     required this.author,
     required this.channelName,
+    required this.sourceId,
   });
 
   /// The URL of the article's main image.
@@ -39,6 +44,7 @@ class DetailScreen extends ConsumerStatefulWidget {
 
   /// The name of the news channel or source.
   final String channelName;
+  final String sourceId;
 
   @override
   ConsumerState<DetailScreen> createState() => _DetailScreenState();
@@ -129,6 +135,19 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                     GestureDetector(
                       onTap: () {
                         ref.read(isLikedProvider.notifier).state = !isLiked;
+                        ref.read(addFavouriteArticleProvider.notifier).add(
+                              FavouritesCompanion(
+                                author: d.Value(widget.author),
+                                content: d.Value(widget.content),
+                                description: d.Value(widget.content),
+                                publishedAt: d.Value(widget.time),
+                                sourceId: d.Value(widget.sourceId),
+                                sourceName: d.Value(widget.channelName),
+                                title: d.Value(widget.title),
+                                url: d.Value(widget.imageUrl),
+                                urlToImage: d.Value(widget.imageUrl),
+                              ),
+                            );
                       },
                       child: isLiked
                           ? const Icon(
@@ -149,6 +168,18 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                             : ref
                                 .read(followButtonTextProvider.notifier)
                                 .state = "Following";
+
+                        if (widget.sourceId != "independent") {
+                          ref.read(addFollowedSourceProvider.notifier).add(
+                                FollowedSourceCompanion(
+                                  sourceId: d.Value(widget.sourceId),
+                                  sourceName:
+                                      widget.channelName != "independent"
+                                          ? d.Value(widget.channelName)
+                                          : d.Value(widget.sourceId),
+                                ),
+                              );
+                        }
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(6),

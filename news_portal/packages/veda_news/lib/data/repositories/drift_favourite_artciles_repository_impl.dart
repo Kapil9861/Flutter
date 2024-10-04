@@ -8,20 +8,17 @@ class DriftFavouriteArtcilesRepositoryImpl
 
   DriftFavouriteArtcilesRepositoryImpl(this.source);
   @override
-  Future<int> addFavouriteArticle(FavouritesCompanion favourite) {
-    // TODO: implement addFavouriteArticle
-    throw UnimplementedError();
+  Future<int> addFavouriteArticle(FavouritesCompanion favourite) async {
+    return await source.addFavouriteArticle(favourite);
   }
 
   @override
   Stream<List<Favourite>> getFavouriteArticles() {
-    // TODO: implement getFavouriteArticles
-    throw UnimplementedError();
+    return source.getFavouriteArticles();
   }
 
   @override
-  Future<int> removeFavouriteArticle(int id) {
-    // TODO: implement removeFavouriteArticle
-    throw UnimplementedError();
+  Future<int> removeFavouriteArticle(int id) async {
+    return await source.removeFavouriteArticle(id);
   }
 }

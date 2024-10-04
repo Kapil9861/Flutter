@@ -3,56 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
-import 'package:veda_news/presentation/providers/news_articles_providers.dart';
-import 'package:veda_news/presentation/providers/small_providers.dart';
+import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/channels_screen.dart';
 import 'package:veda_news/presentation/widgets/favourite_articles.dart';
-import 'package:veda_news/presentation/widgets/filters.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
-/// The [HomePage] widget serves as the main screen of the Veda News Portal.
-/// It displays a list of news articles fetched from an API and allows users to filter
-/// articles by category and sort criteria.
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class FavouritesNewsChannelArticle extends ConsumerStatefulWidget {
+  const FavouritesNewsChannelArticle({
+    super.key,
+    required this.sourceId,
+    required this.sourceName,
+  });
+  final String sourceId;
+  final String sourceName;
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  ConsumerState<FavouritesNewsChannelArticle> createState() =>
+      _FavouritesNewsChannelArticleState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
-  /// The [_newsRepository] is used to fetch news data from the API.
-
-  /// The [category] variable stores the currently selected news category.
-
-  /// The [sortBy] variable stores the sorting criteria for news articles.
-  String sortBy = "";
-
-  @override
-  void initState() {
-    ref.read(newsArticlesProvider.notifier).fetchNewsArticles(context);
-    super.initState();
-  }
-
+class _FavouritesNewsChannelArticleState
+    extends ConsumerState<FavouritesNewsChannelArticle> {
   @override
   Widget build(BuildContext context) {
-    final isLiked = ref.watch(isLikedProvider);
-    String category = ref.watch(selectedCategoryProvider);
-    final fetchLiveNews = ref.watch(newsArticlesProvider).newsModel;
-
+    final favouriteArticles = ref.watch(followedNewsArticlesProvider).newsModel;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         toolbarHeight: 56,
         title: IconButton(
-          icon: Image.asset(
-            'assets/logo/Vector.png',
-            height: 30,
-            width: 99,
-          ),
+          icon: Text(widget.sourceName),
           onPressed: () {
-            ref.read(newsArticlesProvider.notifier).fetchNewsArticles(context);
+            ref
+                .read(followedNewsArticlesProvider.notifier)
+                .fetchNewsArticles(context, source: widget.sourceId);
           },
         ),
         actions: [
@@ -101,32 +86,36 @@ class _HomePageState extends ConsumerState<HomePage> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: fetchLiveNews.articles != null && fetchLiveNews.articles!.isNotEmpty
+      body: favouriteArticles.articles != null &&
+              favouriteArticles.articles!.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Filters(
-                    selectedCategory: category.isEmpty ? "all" : category,
-                    onCategorySelected: (String selectedCategory) {
-                      ref.read(selectedCategoryProvider.notifier).state =
-                          selectedCategory;
-                      ref.read(newsArticlesProvider.notifier).fetchNewsArticles(
-                          context,
-                          category: selectedCategory);
-                    },
-                  ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: fetchLiveNews.articles!.length,
+                      itemCount: favouriteArticles.articles!.length,
                       itemBuilder: (context, index) {
-                        Articles article = fetchLiveNews.articles![index];
+                        Articles article = favouriteArticles.articles![index];
                         return Row(
                           children: [
                             ArticleTile(
                               article: article,
                             ),
+                            Center(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child:
+                                    //  isLiked
+                                    //     ? const Icon(
+                                    //         Icons.favorite,
+                                    //         color: Colors.pink,
+                                    //       )
+                                    //     :
+                                    const Icon(Icons.favorite_outline),
+                              ),
+                            )
                           ],
                         );
                       },
@@ -135,9 +124,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ],
               ),
             )
-          : fetchLiveNews.articles != null &&
-                  (fetchLiveNews.articles == null ||
-                      fetchLiveNews.articles!.isEmpty)
+          : favouriteArticles.articles != null &&
+                  (favouriteArticles.articles == null ||
+                      favouriteArticles.articles!.isEmpty)
               ? const Center(
                   child: CircularProgressIndicator(),
                 )

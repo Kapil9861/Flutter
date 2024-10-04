@@ -8,19 +8,19 @@ import 'package:veda_news/data/repositories/news_repository_impl.dart';
 import 'package:veda_news/domain/repositories/news_repository.dart';
 import 'package:veda_news/domain/usecases/fetch_news_article.dart';
 
-final newsDataSourceProvider = Provider<NewsArticleDatasource>((ref) {
+final followedNewsDataSourceProvider = Provider<NewsArticleDatasource>((ref) {
   final httpService = HttpServiceImpl();
   return NewsArticleDatasource(httpService);
 });
 
-final newsRepositoryProvider = Provider<NewsRepository>((ref) {
-  final source = ref.watch(newsDataSourceProvider);
+final followedNewsRepositoryProvider = Provider<NewsRepository>((ref) {
+  final source = ref.watch(followedNewsDataSourceProvider);
   return NewsRepositoryImpl(source);
 });
 
-final newsArticlesProvider =
+final followedNewsArticlesProvider =
     ChangeNotifierProvider<NewsArticlesNotifier>((ref) {
-  final repo = ref.watch(newsRepositoryProvider);
+  final repo = ref.watch(followedNewsRepositoryProvider);
   final fetchNews = FetchNewsArticle(repo);
   return NewsArticlesNotifier(fetchNews);
 });
@@ -37,13 +37,9 @@ class NewsArticlesNotifier extends ChangeNotifier {
 
   Future<void> fetchNewsArticles(
     BuildContext context, {
-    String? sortBy,
-    String? category,
-    String? source,
+    required String source,
   }) async {
     final fetchNewsModel = await fetchNews.call(
-      category: category,
-      sortBy: sortBy,
       source: source,
     );
     final data = fetchNewsModel['data'];
