@@ -5,15 +5,20 @@ import 'package:veda_news/domain/repositories/news_repository.dart';
 /// It provides methods to retrieve news articles based on various filters such as category
 /// and sorting order.
 class NewsRepositoryImpl implements NewsRepository {
-  final NewsArticleDatasource source;
+  final NewsArticleDatasource datasource;
 
-  NewsRepositoryImpl(this.source);
+  NewsRepositoryImpl(this.datasource);
 
   @override
   Future<Map<String, dynamic>> fetchNewsFromApi({
     String? sortBy,
     String? category,
+    String? source,
   }) async {
-    return await source.fetchNews(category: category, sortBy: sortBy);
+    return await datasource.fetchNews(
+      category: category,
+      sortBy: sortBy,
+      sources: source,
+    );
   }
 }

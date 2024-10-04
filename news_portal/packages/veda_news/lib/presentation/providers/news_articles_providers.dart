@@ -39,10 +39,12 @@ class NewsArticlesNotifier extends ChangeNotifier {
     BuildContext context, {
     String? sortBy,
     String? category,
+    required String source,
   }) async {
     final fetchNewsModel = await fetchNews.call(
       category: category,
       sortBy: sortBy,
+      source: source,
     );
     final data = fetchNewsModel['data'];
     final error = fetchNewsModel['error'];

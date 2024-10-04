@@ -5,10 +5,12 @@ class FetchNewsArticle {
 
   FetchNewsArticle(this.repository);
 
-  Future<Map<String, dynamic>> call({String? category, String? sortBy}) async {
+  Future<Map<String, dynamic>> call(
+      {String? category, String? sortBy, String? source}) async {
     return await repository.fetchNewsFromApi(
       category: category,
       sortBy: sortBy,
+      source: source,
     );
   }
 }
