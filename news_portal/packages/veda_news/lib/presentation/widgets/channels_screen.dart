@@ -2,7 +2,7 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/database/news_portal_database.dart';
-import 'package:veda_news/presentation/pages/favourites_news_channel_article.dart';
+import 'package:veda_news/presentation/pages/favourites_news_channel_article_tile.dart';
 import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/pages/favourite_articles.dart';
