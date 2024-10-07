@@ -53,20 +53,30 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
 
   Future<int> removeFollowedSource(String sourceId) async {
     final query = await (delete(followedSource)
-          ..where(
-            (table) => table.sourceId.equals(sourceId),
-          ))
+          ..where((table) => table.sourceId.equals(sourceId)))
         .go();
     return query;
   }
 
   Future<int> removeFavouriteArticle(int id) async {
     final query = await (delete(followedSource)
+          ..where((table) => table.id.equals(id)))
+        .go();
+
+    return query;
+  }
+
+  Future<bool> removeFavourite(String title) async {
+    final query = await (delete(favourites)
           ..where(
-            (table) => table.id.equals(id),
+            (table) => table.title.equals(title),
           ))
         .go();
-    return query;
+    if (query > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Stream<List<FollowedSourceData>> getFollowedSources() {

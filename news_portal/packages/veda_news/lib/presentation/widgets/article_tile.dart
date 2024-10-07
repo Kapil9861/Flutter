@@ -128,6 +128,8 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                                         onPressed: () async {
                                           await _database
                                               .removeFollowedSource(sourceId);
+                                          CustomSnackbar().show(context,
+                                              "Unfollowed Channel($channelName)!");
                                         },
                                         child: const StyledText(
                                           fontSize: 14,
@@ -260,7 +262,6 @@ class LikeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: StreamBuilder(
-          // future: _database.isFavourite(title),
           stream: _database.likedStream(title),
           builder: (context, snapshot) {
             bool isLiked = snapshot.data != null && snapshot.data!.isNotEmpty;
@@ -269,6 +270,8 @@ class LikeWidget extends StatelessWidget {
                 if (title != "[Removed]") {
                   if (isLiked) {
                     await _database.removeFavourite(title);
+                    CustomSnackbar().show(context, "Removed as the favourite article");
+
                   } else {
                     _database.addFavouriteArticle(
                       FavouritesCompanion(
@@ -283,29 +286,8 @@ class LikeWidget extends StatelessWidget {
                         urlToImage: d.Value(imageUrl),
                       ),
                     );
+                    CustomSnackbar().show(context, "Added as the favourite article");
                   }
-                  // final result = await _database.isFavourite(title);
-                  // if (result == true) {
-                  //   if (widget.id != 0) {
-                  //     await _database.removeFavouriteArticle(widget.id);
-                  //   }
-                  // } else {
-                  //   ref.read(isLikedProvider.notifier).state = !isLiked;
-                  //   ref.read(addFavouriteArticleProvider.notifier).add(
-                  //         context,
-                  //         FavouritesCompanion(
-                  //           author: d.Value(author),
-                  //           content: d.Value(description),
-                  //           description: d.Value(description),
-                  //           publishedAt: d.Value(postDuration),
-                  //           sourceId: d.Value(sourceId),
-                  //           sourceName: d.Value(channelName),
-                  //           title: d.Value(channelName),
-                  //           url: d.Value(imageUrl),
-                  //           urlToImage: d.Value(imageUrl),
-                  //         ),
-                  //       );
-                  // }
                 } else {
                   CustomSnackbar()
                       .show(context, "The article is not available!");
