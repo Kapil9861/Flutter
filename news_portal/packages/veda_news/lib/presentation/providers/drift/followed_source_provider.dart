@@ -1,5 +1,4 @@
 import 'package:components/components.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/database/news_portal_database.dart';
@@ -46,8 +45,8 @@ class RemoveFollowedSourceNotifier extends ChangeNotifier {
   RemoveFollowedSourceNotifier(this.useCase);
   String message = "";
 
-  Future<void> remove(BuildContext context, int id) async {
-    final result = await useCase.call(id);
+  Future<void> remove(BuildContext context, String sourceId) async {
+    final result = await useCase.call(sourceId);
     if (result > 0) {
       message = "Removed Followed Source Successfully!";
       CustomSnackbar().show(context, message);

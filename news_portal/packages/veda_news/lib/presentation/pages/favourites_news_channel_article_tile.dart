@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/presentation/pages/followed_channel_news_articles.dart';
+import 'package:veda_news/presentation/providers/drift/favourites_provider.dart';
+import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/providers/logo_provider.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
@@ -8,9 +10,11 @@ import 'package:veda_news/presentation/widgets/styled_text.dart';
 class FavouritesNewsChannelArticle extends ConsumerStatefulWidget {
   const FavouritesNewsChannelArticle({
     super.key,
+    required this.id,
     required this.sourceId,
     required this.sourceName,
   });
+  final int id;
   final String sourceId;
   final String sourceName;
 
@@ -25,7 +29,7 @@ class _FavouritesNewsChannelArticleState
   @override
   Widget build(BuildContext context) {
     final logo = _logoProvider.getLogo(widget.sourceName);
-    final buttonText = "follow";
+    final buttonText = "Following";
     return Padding(
       padding: const EdgeInsets.all(15),
       child: GestureDetector(
@@ -66,12 +70,24 @@ class _FavouritesNewsChannelArticleState
                   ],
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await ref
+                        .read(removeFollowedSourceProvider.notifier)
+                        .remove(
+                          context,
+                          widget.sourceId,
+                        );
+                    ref.read(getFavouritesProvider);
+                  },
                   style: const ButtonStyle(
                     foregroundColor: WidgetStatePropertyAll(Colors.white),
                     backgroundColor: WidgetStatePropertyAll(Colors.blue),
                   ),
-                  child: Text(buttonText),
+                  child: StyledText(
+                    fontSize: 14,
+                    text: buttonText,
+                    fontColor: Colors.white,
+                  ),
                 ),
               ],
             )),

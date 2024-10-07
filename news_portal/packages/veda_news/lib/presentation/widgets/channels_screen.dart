@@ -75,7 +75,7 @@ class ChannelsScreen extends ConsumerWidget {
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     FollowedSourceData source = data[index];
-                
+
                     return GestureDetector(
                       onTap: () {
                         ref
@@ -86,6 +86,7 @@ class ChannelsScreen extends ConsumerWidget {
                             );
                       },
                       child: FavouritesNewsChannelArticle(
+                        id: source.id,
                         sourceName: source.sourceName ?? source.sourceId,
                         sourceId: source.sourceId,
                       ),

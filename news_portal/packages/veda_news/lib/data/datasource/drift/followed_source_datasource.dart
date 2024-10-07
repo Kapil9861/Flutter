@@ -10,7 +10,7 @@ class FollowedSourceDatasource {
     return await _database.addFollowedSource(source);
   }
 
-  Future<int> removeFollowedSource(int id) async {
+  Future<int> removeFollowedSource(String id) async {
     return await _database.removeFollowedSource(id);
   }
 }

@@ -11,6 +11,8 @@ import 'package:veda_news/presentation/pages/favourite_articles.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
+import '../../data/database/news_portal_database.dart';
+
 /// The [HomePage] widget serves as the main screen of the Veda News Portal.
 /// It displays a list of news articles fetched from an API and allows users to filter
 /// articles by category and sort criteria.
@@ -35,6 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     super.initState();
   }
 
+  final _database = NewsPortalDatabase();
   @override
   Widget build(BuildContext context) {
     String category = ref.watch(selectedCategoryProvider);
@@ -42,6 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         toolbarHeight: 56,
         title: IconButton(

@@ -52,10 +52,10 @@ class DetailScreen extends ConsumerStatefulWidget {
 }
 
 class _DetailScreenState extends ConsumerState<DetailScreen> {
-  /// The text displayed on the follow button, toggles between "Follow" and "Following".
+  final _database = NewsPortalDatabase();
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
-    bool isLiked = ref.watch(isLikedProvider);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -135,7 +135,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       widget.channelName.isNotEmpty)
                     GestureDetector(
                       onTap: () {
-                        ref.read(isLikedProvider.notifier).state = !isLiked;
+                        isLiked = !isLiked;
                         ref.read(addFavouriteArticleProvider.notifier).add(
                               context,
                               FavouritesCompanion(
@@ -162,15 +162,6 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                       widget.channelName.isNotEmpty)
                     GestureDetector(
                       onTap: () {
-                        ref.read(followButtonTextProvider.notifier).state ==
-                                "Following"
-                            ? ref
-                                .read(followButtonTextProvider.notifier)
-                                .state = "Follow"
-                            : ref
-                                .read(followButtonTextProvider.notifier)
-                                .state = "Following";
-
                         if (widget.sourceId != "independent") {
                           ref.read(addFollowedSourceProvider.notifier).add(
                                 context,
@@ -200,12 +191,12 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                               color: const Color(0xFF1877F2),
                               borderRadius: BorderRadius.circular(6),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 StyledText(
                                   fontSize: 16,
-                                  text: ref.watch(followButtonTextProvider),
+                                  text: "Following",
                                   fontWeight: FontWeight.w600,
                                   fontColor: Colors.white,
                                 ),
