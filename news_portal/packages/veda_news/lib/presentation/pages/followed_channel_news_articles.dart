@@ -30,13 +30,9 @@ class _FollowedNewsChannelArticleState
         backgroundColor: Colors.white,
         toolbarHeight: 56,
         title: IconButton(
-          icon: Image.asset(
-            'assets/logo/Vector.png',
-            height: 30,
-            width: 99,
-          ),
+          icon: Image.asset("assets/logo/Vector.png"),
           onPressed: () {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) {
                   return const HomePage();
@@ -94,7 +90,7 @@ class _FollowedNewsChannelArticleState
       body: favouriteArticles.articles != null &&
               favouriteArticles.articles!.isNotEmpty
           ? Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -107,19 +103,6 @@ class _FollowedNewsChannelArticleState
                           children: [
                             ArticleTile(
                               article: article,
-                            ),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child:
-                                    //  isLiked
-                                    //     ? const Icon(
-                                    //         Icons.favorite,
-                                    //         color: Colors.pink,
-                                    //       )
-                                    //     :
-                                    const Icon(Icons.favorite_outline),
-                              ),
                             )
                           ],
                         );

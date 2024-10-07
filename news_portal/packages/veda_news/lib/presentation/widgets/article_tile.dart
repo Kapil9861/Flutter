@@ -1,12 +1,12 @@
+import 'package:components/components.dart';
 import 'package:drift/drift.dart' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/data/models/articles.dart'; // Article model
 import 'package:veda_news/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
-import 'package:veda_news/presentation/providers/drift/favourites_provider.dart';
+import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/logo_provider.dart'; // Provider for logos
-import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
 import 'package:core/core.dart';
 
@@ -17,7 +17,9 @@ class ArticleTile extends ConsumerStatefulWidget {
   const ArticleTile({
     super.key,
     required this.article,
+    this.id = 0,
   });
+  final int id;
 
   /// The article data to be displayed.
   final Articles article;
@@ -28,10 +30,9 @@ class ArticleTile extends ConsumerStatefulWidget {
 
 class _ArticleTileState extends ConsumerState<ArticleTile> {
   final LogoProvider _logoProvider = LogoProvider(); // Instance to fetch logos
-
+  final _database = NewsPortalDatabase();
   @override
   Widget build(BuildContext context) {
-    final isLiked = ref.watch(isLikedProvider);
     // Fetching and assigning necessary data
     String logo = _logoProvider.getLogo(widget.article.source!.name ?? "");
     String imageUrl = widget.article.urlToImage ??
@@ -67,10 +68,10 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(4.5),
+          padding: const EdgeInsets.all(2.5),
           child: SizedBox(
-            height: 116,
-            width: MediaQuery.of(context).size.width - 50,
+            height: 124,
+            width: MediaQuery.of(context).size.width - 15,
             child: Row(
               children: [
                 Padding(
@@ -103,17 +104,70 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                   ),
                   child: SizedBox(
                     height: 200,
-                    width: 250,
+                    width: 240,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        StyledText(
-                          fontSize: 13,
-                          text: author,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              child: StyledText(
+                                fontSize: 13,
+                                text: truncateWithEllipsis(author, 20),
+                              ),
+                            ),
+                            StreamBuilder(
+                              stream: _database.followedSources(sourceId),
+                              builder: (context, snapshot) {
+                                return snapshot.data != null &&
+                                        snapshot.data!.isNotEmpty
+                                    ? TextButton(
+                                        onPressed: () async {
+                                          await _database
+                                              .removeFollowedSource(sourceId);
+                                          CustomSnackbar().show(context,
+                                              "Unfollowed Channel($channelName)!");
+                                        },
+                                        child: const StyledText(
+                                          fontSize: 14,
+                                          text: "Following",
+                                          fontColor: Colors.blue,
+                                        ),
+                                      )
+                                    : TextButton(
+                                        onPressed: () async {
+                                          if (sourceId != "independent") {
+                                            await ref
+                                                .read(addFollowedSourceProvider
+                                                    .notifier)
+                                                .add(
+                                                  context,
+                                                  FollowedSourceCompanion(
+                                                    sourceId: d.Value(sourceId),
+                                                    sourceName:
+                                                        d.Value(channelName),
+                                                  ),
+                                                );
+                                          } else {
+                                            CustomSnackbar().show(context,
+                                                "The source is not identified");
+                                          }
+                                        },
+                                        child: const StyledText(
+                                          fontSize: 14,
+                                          fontColor: Colors.blue,
+                                          text: "Follow",
+                                        ),
+                                      );
+                              },
+                            ),
+                          ],
                         ),
                         StyledText(
-                          text: truncateWithEllipsis(title, 45),
+                          text: truncateWithEllipsis(title, 40),
                           fontSize: 16,
                           fontColor: Colors.black,
                         ),
@@ -164,38 +218,89 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                     ),
                   ),
                 ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      ref.read(isLikedProvider.notifier).state = !isLiked;
-                      ref.read(addFavouriteArticleProvider.notifier).add(
-                            context,
-                            FavouritesCompanion(
-                              author: d.Value(author),
-                              content: d.Value(description),
-                              description: d.Value(description),
-                              publishedAt: d.Value(postDuration),
-                              sourceId: d.Value(sourceId),
-                              sourceName: d.Value(channelName),
-                              title: d.Value(channelName),
-                              url: d.Value(imageUrl),
-                              urlToImage: d.Value(imageUrl),
-                            ),
-                          );
-                    },
-                    child: isLiked
-                        ? const Icon(
-                            Icons.favorite,
-                            color: Colors.pink,
-                          )
-                        : const Icon(Icons.favorite_outline),
-                  ),
-                )
+                LikeWidget(
+                    database: _database,
+                    title: title,
+                    author: author,
+                    description: description,
+                    postDuration: postDuration,
+                    sourceId: sourceId,
+                    channelName: channelName,
+                    imageUrl: imageUrl)
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class LikeWidget extends StatelessWidget {
+  const LikeWidget({
+    super.key,
+    required NewsPortalDatabase database,
+    required this.title,
+    required this.author,
+    required this.description,
+    required this.postDuration,
+    required this.sourceId,
+    required this.channelName,
+    required this.imageUrl,
+  }) : _database = database;
+
+  final NewsPortalDatabase _database;
+  final String title;
+  final String author;
+  final String description;
+  final String postDuration;
+  final String sourceId;
+  final String channelName;
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: StreamBuilder(
+          stream: _database.likedStream(title),
+          builder: (context, snapshot) {
+            bool isLiked = snapshot.data != null && snapshot.data!.isNotEmpty;
+            return GestureDetector(
+              onTap: () async {
+                if (title != "[Removed]") {
+                  if (isLiked) {
+                    await _database.removeFavourite(title);
+                    CustomSnackbar().show(context, "Removed as the favourite article");
+
+                  } else {
+                    _database.addFavouriteArticle(
+                      FavouritesCompanion(
+                        author: d.Value(author),
+                        content: d.Value(description),
+                        description: d.Value(description),
+                        publishedAt: d.Value(postDuration),
+                        sourceId: d.Value(sourceId),
+                        sourceName: d.Value(channelName),
+                        title: d.Value(title),
+                        url: d.Value(imageUrl),
+                        urlToImage: d.Value(imageUrl),
+                      ),
+                    );
+                    CustomSnackbar().show(context, "Added as the favourite article");
+                  }
+                } else {
+                  CustomSnackbar()
+                      .show(context, "The article is not available!");
+                }
+              },
+              child: snapshot.data != null && snapshot.data!.isNotEmpty
+                  ? const Icon(
+                      Icons.favorite,
+                      color: Colors.pink,
+                    )
+                  : const Icon(Icons.favorite_outline),
+            );
+          }),
     );
   }
 }

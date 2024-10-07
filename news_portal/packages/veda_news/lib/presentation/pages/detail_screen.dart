@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/presentation/providers/drift/favourites_provider.dart';
 import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
-import 'package:veda_news/presentation/providers/small_providers.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 import 'package:resources/resources.dart';
 
@@ -52,10 +51,11 @@ class DetailScreen extends ConsumerStatefulWidget {
 }
 
 class _DetailScreenState extends ConsumerState<DetailScreen> {
-  /// The text displayed on the follow button, toggles between "Follow" and "Following".
+  final _database = NewsPortalDatabase();
+  bool isLiked = false;
+  String buttonText = "";
   @override
   Widget build(BuildContext context) {
-    bool isLiked = ref.watch(isLikedProvider);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -133,88 +133,109 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                   ),
                   if (widget.channelName != "[Removed]" &&
                       widget.channelName.isNotEmpty)
-                    GestureDetector(
-                      onTap: () {
-                        ref.read(isLikedProvider.notifier).state = !isLiked;
-                        ref.read(addFavouriteArticleProvider.notifier).add(
-                              context,
-                              FavouritesCompanion(
-                                author: d.Value(widget.author),
-                                content: d.Value(widget.content),
-                                description: d.Value(widget.content),
-                                publishedAt: d.Value(widget.time),
-                                sourceId: d.Value(widget.sourceId),
-                                sourceName: d.Value(widget.channelName),
-                                title: d.Value(widget.title),
-                                url: d.Value(widget.imageUrl),
-                                urlToImage: d.Value(widget.imageUrl),
-                              ),
-                            );
-                      },
-                      child: isLiked
-                          ? const Icon(
-                              Icons.favorite,
-                              color: Colors.pink,
-                            )
-                          : const Icon(Icons.favorite_outline),
-                    ),
+                    StreamBuilder(
+                        stream: _database.likedStream(widget.title),
+                        builder: (context, snapshot) {
+                          isLiked = snapshot.data != null &&
+                              snapshot.data!.isNotEmpty;
+                          return GestureDetector(
+                            onTap: () async {
+                              if (isLiked) {
+                                await _database.removeFavourite(widget.title);
+                                CustomSnackbar().show(
+                                    context, "Article removed as favourite!");
+                              } else {
+                                ref
+                                    .read(addFavouriteArticleProvider.notifier)
+                                    .add(
+                                      context,
+                                      FavouritesCompanion(
+                                        author: d.Value(widget.author),
+                                        content: d.Value(widget.content),
+                                        description: d.Value(widget.content),
+                                        publishedAt: d.Value(widget.time),
+                                        sourceId: d.Value(widget.sourceId),
+                                        sourceName: d.Value(widget.channelName),
+                                        title: d.Value(widget.title),
+                                        url: d.Value(widget.imageUrl),
+                                        urlToImage: d.Value(widget.imageUrl),
+                                      ),
+                                    );
+                              }
+                            },
+                            child: isLiked
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Colors.pink,
+                                  )
+                                : const Icon(Icons.favorite_outline),
+                          );
+                        }),
                   if (widget.channelName != "[Removed]" &&
                       widget.channelName.isNotEmpty)
-                    GestureDetector(
-                      onTap: () {
-                        ref.read(followButtonTextProvider.notifier).state ==
-                                "Following"
-                            ? ref
-                                .read(followButtonTextProvider.notifier)
-                                .state = "Follow"
-                            : ref
-                                .read(followButtonTextProvider.notifier)
-                                .state = "Following";
-
-                        if (widget.sourceId != "independent") {
-                          ref.read(addFollowedSourceProvider.notifier).add(
-                                context,
-                                FollowedSourceCompanion(
-                                  sourceId: d.Value(widget.sourceId),
-                                  sourceName:
-                                      widget.channelName != "independent"
-                                          ? d.Value(widget.channelName)
-                                          : d.Value(widget.sourceId),
-                                ),
-                              );
-                        } else {
-                          CustomSnackbar().show(
-                            context,
-                            "The channel does not have a valid source.",
-                          );
-                        }
-                      },
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(6),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5.0, bottom: 5),
-                          child: Container(
-                            width: 102,
-                            height: 34,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF1877F2),
+                    StreamBuilder(
+                        stream: _database.followedSources(widget.sourceId),
+                        builder: (context, snapshot) {
+                          buttonText = snapshot.hasData &&
+                                  snapshot.data != null &&
+                                  snapshot.data!.isNotEmpty
+                              ? "Following"
+                              : "Follow";
+                          return GestureDetector(
+                            onTap: () async {
+                              if (buttonText == "Following") {
+                                await _database
+                                    .removeFollowedSource(widget.sourceId);
+                                CustomSnackbar()
+                                    .show(context, "Unfollowed Successfully!");
+                              } else if (widget.sourceId != "independent") {
+                                ref
+                                    .read(addFollowedSourceProvider.notifier)
+                                    .add(
+                                      context,
+                                      FollowedSourceCompanion(
+                                        sourceId: d.Value(widget.sourceId),
+                                        sourceName:
+                                            widget.channelName != "independent"
+                                                ? d.Value(widget.channelName)
+                                                : d.Value(widget.sourceId),
+                                      ),
+                                    );
+                              } else {
+                                CustomSnackbar().show(
+                                  context,
+                                  "The channel does not have a valid source.",
+                                );
+                              }
+                            },
+                            child: ClipRRect(
                               borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                StyledText(
-                                  fontSize: 16,
-                                  text: ref.watch(followButtonTextProvider),
-                                  fontWeight: FontWeight.w600,
-                                  fontColor: Colors.white,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5.0, bottom: 5),
+                                child: Container(
+                                  width: 102,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF1877F2),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      StyledText(
+                                        fontSize: 16,
+                                        text: buttonText,
+                                        fontWeight: FontWeight.w600,
+                                        fontColor: Colors.white,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
+                          );
+                        }),
                 ],
               ),
             ),

@@ -5,7 +5,7 @@ class RemoveFollowedSource {
 
   RemoveFollowedSource(this.repository);
 
-  Future<int> call(int id) async {
+  Future<int> call(String id) async {
     return await repository.removeFollowedSource(id);
   }
 }

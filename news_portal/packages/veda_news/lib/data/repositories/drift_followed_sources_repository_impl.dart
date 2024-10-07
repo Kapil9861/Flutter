@@ -14,7 +14,7 @@ class DriftFollowedSourcesRepositoryImpl
   }
 
   @override
-  Future<int> removeFollowedSource(int id) async {
+  Future<int> removeFollowedSource(String id) async {
     return await dataSource.removeFollowedSource(id);
   }
 

@@ -11,6 +11,8 @@ import 'package:veda_news/presentation/pages/favourite_articles.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
+import '../../data/database/news_portal_database.dart';
+
 /// The [HomePage] widget serves as the main screen of the Veda News Portal.
 /// It displays a list of news articles fetched from an API and allows users to filter
 /// articles by category and sort criteria.
@@ -35,6 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     super.initState();
   }
 
+  final _database = NewsPortalDatabase();
   @override
   Widget build(BuildContext context) {
     String category = ref.watch(selectedCategoryProvider);
@@ -42,6 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         toolbarHeight: 56,
         title: IconButton(
@@ -60,7 +64,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return ChannelsScreen();
+                    return const ChannelsScreen();
                   },
                 ),
               );
@@ -76,7 +80,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return FavouriteArticles();
+                    return const FavouriteArticles();
                   },
                 ),
               );
@@ -102,7 +106,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       backgroundColor: Colors.white,
       body: fetchLiveNews.articles != null && fetchLiveNews.articles!.isNotEmpty
           ? Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

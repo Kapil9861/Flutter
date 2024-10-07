@@ -75,7 +75,10 @@ class FavouriteArticles extends ConsumerWidget {
                     publishedAt: favourite.publishedAt ?? "",
                     content: favourite.content ?? "",
                   );
-                  return ArticleTile(article: article);
+                  return ArticleTile(
+                    article: article,
+                    id: favourite.id,
+                  );
                 },
               );
             }
