@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/presentation/pages/favourite_articles.dart';
+import 'package:veda_news/presentation/pages/home_page.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/channels_screen.dart';
@@ -29,8 +30,20 @@ class _FollowedNewsChannelArticleState
         backgroundColor: Colors.white,
         toolbarHeight: 56,
         title: IconButton(
-          icon: Text(""),
-          onPressed: () {},
+          icon: Image.asset(
+            'assets/logo/Vector.png',
+            height: 30,
+            width: 99,
+          ),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return const HomePage();
+                },
+              ),
+            );
+          },
         ),
         actions: [
           TextButton(
@@ -38,7 +51,7 @@ class _FollowedNewsChannelArticleState
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return ChannelsScreen();
+                    return const ChannelsScreen();
                   },
                 ),
               );
@@ -54,7 +67,7 @@ class _FollowedNewsChannelArticleState
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return FavouriteArticles();
+                    return const FavouriteArticles();
                   },
                 ),
               );
