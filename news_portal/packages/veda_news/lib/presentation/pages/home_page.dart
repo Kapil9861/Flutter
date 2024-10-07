@@ -60,7 +60,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return ChannelsScreen();
+                    return const ChannelsScreen();
                   },
                 ),
               );
@@ -76,7 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return FavouriteArticles();
+                    return const FavouriteArticles();
                   },
                 ),
               );
@@ -102,7 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       backgroundColor: Colors.white,
       body: fetchLiveNews.articles != null && fetchLiveNews.articles!.isNotEmpty
           ? Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

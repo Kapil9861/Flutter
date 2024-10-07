@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/presentation/pages/favourite_articles.dart';
+import 'package:veda_news/presentation/pages/home_page.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/channels_screen.dart';
@@ -29,8 +30,16 @@ class _FollowedNewsChannelArticleState
         backgroundColor: Colors.white,
         toolbarHeight: 56,
         title: IconButton(
-          icon: Text(""),
-          onPressed: () {},
+          icon: Image.asset("assets/logo/Vector.png"),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) {
+                  return const HomePage();
+                },
+              ),
+            );
+          },
         ),
         actions: [
           TextButton(
@@ -38,7 +47,7 @@ class _FollowedNewsChannelArticleState
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return ChannelsScreen();
+                    return const ChannelsScreen();
                   },
                 ),
               );
@@ -54,7 +63,7 @@ class _FollowedNewsChannelArticleState
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return FavouriteArticles();
+                    return const FavouriteArticles();
                   },
                 ),
               );
@@ -81,7 +90,7 @@ class _FollowedNewsChannelArticleState
       body: favouriteArticles.articles != null &&
               favouriteArticles.articles!.isNotEmpty
           ? Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -94,19 +103,6 @@ class _FollowedNewsChannelArticleState
                           children: [
                             ArticleTile(
                               article: article,
-                            ),
-                            Center(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child:
-                                    //  isLiked
-                                    //     ? const Icon(
-                                    //         Icons.favorite,
-                                    //         color: Colors.pink,
-                                    //       )
-                                    //     :
-                                    const Icon(Icons.favorite_outline),
-                              ),
                             )
                           ],
                         );

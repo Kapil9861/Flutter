@@ -67,10 +67,10 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
           );
         },
         child: Padding(
-          padding: const EdgeInsets.all(4.5),
+          padding: const EdgeInsets.all(2.5),
           child: SizedBox(
             height: 116,
-            width: MediaQuery.of(context).size.width - 50,
+            width: MediaQuery.of(context).size.width - 15,
             child: Row(
               children: [
                 Padding(
@@ -103,7 +103,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                   ),
                   child: SizedBox(
                     height: 200,
-                    width: 250,
+                    width: 240,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
