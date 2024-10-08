@@ -29,7 +29,7 @@ class _FavouritesNewsChannelArticleState
   @override
   Widget build(BuildContext context) {
     final logo = _logoProvider.getLogo(widget.sourceName);
-    final buttonText = "Following";
+    var buttonText = "Following";
     return Padding(
       padding: const EdgeInsets.all(15),
       child: GestureDetector(
@@ -37,60 +37,62 @@ class _FavouritesNewsChannelArticleState
           await ref
               .read(followedNewsArticlesProvider.notifier)
               .fetchNewsArticles(context, source: widget.sourceId);
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => FollowedNewsChannelArticle()));
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const FollowedNewsChannelArticle(),
+            ),
+          );
         },
         child: Container(
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12, right: 12),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 3 - 24,
-                        child: Image.network(
-                          logo,
-                          height: 60,
-                          width: 60,
-                          fit: BoxFit.fill,
-                        ),
+          height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12, right: 12),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 3 - 24,
+                      child: Image.network(
+                        logo,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: StyledText(fontSize: 14, text: widget.sourceName),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await ref
-                        .read(removeFollowedSourceProvider.notifier)
-                        .remove(
-                          context,
-                          widget.sourceId,
-                        );
-                    ref.read(getFavouritesProvider);
-                  },
-                  style: const ButtonStyle(
-                    foregroundColor: WidgetStatePropertyAll(Colors.white),
-                    backgroundColor: WidgetStatePropertyAll(Colors.blue),
                   ),
-                  child: StyledText(
-                    fontSize: 14,
-                    text: buttonText,
-                    fontColor: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: StyledText(fontSize: 14, text: widget.sourceName),
                   ),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  await ref.read(removeFollowedSourceProvider.notifier).remove(
+                        context,
+                        widget.sourceId,
+                      );
+                  ref.read(getFavouritesProvider);
+                },
+                style: const ButtonStyle(
+                  foregroundColor: WidgetStatePropertyAll(Colors.white),
+                  backgroundColor: WidgetStatePropertyAll(Colors.blue),
                 ),
-              ],
-            )),
+                child: StyledText(
+                  fontSize: 14,
+                  text: buttonText,
+                  fontColor: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

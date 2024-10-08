@@ -95,14 +95,8 @@ class _FollowedNewsChannelArticleState
                 itemCount: favouriteArticles.articles!.length,
                 itemBuilder: (context, index) {
                   Articles article = favouriteArticles.articles![index];
-                  return Expanded(
-                    child: Row(
-                      children: [
-                        ArticleTile(
-                          article: article,
-                        )
-                      ],
-                    ),
+                  return ArticleTile(
+                    article: article,
                   );
                 },
               ),
