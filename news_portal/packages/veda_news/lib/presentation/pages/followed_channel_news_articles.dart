@@ -91,25 +91,20 @@ class _FollowedNewsChannelArticleState
               favouriteArticles.articles!.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: favouriteArticles.articles!.length,
-                      itemBuilder: (context, index) {
-                        Articles article = favouriteArticles.articles![index];
-                        return Row(
-                          children: [
-                            ArticleTile(
-                              article: article,
-                            )
-                          ],
-                        );
-                      },
+              child: ListView.builder(
+                itemCount: favouriteArticles.articles!.length,
+                itemBuilder: (context, index) {
+                  Articles article = favouriteArticles.articles![index];
+                  return Expanded(
+                    child: Row(
+                      children: [
+                        ArticleTile(
+                          article: article,
+                        )
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             )
           : favouriteArticles.articles != null &&
