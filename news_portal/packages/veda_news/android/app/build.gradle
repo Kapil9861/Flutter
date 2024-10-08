@@ -51,6 +51,20 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+    
+    flavorDimensions "app"
+    productFlavors{
+        feature{
+            dimension "app"
+            resValue "string", "veda_news","New Feature"
+            versionNameSuffix ".feature"
+        } 
+        prod{
+            dimension "app"
+            resValue "string", "veda_news","Release with Flavor"
+            applicationId "com.example.veda_news.prod"
+        }
+    }
 }
 
 flutter {
