@@ -29,7 +29,7 @@ class ChannelsScreen extends ConsumerWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) {
-                      return FavouriteArticles();
+                      return const FavouriteArticles();
                     },
                   ),
                 );
@@ -69,14 +69,14 @@ class ChannelsScreen extends ConsumerWidget {
                     StyledText(fontSize: 13, text: "No channels followed yet!"),
               );
             } else {
-              return Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    FollowedSourceData source = data[index];
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: data.length,
+                itemBuilder: (context, index) {
+                  FollowedSourceData source = data[index];
 
-                    return GestureDetector(
+                  return SizedBox(
+                    child: GestureDetector(
                       onTap: () {
                         ref
                             .read(followedNewsArticlesProvider.notifier)
@@ -90,9 +90,9 @@ class ChannelsScreen extends ConsumerWidget {
                         sourceName: source.sourceName ?? source.sourceId,
                         sourceId: source.sourceId,
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               );
             }
           },
