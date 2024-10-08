@@ -116,7 +116,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                             SizedBox(
                               child: StyledText(
                                 fontSize: 13,
-                                text: truncateWithEllipsis(author, 20),
+                                text: truncateWithEllipsis(author, 18),
                               ),
                             ),
                             StreamBuilder(
@@ -270,8 +270,8 @@ class LikeWidget extends StatelessWidget {
                 if (title != "[Removed]") {
                   if (isLiked) {
                     await _database.removeFavourite(title);
-                    CustomSnackbar().show(context, "Removed as the favourite article");
-
+                    CustomSnackbar()
+                        .show(context, "Removed as the favourite article");
                   } else {
                     _database.addFavouriteArticle(
                       FavouritesCompanion(
@@ -286,7 +286,8 @@ class LikeWidget extends StatelessWidget {
                         urlToImage: d.Value(imageUrl),
                       ),
                     );
-                    CustomSnackbar().show(context, "Added as the favourite article");
+                    CustomSnackbar()
+                        .show(context, "Added as the favourite article");
                   }
                 } else {
                   CustomSnackbar()
