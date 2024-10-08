@@ -28,7 +28,7 @@ class FavouriteArticles extends ConsumerWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) {
-                    return ChannelsScreen();
+                    return const  ChannelsScreen();
                   },
                 ),
               );
