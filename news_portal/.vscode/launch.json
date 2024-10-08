@@ -60,6 +60,22 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "Feature Name",
+            "cwd": "packages\\veda_news",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": ["--flavor", "feature", "--dart-define=FLAVOR=feature", "--target", "lib/main.dart" ]
+        },
+        {
+            "name": "Launch Release",
+            "cwd": "packages\\veda_news",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "args": ["--flavor", "prod", "--dart-define=FLAVOR=prod", "--target", "lib/main.dart" ]
         }
     ]
 }
