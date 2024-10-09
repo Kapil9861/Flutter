@@ -6,7 +6,7 @@ import 'package:veda_news/presentation/pages/favourites_news_channel_article_til
 import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/pages/favourite_articles.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
+// import 'package:veda_news/presentation/widgets/styled_text.dart';
 
 class ChannelsScreen extends ConsumerWidget {
   const ChannelsScreen({super.key});

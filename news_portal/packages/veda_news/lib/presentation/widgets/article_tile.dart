@@ -7,7 +7,7 @@ import 'package:veda_news/data/models/articles.dart'; // Article model
 import 'package:veda_news/presentation/pages/detail_screen.dart'; // Detail screen to show detailed article info
 import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
 import 'package:veda_news/presentation/providers/logo_provider.dart'; // Provider for logos
-import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
+// import 'package:veda_news/presentation/widgets/styled_text.dart'; // Custom text widget
 import 'package:core/core.dart';
 
 /// [ArticleTile] is a widget that displays a summary of an article.

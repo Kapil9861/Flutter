@@ -4,11 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/presentation/pages/favourite_articles.dart';
-import 'package:veda_news/presentation/pages/home_page.dart';
+import 'package:veda_news/presentation/pages/sliver_appbar.dart';
 import 'package:veda_news/presentation/providers/followed_channels_news_article_provider.dart';
 import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/channels_screen.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
 
 class FollowedNewsChannelArticle extends ConsumerStatefulWidget {
   const FollowedNewsChannelArticle({
@@ -35,7 +34,7 @@ class _FollowedNewsChannelArticleState
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) {
-                  return const HomePage();
+                  return const SliverHomePage();
                 },
               ),
             );

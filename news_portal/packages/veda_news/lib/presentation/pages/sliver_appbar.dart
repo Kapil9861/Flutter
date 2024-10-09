@@ -9,7 +9,6 @@ import 'package:veda_news/presentation/widgets/article_tile.dart';
 import 'package:veda_news/presentation/widgets/channels_screen.dart';
 import 'package:veda_news/presentation/pages/favourite_articles.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
 
 /// The [SliverHomePage] widget serves as the main screen of the Veda News Portal.
 /// It displays a list of news articles fetched from an API and allows users to filter

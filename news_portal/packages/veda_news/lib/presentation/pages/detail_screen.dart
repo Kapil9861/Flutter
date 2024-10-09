@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/presentation/providers/drift/favourites_provider.dart';
 import 'package:veda_news/presentation/providers/drift/followed_source_provider.dart';
-import 'package:veda_news/presentation/widgets/styled_text.dart';
 import 'package:resources/resources.dart';
 
 /// The [DetailScreen] widget displays the details of a selected news article.

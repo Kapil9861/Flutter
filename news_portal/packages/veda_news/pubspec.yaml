@@ -44,6 +44,8 @@ dependencies:
   drift_flutter: ^0.1.0
   path: ^1.9.0
   path_provider: ^2.1.4
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +63,8 @@ dev_dependencies:
   custom_lint: ^0.6.4
   riverpod_lint: ^2.3.10
   drift_dev: ^2.20.3
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
