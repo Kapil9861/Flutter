@@ -21,7 +21,7 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
   }
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
@@ -37,6 +37,9 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
         if (from < 2) {
           await m.createTable(favourites);
           await m.createTable(followedSource);
+        }
+        if (from < 3) {
+          await m.createTable(users);
         }
       },
     );
