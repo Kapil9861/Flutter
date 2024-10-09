@@ -1,8 +1,10 @@
 import 'package:veda_news/data/models/user_model.dart';
-import 'package:veda_news/data/repositories/auth_repository_impl.dart';
+import 'package:veda_news/domain/repositories/auth_repository.dart';
 
 class Login {
-  final authRepositoryImpl = AuthRepositoryImpl();
+  final AuthRepository authRepositoryImpl;
+
+  Login(this.authRepositoryImpl);
   Future<UserModel> login({
     required String username,
     required String password,

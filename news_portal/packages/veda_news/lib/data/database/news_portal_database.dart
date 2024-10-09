@@ -66,6 +66,18 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
     return query;
   }
 
+  Future login(String username, String password) async {}
+  Future register(
+      {required String fullname,
+      required String username,
+      required String password,
+      required String phoneNumber,
+      String? email,
+      String? resetPasswordExpiration,
+      String? sessionId,
+      String? rememberToken,
+      bool? isDeleted}) async {}
+
   Future<bool> removeFavourite(String title) async {
     final query = await (delete(favourites)
           ..where(

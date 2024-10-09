@@ -1,11 +1,9 @@
+import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/data/models/user_model.dart';
-import 'package:veda_news/domain/repositories/auth_repository.dart';
 
-class Register {
-  final AuthRepository source;
-
-  Register(this.source);
-  Future<UserModel> call(
+class AuthDatasource {
+  final _database = NewsPortalDatabase();
+  Future<UserModel> register(
       {required String fullname,
       required String username,
       required String password,
@@ -15,7 +13,7 @@ class Register {
       String? sessionId,
       String? rememberToken,
       bool? isDeleted}) async {
-    return await source.register(
+    return await _database.register(
       fullname: fullname,
       username: username,
       password: password,
@@ -26,5 +24,13 @@ class Register {
       resetPasswordExpiration: resetPasswordExpiration,
       sessionId: sessionId,
     );
+  }
+
+  Future<UserModel> login({
+    required String username,
+    required String password,
+    String? rememberToken,
+  }) async {
+    return await _database.login(username, password);
   }
 }
