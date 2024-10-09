@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veda_news/presentation/pages/home_page.dart';
+import 'package:veda_news/presentation/pages/sliver_appbar.dart';
 
 // Entry point of the application
 void main() {
@@ -42,7 +42,8 @@ class MyAppFeature extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme,
       ),
       debugShowCheckedModeBanner: false, // Hides the debug banner in the app.
-      home: const HomePage(), // Sets the home page of the app to `HomePage`.
+      home:
+          const SliverHomePage(), // Sets the home page of the app to `HomePage`.
     );
   }
 }
@@ -67,7 +68,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme,
       ),
       debugShowCheckedModeBanner: false, // Hides the debug banner in the app.
-      home: const HomePage(), // Sets the home page of the app to `HomePage`.
+      home:
+          const SliverHomePage(), // Sets the home page of the app to `HomePage`.
     );
   }
 }

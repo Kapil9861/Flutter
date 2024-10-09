@@ -1,6 +1,5 @@
 import 'package:components/components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:veda_news/data/models/articles.dart';
@@ -12,17 +11,17 @@ import 'package:veda_news/presentation/pages/favourite_articles.dart';
 import 'package:veda_news/presentation/widgets/filters.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
-/// The [SliverAppbar] widget serves as the main screen of the Veda News Portal.
+/// The [SliverHomePage] widget serves as the main screen of the Veda News Portal.
 /// It displays a list of news articles fetched from an API and allows users to filter
 /// articles by category and sort criteria.
-class SliverAppbar extends ConsumerStatefulWidget {
-  const SliverAppbar({super.key});
+class SliverHomePage extends ConsumerStatefulWidget {
+  const SliverHomePage({super.key});
 
   @override
-  ConsumerState<SliverAppbar> createState() => _SliverAppbarState();
+  ConsumerState<SliverHomePage> createState() => _SliverHomePageState();
 }
 
-class _SliverAppbarState extends ConsumerState<SliverAppbar> {
+class _SliverHomePageState extends ConsumerState<SliverHomePage> {
   /// The [_newsRepository] is used to fetch news data from the API.
 
   /// The [category] variable stores the currently selected news category.
@@ -46,9 +45,14 @@ class _SliverAppbarState extends ConsumerState<SliverAppbar> {
         physics: const BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
+            floating: true,
+            pinned: true,
+            snap: false,
+            stretch: true,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
-            toolbarHeight: 56,
+            toolbarHeight: 45,
+            expandedHeight: 132,
             title: IconButton(
               icon: Image.asset(
                 'assets/logo/Vector.png',
@@ -105,56 +109,58 @@ class _SliverAppbarState extends ConsumerState<SliverAppbar> {
                 },
               ),
             ],
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(top: 80.0),
+                child: fetchLiveNews.articles != null &&
+                        fetchLiveNews.articles!.isNotEmpty
+                    ? Filters(
+                        selectedCategory: category.isEmpty ? "all" : category,
+                        onCategorySelected: (String selectedCategory) {
+                          ref.read(selectedCategoryProvider.notifier).state =
+                              selectedCategory;
+                          ref
+                              .read(newsArticlesProvider.notifier)
+                              .fetchNewsArticles(context,
+                                  category: selectedCategory);
+                        },
+                      )
+                    : fetchLiveNews.articles != null &&
+                            (fetchLiveNews.articles == null ||
+                                fetchLiveNews.articles!.isEmpty)
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Center(
+                            child: Text(
+                              "Something went wrong!",
+                              style: GoogleFonts.lato(),
+                            ),
+                          ),
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (fetchLiveNews.articles != null &&
+                    fetchLiveNews.articles!.isNotEmpty) {
+                  Articles article = fetchLiveNews.articles![index];
+                  return ArticleTile(article: article);
+                } else {
+                  return Center(
+                    child: Text(
+                      "Something went wrong!",
+                      style: GoogleFonts.lato(),
+                    ),
+                  );
+                }
+              },
+              childCount: fetchLiveNews.articles!.length,
+            ),
           ),
         ],
       ),
-      // backgroundColor: Colors.white,
-      // body: fetchLiveNews.articles != null && fetchLiveNews.articles!.isNotEmpty
-      //     ? Padding(
-      //         padding: const EdgeInsets.only(left: 8.0),
-      //         child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.center,
-      //           children: [
-      //             Filters(
-      //               selectedCategory: category.isEmpty ? "all" : category,
-      //               onCategorySelected: (String selectedCategory) {
-      //                 ref.read(selectedCategoryProvider.notifier).state =
-      //                     selectedCategory;
-      //                 ref.read(newsArticlesProvider.notifier).fetchNewsArticles(
-      //                     context,
-      //                     category: selectedCategory);
-      //               },
-      //             ),
-      //             Expanded(
-      //               child: ListView.builder(
-      //                 itemCount: fetchLiveNews.articles!.length,
-      //                 itemBuilder: (context, index) {
-      //                   Articles article = fetchLiveNews.articles![index];
-      //                   return Row(
-      //                     children: [
-      //                       ArticleTile(
-      //                         article: article,
-      //                       ),
-      //                     ],
-      //                   );
-      //                 },
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       )
-      //     : fetchLiveNews.articles != null &&
-      //             (fetchLiveNews.articles == null ||
-      //                 fetchLiveNews.articles!.isEmpty)
-      //         ? const Center(
-      //             child: CircularProgressIndicator(),
-      //           )
-      //         : Center(
-      //             child: Text(
-      //               "Something went wrong!",
-      //               style: GoogleFonts.lato(),
-      //             ),
-      //           ),
     );
   }
 }
