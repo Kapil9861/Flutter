@@ -1,13 +1,13 @@
-import 'package:veda_news/data/models/user_model.dart';
+import 'package:veda_news/data/database/news_portal_database.dart';
 
 abstract class AuthRepository {
-  Future<UserModel> login({
+  Future<User?> login({
     required String username,
     required String password,
     String? rememberToken,
   });
 
-  Future<UserModel> register({
+  Future<String> register({
     required String fullname,
     required String username,
     required String password,

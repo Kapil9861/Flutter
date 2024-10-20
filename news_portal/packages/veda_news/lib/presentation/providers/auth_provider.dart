@@ -1,7 +1,8 @@
+import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/data/datasource/drift/auth_datasource.dart';
-import 'package:veda_news/data/models/user_model.dart';
 import 'package:veda_news/data/repositories/auth_repository_impl.dart';
 import 'package:veda_news/domain/repositories/auth_repository.dart';
 import 'package:veda_news/domain/usecases/auth/login.dart';
@@ -16,7 +17,7 @@ final authRepoProvider = Provider<AuthRepository>((ref) {
 
   return AuthRepositoryImpl(resource);
 });
-final loginProvider = StateNotifierProvider<LoginNotifier, UserModel>((ref) {
+final loginProvider = StateNotifierProvider<LoginNotifier, User>((ref) {
   final repo = ref.watch(authRepoProvider);
   final login = Login(repo);
   return LoginNotifier(login);
@@ -32,8 +33,8 @@ class RegisterNotifier extends ChangeNotifier {
   final Register reg;
 
   RegisterNotifier(this.reg);
-  UserModel userModel = const UserModel();
-  Future<UserModel> register(
+  String message = "";
+  Future<void> register(
       {required String fullname,
       required String username,
       required String password,
@@ -43,7 +44,7 @@ class RegisterNotifier extends ChangeNotifier {
       String? sessionId,
       String? rememberToken,
       bool? isDeleted}) async {
-    return await reg.call(
+    message = await reg.call(
       fullname: fullname,
       username: username,
       password: password,
@@ -57,10 +58,19 @@ class RegisterNotifier extends ChangeNotifier {
   }
 }
 
-class LoginNotifier extends StateNotifier<UserModel> {
-  LoginNotifier(this.usecase) : super(const UserModel());
+class LoginNotifier extends StateNotifier<User> {
+  LoginNotifier(this.usecase)
+      : super(
+          const User(
+              userName: "",
+              fullName: "",
+              password: "",
+              phoneNumber: "",
+              isDeleted: true),
+        );
   final Login usecase;
   Future<void> login({
+    required BuildContext context,
     required String password,
     required String username,
     String? rememberToken,
@@ -71,6 +81,11 @@ class LoginNotifier extends StateNotifier<UserModel> {
       username: username,
       rememberToken: rememberToken,
     );
-    state = loginState;
+    if (loginState == null) {
+      CustomSnackbar()
+          .show(context, "User not found! \nAre you sure you registered?");
+    } else {
+      state = loginState;
+    }
   }
 }

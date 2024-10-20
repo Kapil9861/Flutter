@@ -1,9 +1,8 @@
 import 'package:veda_news/data/database/news_portal_database.dart';
-import 'package:veda_news/data/models/user_model.dart';
 
 class AuthDatasource {
   final _database = NewsPortalDatabase();
-  Future<UserModel> register(
+  Future<String> register(
       {required String fullname,
       required String username,
       required String password,
@@ -26,7 +25,7 @@ class AuthDatasource {
     );
   }
 
-  Future<UserModel> login({
+  Future<User?> login({
     required String username,
     required String password,
     String? rememberToken,

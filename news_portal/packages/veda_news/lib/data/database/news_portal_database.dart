@@ -6,10 +6,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:veda_news/data/database/tables/favourites.dart';
 import 'package:veda_news/data/database/tables/followed_source.dart';
+import 'package:veda_news/data/database/tables/users.dart';
 
 part 'news_portal_database.g.dart';
 
-@DriftDatabase(tables: [Favourites, FollowedSource])
+@DriftDatabase(tables: [Favourites, FollowedSource, Users])
 class NewsPortalDatabase extends _$NewsPortalDatabase {
   NewsPortalDatabase._privateConstructor() : super(_openConnection());
 
@@ -69,17 +70,43 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
     return query;
   }
 
-  Future login(String username, String password) async {}
-  Future register(
-      {required String fullname,
-      required String username,
-      required String password,
-      required String phoneNumber,
-      String? email,
-      String? resetPasswordExpiration,
-      String? sessionId,
-      String? rememberToken,
-      bool? isDeleted}) async {}
+  Future<User?> login(String username, String password) async {
+    final query = await (select(users)
+          ..where((user) =>
+              user.userName.equals(username) &
+              (user.password.equals(password))))
+        .getSingleOrNull();
+    return query;
+  }
+
+  Future<String> register({
+    required String fullname,
+    required String username,
+    required String password,
+    required String phoneNumber,
+    String? email,
+    String? resetPasswordExpiration,
+    String? sessionId,
+    String? rememberToken,
+    bool? isDeleted,
+  }) async {
+    final query = await into(users).insert(
+      UsersCompanion(
+        userName: Value(username),
+        email: Value(email),
+        password: Value(password),
+        fullName: Value(fullname),
+        phoneNumber: Value(phoneNumber),
+        isDeleted: Value(isDeleted ?? false),
+        rememberToken: Value(rememberToken),
+      ),
+    );
+    if (query.isNegative) {
+      return "Could Not Register User!";
+    } else {
+      return "User Registration Completed Successfully!";
+    }
+  }
 
   Future<bool> removeFavourite(String title) async {
     final query = await (delete(favourites)

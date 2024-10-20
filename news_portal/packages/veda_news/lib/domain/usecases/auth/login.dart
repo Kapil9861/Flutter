@@ -1,11 +1,11 @@
-import 'package:veda_news/data/models/user_model.dart';
+import 'package:veda_news/data/database/news_portal_database.dart';
 import 'package:veda_news/domain/repositories/auth_repository.dart';
 
 class Login {
   final AuthRepository authRepositoryImpl;
 
   Login(this.authRepositoryImpl);
-  Future<UserModel> login({
+  Future<User?> login({
     required String username,
     required String password,
     String? rememberToken,
@@ -18,9 +18,7 @@ class Login {
       );
       return loginData;
     } on Exception catch (e) {
-      return UserModel(
-        sessionId: "error from UseCase: ${e.toString()}",
-      );
+      print(e);
     }
   }
 }

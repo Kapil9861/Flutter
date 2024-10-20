@@ -1,11 +1,10 @@
-import 'package:veda_news/data/models/user_model.dart';
 import 'package:veda_news/domain/repositories/auth_repository.dart';
 
 class Register {
   final AuthRepository source;
 
   Register(this.source);
-  Future<UserModel> call(
+  Future<String> call(
       {required String fullname,
       required String username,
       required String password,

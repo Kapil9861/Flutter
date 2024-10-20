@@ -738,17 +738,535 @@ class FollowedSourceCompanion extends UpdateCompanion<FollowedSourceData> {
   }
 }
 
+class $UsersTable extends Users with TableInfo<$UsersTable, User> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $UsersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _userNameMeta =
+      const VerificationMeta('userName');
+  @override
+  late final GeneratedColumn<String> userName = GeneratedColumn<String>(
+      'user_name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 3, maxTextLength: 30),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _fullNameMeta =
+      const VerificationMeta('fullName');
+  @override
+  late final GeneratedColumn<String> fullName = GeneratedColumn<String>(
+      'full_name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 3, maxTextLength: 30),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _passwordMeta =
+      const VerificationMeta('password');
+  @override
+  late final GeneratedColumn<String> password = GeneratedColumn<String>(
+      'password', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 6, maxTextLength: 20),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _phoneNumberMeta =
+      const VerificationMeta('phoneNumber');
+  @override
+  late final GeneratedColumn<String> phoneNumber = GeneratedColumn<String>(
+      'phone_number', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 10, maxTextLength: 15),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+      'email', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 11, maxTextLength: 32),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _resetPasswordExpirationMeta =
+      const VerificationMeta('resetPasswordExpiration');
+  @override
+  late final GeneratedColumn<String> resetPasswordExpiration =
+      GeneratedColumn<String>('reset_password_expiration', aliasedName, true,
+          additionalChecks: GeneratedColumn.checkTextLength(
+              minTextLength: 3, maxTextLength: 30),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false);
+  static const VerificationMeta _rememberTokenMeta =
+      const VerificationMeta('rememberToken');
+  @override
+  late final GeneratedColumn<String> rememberToken = GeneratedColumn<String>(
+      'remember_token', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 3, maxTextLength: 30),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _sessionIdMeta =
+      const VerificationMeta('sessionId');
+  @override
+  late final GeneratedColumn<String> sessionId = GeneratedColumn<String>(
+      'session_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 3, maxTextLength: 30),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns => [
+        userName,
+        fullName,
+        password,
+        phoneNumber,
+        email,
+        resetPasswordExpiration,
+        rememberToken,
+        sessionId,
+        isDeleted
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'users';
+  @override
+  VerificationContext validateIntegrity(Insertable<User> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('user_name')) {
+      context.handle(_userNameMeta,
+          userName.isAcceptableOrUnknown(data['user_name']!, _userNameMeta));
+    } else if (isInserting) {
+      context.missing(_userNameMeta);
+    }
+    if (data.containsKey('full_name')) {
+      context.handle(_fullNameMeta,
+          fullName.isAcceptableOrUnknown(data['full_name']!, _fullNameMeta));
+    } else if (isInserting) {
+      context.missing(_fullNameMeta);
+    }
+    if (data.containsKey('password')) {
+      context.handle(_passwordMeta,
+          password.isAcceptableOrUnknown(data['password']!, _passwordMeta));
+    } else if (isInserting) {
+      context.missing(_passwordMeta);
+    }
+    if (data.containsKey('phone_number')) {
+      context.handle(
+          _phoneNumberMeta,
+          phoneNumber.isAcceptableOrUnknown(
+              data['phone_number']!, _phoneNumberMeta));
+    } else if (isInserting) {
+      context.missing(_phoneNumberMeta);
+    }
+    if (data.containsKey('email')) {
+      context.handle(
+          _emailMeta, email.isAcceptableOrUnknown(data['email']!, _emailMeta));
+    }
+    if (data.containsKey('reset_password_expiration')) {
+      context.handle(
+          _resetPasswordExpirationMeta,
+          resetPasswordExpiration.isAcceptableOrUnknown(
+              data['reset_password_expiration']!,
+              _resetPasswordExpirationMeta));
+    }
+    if (data.containsKey('remember_token')) {
+      context.handle(
+          _rememberTokenMeta,
+          rememberToken.isAcceptableOrUnknown(
+              data['remember_token']!, _rememberTokenMeta));
+    }
+    if (data.containsKey('session_id')) {
+      context.handle(_sessionIdMeta,
+          sessionId.isAcceptableOrUnknown(data['session_id']!, _sessionIdMeta));
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  User map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return User(
+      userName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_name'])!,
+      fullName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}full_name'])!,
+      password: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}password'])!,
+      phoneNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}phone_number'])!,
+      email: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}email']),
+      resetPasswordExpiration: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}reset_password_expiration']),
+      rememberToken: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}remember_token']),
+      sessionId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}session_id']),
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+    );
+  }
+
+  @override
+  $UsersTable createAlias(String alias) {
+    return $UsersTable(attachedDatabase, alias);
+  }
+}
+
+class User extends DataClass implements Insertable<User> {
+  final String userName;
+  final String fullName;
+  final String password;
+  final String phoneNumber;
+  final String? email;
+  final String? resetPasswordExpiration;
+  final String? rememberToken;
+  final String? sessionId;
+  final bool isDeleted;
+  const User(
+      {required this.userName,
+      required this.fullName,
+      required this.password,
+      required this.phoneNumber,
+      this.email,
+      this.resetPasswordExpiration,
+      this.rememberToken,
+      this.sessionId,
+      required this.isDeleted});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['user_name'] = Variable<String>(userName);
+    map['full_name'] = Variable<String>(fullName);
+    map['password'] = Variable<String>(password);
+    map['phone_number'] = Variable<String>(phoneNumber);
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || resetPasswordExpiration != null) {
+      map['reset_password_expiration'] =
+          Variable<String>(resetPasswordExpiration);
+    }
+    if (!nullToAbsent || rememberToken != null) {
+      map['remember_token'] = Variable<String>(rememberToken);
+    }
+    if (!nullToAbsent || sessionId != null) {
+      map['session_id'] = Variable<String>(sessionId);
+    }
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    return map;
+  }
+
+  UsersCompanion toCompanion(bool nullToAbsent) {
+    return UsersCompanion(
+      userName: Value(userName),
+      fullName: Value(fullName),
+      password: Value(password),
+      phoneNumber: Value(phoneNumber),
+      email:
+          email == null && nullToAbsent ? const Value.absent() : Value(email),
+      resetPasswordExpiration: resetPasswordExpiration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(resetPasswordExpiration),
+      rememberToken: rememberToken == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rememberToken),
+      sessionId: sessionId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sessionId),
+      isDeleted: Value(isDeleted),
+    );
+  }
+
+  factory User.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return User(
+      userName: serializer.fromJson<String>(json['userName']),
+      fullName: serializer.fromJson<String>(json['fullName']),
+      password: serializer.fromJson<String>(json['password']),
+      phoneNumber: serializer.fromJson<String>(json['phoneNumber']),
+      email: serializer.fromJson<String?>(json['email']),
+      resetPasswordExpiration:
+          serializer.fromJson<String?>(json['resetPasswordExpiration']),
+      rememberToken: serializer.fromJson<String?>(json['rememberToken']),
+      sessionId: serializer.fromJson<String?>(json['sessionId']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'userName': serializer.toJson<String>(userName),
+      'fullName': serializer.toJson<String>(fullName),
+      'password': serializer.toJson<String>(password),
+      'phoneNumber': serializer.toJson<String>(phoneNumber),
+      'email': serializer.toJson<String?>(email),
+      'resetPasswordExpiration':
+          serializer.toJson<String?>(resetPasswordExpiration),
+      'rememberToken': serializer.toJson<String?>(rememberToken),
+      'sessionId': serializer.toJson<String?>(sessionId),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+    };
+  }
+
+  User copyWith(
+          {String? userName,
+          String? fullName,
+          String? password,
+          String? phoneNumber,
+          Value<String?> email = const Value.absent(),
+          Value<String?> resetPasswordExpiration = const Value.absent(),
+          Value<String?> rememberToken = const Value.absent(),
+          Value<String?> sessionId = const Value.absent(),
+          bool? isDeleted}) =>
+      User(
+        userName: userName ?? this.userName,
+        fullName: fullName ?? this.fullName,
+        password: password ?? this.password,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        email: email.present ? email.value : this.email,
+        resetPasswordExpiration: resetPasswordExpiration.present
+            ? resetPasswordExpiration.value
+            : this.resetPasswordExpiration,
+        rememberToken:
+            rememberToken.present ? rememberToken.value : this.rememberToken,
+        sessionId: sessionId.present ? sessionId.value : this.sessionId,
+        isDeleted: isDeleted ?? this.isDeleted,
+      );
+  User copyWithCompanion(UsersCompanion data) {
+    return User(
+      userName: data.userName.present ? data.userName.value : this.userName,
+      fullName: data.fullName.present ? data.fullName.value : this.fullName,
+      password: data.password.present ? data.password.value : this.password,
+      phoneNumber:
+          data.phoneNumber.present ? data.phoneNumber.value : this.phoneNumber,
+      email: data.email.present ? data.email.value : this.email,
+      resetPasswordExpiration: data.resetPasswordExpiration.present
+          ? data.resetPasswordExpiration.value
+          : this.resetPasswordExpiration,
+      rememberToken: data.rememberToken.present
+          ? data.rememberToken.value
+          : this.rememberToken,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('User(')
+          ..write('userName: $userName, ')
+          ..write('fullName: $fullName, ')
+          ..write('password: $password, ')
+          ..write('phoneNumber: $phoneNumber, ')
+          ..write('email: $email, ')
+          ..write('resetPasswordExpiration: $resetPasswordExpiration, ')
+          ..write('rememberToken: $rememberToken, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('isDeleted: $isDeleted')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(userName, fullName, password, phoneNumber,
+      email, resetPasswordExpiration, rememberToken, sessionId, isDeleted);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is User &&
+          other.userName == this.userName &&
+          other.fullName == this.fullName &&
+          other.password == this.password &&
+          other.phoneNumber == this.phoneNumber &&
+          other.email == this.email &&
+          other.resetPasswordExpiration == this.resetPasswordExpiration &&
+          other.rememberToken == this.rememberToken &&
+          other.sessionId == this.sessionId &&
+          other.isDeleted == this.isDeleted);
+}
+
+class UsersCompanion extends UpdateCompanion<User> {
+  final Value<String> userName;
+  final Value<String> fullName;
+  final Value<String> password;
+  final Value<String> phoneNumber;
+  final Value<String?> email;
+  final Value<String?> resetPasswordExpiration;
+  final Value<String?> rememberToken;
+  final Value<String?> sessionId;
+  final Value<bool> isDeleted;
+  final Value<int> rowid;
+  const UsersCompanion({
+    this.userName = const Value.absent(),
+    this.fullName = const Value.absent(),
+    this.password = const Value.absent(),
+    this.phoneNumber = const Value.absent(),
+    this.email = const Value.absent(),
+    this.resetPasswordExpiration = const Value.absent(),
+    this.rememberToken = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  UsersCompanion.insert({
+    required String userName,
+    required String fullName,
+    required String password,
+    required String phoneNumber,
+    this.email = const Value.absent(),
+    this.resetPasswordExpiration = const Value.absent(),
+    this.rememberToken = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : userName = Value(userName),
+        fullName = Value(fullName),
+        password = Value(password),
+        phoneNumber = Value(phoneNumber);
+  static Insertable<User> custom({
+    Expression<String>? userName,
+    Expression<String>? fullName,
+    Expression<String>? password,
+    Expression<String>? phoneNumber,
+    Expression<String>? email,
+    Expression<String>? resetPasswordExpiration,
+    Expression<String>? rememberToken,
+    Expression<String>? sessionId,
+    Expression<bool>? isDeleted,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (userName != null) 'user_name': userName,
+      if (fullName != null) 'full_name': fullName,
+      if (password != null) 'password': password,
+      if (phoneNumber != null) 'phone_number': phoneNumber,
+      if (email != null) 'email': email,
+      if (resetPasswordExpiration != null)
+        'reset_password_expiration': resetPasswordExpiration,
+      if (rememberToken != null) 'remember_token': rememberToken,
+      if (sessionId != null) 'session_id': sessionId,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  UsersCompanion copyWith(
+      {Value<String>? userName,
+      Value<String>? fullName,
+      Value<String>? password,
+      Value<String>? phoneNumber,
+      Value<String?>? email,
+      Value<String?>? resetPasswordExpiration,
+      Value<String?>? rememberToken,
+      Value<String?>? sessionId,
+      Value<bool>? isDeleted,
+      Value<int>? rowid}) {
+    return UsersCompanion(
+      userName: userName ?? this.userName,
+      fullName: fullName ?? this.fullName,
+      password: password ?? this.password,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      email: email ?? this.email,
+      resetPasswordExpiration:
+          resetPasswordExpiration ?? this.resetPasswordExpiration,
+      rememberToken: rememberToken ?? this.rememberToken,
+      sessionId: sessionId ?? this.sessionId,
+      isDeleted: isDeleted ?? this.isDeleted,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (userName.present) {
+      map['user_name'] = Variable<String>(userName.value);
+    }
+    if (fullName.present) {
+      map['full_name'] = Variable<String>(fullName.value);
+    }
+    if (password.present) {
+      map['password'] = Variable<String>(password.value);
+    }
+    if (phoneNumber.present) {
+      map['phone_number'] = Variable<String>(phoneNumber.value);
+    }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (resetPasswordExpiration.present) {
+      map['reset_password_expiration'] =
+          Variable<String>(resetPasswordExpiration.value);
+    }
+    if (rememberToken.present) {
+      map['remember_token'] = Variable<String>(rememberToken.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<String>(sessionId.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('UsersCompanion(')
+          ..write('userName: $userName, ')
+          ..write('fullName: $fullName, ')
+          ..write('password: $password, ')
+          ..write('phoneNumber: $phoneNumber, ')
+          ..write('email: $email, ')
+          ..write('resetPasswordExpiration: $resetPasswordExpiration, ')
+          ..write('rememberToken: $rememberToken, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NewsPortalDatabase extends GeneratedDatabase {
   _$NewsPortalDatabase(QueryExecutor e) : super(e);
   $NewsPortalDatabaseManager get managers => $NewsPortalDatabaseManager(this);
   late final $FavouritesTable favourites = $FavouritesTable(this);
   late final $FollowedSourceTable followedSource = $FollowedSourceTable(this);
+  late final $UsersTable users = $UsersTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [favourites, followedSource];
+      [favourites, followedSource, users];
 }
 
 typedef $$FavouritesTableCreateCompanionBuilder = FavouritesCompanion Function({
@@ -777,111 +1295,123 @@ typedef $$FavouritesTableUpdateCompanionBuilder = FavouritesCompanion Function({
 });
 
 class $$FavouritesTableFilterComposer
-    extends FilterComposer<_$NewsPortalDatabase, $FavouritesTable> {
-  $$FavouritesTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$NewsPortalDatabase, $FavouritesTable> {
+  $$FavouritesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get sourceId => $state.composableBuilder(
-      column: $state.table.sourceId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get sourceId => $composableBuilder(
+      column: $table.sourceId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get sourceName => $state.composableBuilder(
-      column: $state.table.sourceName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get sourceName => $composableBuilder(
+      column: $table.sourceName, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get author => $state.composableBuilder(
-      column: $state.table.author,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get author => $composableBuilder(
+      column: $table.author, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get url => $state.composableBuilder(
-      column: $state.table.url,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get urlToImage => $state.composableBuilder(
-      column: $state.table.urlToImage,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get urlToImage => $composableBuilder(
+      column: $table.urlToImage, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get publishedAt => $state.composableBuilder(
-      column: $state.table.publishedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get publishedAt => $composableBuilder(
+      column: $table.publishedAt, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get content => $state.composableBuilder(
-      column: $state.table.content,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnFilters(column));
 }
 
 class $$FavouritesTableOrderingComposer
-    extends OrderingComposer<_$NewsPortalDatabase, $FavouritesTable> {
-  $$FavouritesTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$NewsPortalDatabase, $FavouritesTable> {
+  $$FavouritesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get sourceId => $state.composableBuilder(
-      column: $state.table.sourceId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get sourceId => $composableBuilder(
+      column: $table.sourceId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get sourceName => $state.composableBuilder(
-      column: $state.table.sourceName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get sourceName => $composableBuilder(
+      column: $table.sourceName, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get author => $state.composableBuilder(
-      column: $state.table.author,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get author => $composableBuilder(
+      column: $table.author, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get title => $state.composableBuilder(
-      column: $state.table.title,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get url => $state.composableBuilder(
-      column: $state.table.url,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get url => $composableBuilder(
+      column: $table.url, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get urlToImage => $state.composableBuilder(
-      column: $state.table.urlToImage,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get urlToImage => $composableBuilder(
+      column: $table.urlToImage, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get publishedAt => $state.composableBuilder(
-      column: $state.table.publishedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get publishedAt => $composableBuilder(
+      column: $table.publishedAt, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get content => $state.composableBuilder(
-      column: $state.table.content,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get content => $composableBuilder(
+      column: $table.content, builder: (column) => ColumnOrderings(column));
+}
+
+class $$FavouritesTableAnnotationComposer
+    extends Composer<_$NewsPortalDatabase, $FavouritesTable> {
+  $$FavouritesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceId =>
+      $composableBuilder(column: $table.sourceId, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceName => $composableBuilder(
+      column: $table.sourceName, builder: (column) => column);
+
+  GeneratedColumn<String> get author =>
+      $composableBuilder(column: $table.author, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<String> get url =>
+      $composableBuilder(column: $table.url, builder: (column) => column);
+
+  GeneratedColumn<String> get urlToImage => $composableBuilder(
+      column: $table.urlToImage, builder: (column) => column);
+
+  GeneratedColumn<String> get publishedAt => $composableBuilder(
+      column: $table.publishedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
 }
 
 class $$FavouritesTableTableManager extends RootTableManager<
@@ -890,6 +1420,7 @@ class $$FavouritesTableTableManager extends RootTableManager<
     Favourite,
     $$FavouritesTableFilterComposer,
     $$FavouritesTableOrderingComposer,
+    $$FavouritesTableAnnotationComposer,
     $$FavouritesTableCreateCompanionBuilder,
     $$FavouritesTableUpdateCompanionBuilder,
     (
@@ -902,10 +1433,12 @@ class $$FavouritesTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$FavouritesTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$FavouritesTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$FavouritesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FavouritesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FavouritesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String?> sourceId = const Value.absent(),
@@ -967,6 +1500,7 @@ typedef $$FavouritesTableProcessedTableManager = ProcessedTableManager<
     Favourite,
     $$FavouritesTableFilterComposer,
     $$FavouritesTableOrderingComposer,
+    $$FavouritesTableAnnotationComposer,
     $$FavouritesTableCreateCompanionBuilder,
     $$FavouritesTableUpdateCompanionBuilder,
     (
@@ -989,41 +1523,60 @@ typedef $$FollowedSourceTableUpdateCompanionBuilder = FollowedSourceCompanion
 });
 
 class $$FollowedSourceTableFilterComposer
-    extends FilterComposer<_$NewsPortalDatabase, $FollowedSourceTable> {
-  $$FollowedSourceTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$NewsPortalDatabase, $FollowedSourceTable> {
+  $$FollowedSourceTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get sourceId => $state.composableBuilder(
-      column: $state.table.sourceId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get sourceId => $composableBuilder(
+      column: $table.sourceId, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get sourceName => $state.composableBuilder(
-      column: $state.table.sourceName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get sourceName => $composableBuilder(
+      column: $table.sourceName, builder: (column) => ColumnFilters(column));
 }
 
 class $$FollowedSourceTableOrderingComposer
-    extends OrderingComposer<_$NewsPortalDatabase, $FollowedSourceTable> {
-  $$FollowedSourceTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$NewsPortalDatabase, $FollowedSourceTable> {
+  $$FollowedSourceTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get sourceId => $state.composableBuilder(
-      column: $state.table.sourceId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get sourceId => $composableBuilder(
+      column: $table.sourceId, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get sourceName => $state.composableBuilder(
-      column: $state.table.sourceName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get sourceName => $composableBuilder(
+      column: $table.sourceName, builder: (column) => ColumnOrderings(column));
+}
+
+class $$FollowedSourceTableAnnotationComposer
+    extends Composer<_$NewsPortalDatabase, $FollowedSourceTable> {
+  $$FollowedSourceTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceId =>
+      $composableBuilder(column: $table.sourceId, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceName => $composableBuilder(
+      column: $table.sourceName, builder: (column) => column);
 }
 
 class $$FollowedSourceTableTableManager extends RootTableManager<
@@ -1032,6 +1585,7 @@ class $$FollowedSourceTableTableManager extends RootTableManager<
     FollowedSourceData,
     $$FollowedSourceTableFilterComposer,
     $$FollowedSourceTableOrderingComposer,
+    $$FollowedSourceTableAnnotationComposer,
     $$FollowedSourceTableCreateCompanionBuilder,
     $$FollowedSourceTableUpdateCompanionBuilder,
     (
@@ -1046,10 +1600,12 @@ class $$FollowedSourceTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$FollowedSourceTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$FollowedSourceTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$FollowedSourceTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FollowedSourceTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FollowedSourceTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> sourceId = const Value.absent(),
@@ -1083,6 +1639,7 @@ typedef $$FollowedSourceTableProcessedTableManager = ProcessedTableManager<
     FollowedSourceData,
     $$FollowedSourceTableFilterComposer,
     $$FollowedSourceTableOrderingComposer,
+    $$FollowedSourceTableAnnotationComposer,
     $$FollowedSourceTableCreateCompanionBuilder,
     $$FollowedSourceTableUpdateCompanionBuilder,
     (
@@ -1092,6 +1649,234 @@ typedef $$FollowedSourceTableProcessedTableManager = ProcessedTableManager<
     ),
     FollowedSourceData,
     PrefetchHooks Function()>;
+typedef $$UsersTableCreateCompanionBuilder = UsersCompanion Function({
+  required String userName,
+  required String fullName,
+  required String password,
+  required String phoneNumber,
+  Value<String?> email,
+  Value<String?> resetPasswordExpiration,
+  Value<String?> rememberToken,
+  Value<String?> sessionId,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+typedef $$UsersTableUpdateCompanionBuilder = UsersCompanion Function({
+  Value<String> userName,
+  Value<String> fullName,
+  Value<String> password,
+  Value<String> phoneNumber,
+  Value<String?> email,
+  Value<String?> resetPasswordExpiration,
+  Value<String?> rememberToken,
+  Value<String?> sessionId,
+  Value<bool> isDeleted,
+  Value<int> rowid,
+});
+
+class $$UsersTableFilterComposer
+    extends Composer<_$NewsPortalDatabase, $UsersTable> {
+  $$UsersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get userName => $composableBuilder(
+      column: $table.userName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get fullName => $composableBuilder(
+      column: $table.fullName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get password => $composableBuilder(
+      column: $table.password, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get resetPasswordExpiration => $composableBuilder(
+      column: $table.resetPasswordExpiration,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get rememberToken => $composableBuilder(
+      column: $table.rememberToken, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get sessionId => $composableBuilder(
+      column: $table.sessionId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+}
+
+class $$UsersTableOrderingComposer
+    extends Composer<_$NewsPortalDatabase, $UsersTable> {
+  $$UsersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get userName => $composableBuilder(
+      column: $table.userName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get fullName => $composableBuilder(
+      column: $table.fullName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get password => $composableBuilder(
+      column: $table.password, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get email => $composableBuilder(
+      column: $table.email, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get resetPasswordExpiration => $composableBuilder(
+      column: $table.resetPasswordExpiration,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get rememberToken => $composableBuilder(
+      column: $table.rememberToken,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get sessionId => $composableBuilder(
+      column: $table.sessionId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+}
+
+class $$UsersTableAnnotationComposer
+    extends Composer<_$NewsPortalDatabase, $UsersTable> {
+  $$UsersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get userName =>
+      $composableBuilder(column: $table.userName, builder: (column) => column);
+
+  GeneratedColumn<String> get fullName =>
+      $composableBuilder(column: $table.fullName, builder: (column) => column);
+
+  GeneratedColumn<String> get password =>
+      $composableBuilder(column: $table.password, builder: (column) => column);
+
+  GeneratedColumn<String> get phoneNumber => $composableBuilder(
+      column: $table.phoneNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get resetPasswordExpiration => $composableBuilder(
+      column: $table.resetPasswordExpiration, builder: (column) => column);
+
+  GeneratedColumn<String> get rememberToken => $composableBuilder(
+      column: $table.rememberToken, builder: (column) => column);
+
+  GeneratedColumn<String> get sessionId =>
+      $composableBuilder(column: $table.sessionId, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+}
+
+class $$UsersTableTableManager extends RootTableManager<
+    _$NewsPortalDatabase,
+    $UsersTable,
+    User,
+    $$UsersTableFilterComposer,
+    $$UsersTableOrderingComposer,
+    $$UsersTableAnnotationComposer,
+    $$UsersTableCreateCompanionBuilder,
+    $$UsersTableUpdateCompanionBuilder,
+    (User, BaseReferences<_$NewsPortalDatabase, $UsersTable, User>),
+    User,
+    PrefetchHooks Function()> {
+  $$UsersTableTableManager(_$NewsPortalDatabase db, $UsersTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$UsersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$UsersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$UsersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> userName = const Value.absent(),
+            Value<String> fullName = const Value.absent(),
+            Value<String> password = const Value.absent(),
+            Value<String> phoneNumber = const Value.absent(),
+            Value<String?> email = const Value.absent(),
+            Value<String?> resetPasswordExpiration = const Value.absent(),
+            Value<String?> rememberToken = const Value.absent(),
+            Value<String?> sessionId = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              UsersCompanion(
+            userName: userName,
+            fullName: fullName,
+            password: password,
+            phoneNumber: phoneNumber,
+            email: email,
+            resetPasswordExpiration: resetPasswordExpiration,
+            rememberToken: rememberToken,
+            sessionId: sessionId,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String userName,
+            required String fullName,
+            required String password,
+            required String phoneNumber,
+            Value<String?> email = const Value.absent(),
+            Value<String?> resetPasswordExpiration = const Value.absent(),
+            Value<String?> rememberToken = const Value.absent(),
+            Value<String?> sessionId = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              UsersCompanion.insert(
+            userName: userName,
+            fullName: fullName,
+            password: password,
+            phoneNumber: phoneNumber,
+            email: email,
+            resetPasswordExpiration: resetPasswordExpiration,
+            rememberToken: rememberToken,
+            sessionId: sessionId,
+            isDeleted: isDeleted,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
+    _$NewsPortalDatabase,
+    $UsersTable,
+    User,
+    $$UsersTableFilterComposer,
+    $$UsersTableOrderingComposer,
+    $$UsersTableAnnotationComposer,
+    $$UsersTableCreateCompanionBuilder,
+    $$UsersTableUpdateCompanionBuilder,
+    (User, BaseReferences<_$NewsPortalDatabase, $UsersTable, User>),
+    User,
+    PrefetchHooks Function()>;
 
 class $NewsPortalDatabaseManager {
   final _$NewsPortalDatabase _db;
@@ -1100,4 +1885,6 @@ class $NewsPortalDatabaseManager {
       $$FavouritesTableTableManager(_db, _db.favourites);
   $$FollowedSourceTableTableManager get followedSource =>
       $$FollowedSourceTableTableManager(_db, _db.followedSource);
+  $$UsersTableTableManager get users =>
+      $$UsersTableTableManager(_db, _db.users);
 }
