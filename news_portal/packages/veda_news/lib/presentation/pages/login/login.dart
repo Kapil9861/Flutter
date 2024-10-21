@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:components/components.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/models/user_model.dart';
-import 'package:veda_news/domain/usecases/auth/register.dart';
 import 'package:veda_news/presentation/pages/login/register.dart';
 import 'package:veda_news/presentation/pages/sliver_appbar.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/presentation/pages/login/login.dart';
-import 'package:veda_news/presentation/pages/sliver_appbar.dart';
 
 // Entry point of the application
 void main() {
