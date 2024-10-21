@@ -167,7 +167,7 @@ class _ArticleTileState extends ConsumerState<ArticleTile> {
                           ],
                         ),
                         StyledText(
-                          text: truncateWithEllipsis(title, 40),
+                          text: truncateWithEllipsis(title, 29),
                           fontSize: 16,
                           fontColor: Colors.black,
                         ),

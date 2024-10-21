@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:veda_news/data/models/source.dart';
+import 'package:resources/resources.dart';
 import 'package:veda_news/presentation/pages/login/login.dart';
 import 'package:veda_news/presentation/widgets/styled_text.dart';
 
-class Register extends ConsumerStatefulWidget {
-  const Register({super.key});
+class RegisterPage extends ConsumerStatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  ConsumerState<Register> createState() => _RegisterState();
+  ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterState extends ConsumerState<Register> {
+class _RegisterPageState extends ConsumerState<RegisterPage> {
   String email = "", password = "", name = "", phoneNumber = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -32,7 +32,6 @@ class _RegisterState extends ConsumerState<Register> {
   String? deviceName;
 
   TextEditingController companyName = TextEditingController();
-  bool _isVisible = true;
   FocusNode sourceFocusNode = FocusNode();
 
   @override
@@ -48,7 +47,7 @@ class _RegisterState extends ConsumerState<Register> {
                   height: 170,
                   width: MediaQuery.of(context).size.width,
                   child: Image.asset(
-                    "assets/images/news1.jpg",
+                    Assets.registerBg,
                     fit: BoxFit.cover,
                   ),
                 ),

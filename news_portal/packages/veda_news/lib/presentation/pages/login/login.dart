@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:components/components.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:veda_news/data/models/user_model.dart';
+import 'package:veda_news/domain/usecases/auth/register.dart';
+import 'package:veda_news/presentation/pages/login/register.dart';
 import 'package:veda_news/presentation/pages/sliver_appbar.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -116,6 +118,39 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Don't have an account?",
+                    style: TextStyle(
+                        color: Color(0xFF8c8e98),
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500)),
+                const SizedBox(
+                  width: 5.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegisterPage(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "SignUp",
+                    style: TextStyle(
+                        color: Color(0xFF273671),
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
             )
           ],
         ),

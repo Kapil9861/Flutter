@@ -10,15 +10,20 @@ class Login {
     required String password,
     String? rememberToken,
   }) async {
-    try {
-      final loginData = await authRepositoryImpl.login(
-        username: username,
-        password: password,
-        rememberToken: rememberToken,
-      );
+    final loginData = await authRepositoryImpl.login(
+      username: username,
+      password: password,
+      rememberToken: rememberToken,
+    );
+    if (loginData != null) {
       return loginData;
-    } on Exception catch (e) {
-      print(e);
+    } else {
+      return const User(
+          userName: "",
+          fullName: "",
+          password: "",
+          phoneNumber: "",
+          isDeleted: true);
     }
   }
 }
