@@ -1,16 +1,18 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'package:veda_news/data/database/tables/favourites.dart';
+import 'package:veda_news/data/database/tables/files_storage.dart';
 import 'package:veda_news/data/database/tables/followed_source.dart';
 import 'package:veda_news/data/database/tables/users.dart';
 
 part 'news_portal_database.g.dart';
 
-@DriftDatabase(tables: [Favourites, FollowedSource, Users])
+@DriftDatabase(tables: [Favourites, FollowedSource, Users, FilesStorage])
 class NewsPortalDatabase extends _$NewsPortalDatabase {
   NewsPortalDatabase._privateConstructor() : super(_openConnection());
 
@@ -22,7 +24,7 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
@@ -35,12 +37,16 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
         await m.createAll();
       },
       onUpgrade: (m, from, to) async {
+        await customStatement('PRAGMA foreign_keys = OFF');
         if (from < 2) {
           await m.createTable(favourites);
           await m.createTable(followedSource);
         }
         if (from < 3) {
           await m.createTable(users);
+        }
+        if (from < 4) {
+          await m.createTable(filesStorage);
         }
       },
     );
@@ -49,6 +55,24 @@ class NewsPortalDatabase extends _$NewsPortalDatabase {
   Future<int> addFavouriteArticle(FavouritesCompanion favourite) async {
     final query = await (into(favourites).insert(favourite));
     return query;
+  }
+
+  Future<Uint8List> getMediaBytes(String filePath) async {
+    File file = File(filePath);
+    return await file
+        .readAsBytes(); // Read the video file as Uint8List (binary data)
+  }
+
+  Future<int> addFile(String filePath) async {
+    Uint8List mediaFiles = await getMediaBytes(filePath);
+    FilesStorageCompanion files =
+        FilesStorageCompanion(media: Value(mediaFiles));
+    final query = await (into(filesStorage).insert(files ));
+    return query;
+  }
+
+  Stream<List<FilesStorageData>> getFilesInStream() {
+    return select(filesStorage).watch();
   }
 
   Future<int> addFollowedSource(FollowedSourceCompanion source) async {

@@ -1255,18 +1255,199 @@ class UsersCompanion extends UpdateCompanion<User> {
   }
 }
 
+class $FilesStorageTable extends FilesStorage
+    with TableInfo<$FilesStorageTable, FilesStorageData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FilesStorageTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _mediaMeta = const VerificationMeta('media');
+  @override
+  late final GeneratedColumn<Uint8List> media = GeneratedColumn<Uint8List>(
+      'media', aliasedName, false,
+      type: DriftSqlType.blob, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, media];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'files';
+  @override
+  VerificationContext validateIntegrity(Insertable<FilesStorageData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('media')) {
+      context.handle(
+          _mediaMeta, media.isAcceptableOrUnknown(data['media']!, _mediaMeta));
+    } else if (isInserting) {
+      context.missing(_mediaMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FilesStorageData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FilesStorageData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      media: attachedDatabase.typeMapping
+          .read(DriftSqlType.blob, data['${effectivePrefix}media'])!,
+    );
+  }
+
+  @override
+  $FilesStorageTable createAlias(String alias) {
+    return $FilesStorageTable(attachedDatabase, alias);
+  }
+}
+
+class FilesStorageData extends DataClass
+    implements Insertable<FilesStorageData> {
+  final int id;
+  final Uint8List media;
+  const FilesStorageData({required this.id, required this.media});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['media'] = Variable<Uint8List>(media);
+    return map;
+  }
+
+  FilesStorageCompanion toCompanion(bool nullToAbsent) {
+    return FilesStorageCompanion(
+      id: Value(id),
+      media: Value(media),
+    );
+  }
+
+  factory FilesStorageData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FilesStorageData(
+      id: serializer.fromJson<int>(json['id']),
+      media: serializer.fromJson<Uint8List>(json['media']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'media': serializer.toJson<Uint8List>(media),
+    };
+  }
+
+  FilesStorageData copyWith({int? id, Uint8List? media}) => FilesStorageData(
+        id: id ?? this.id,
+        media: media ?? this.media,
+      );
+  FilesStorageData copyWithCompanion(FilesStorageCompanion data) {
+    return FilesStorageData(
+      id: data.id.present ? data.id.value : this.id,
+      media: data.media.present ? data.media.value : this.media,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FilesStorageData(')
+          ..write('id: $id, ')
+          ..write('media: $media')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, $driftBlobEquality.hash(media));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FilesStorageData &&
+          other.id == this.id &&
+          $driftBlobEquality.equals(other.media, this.media));
+}
+
+class FilesStorageCompanion extends UpdateCompanion<FilesStorageData> {
+  final Value<int> id;
+  final Value<Uint8List> media;
+  const FilesStorageCompanion({
+    this.id = const Value.absent(),
+    this.media = const Value.absent(),
+  });
+  FilesStorageCompanion.insert({
+    this.id = const Value.absent(),
+    required Uint8List media,
+  }) : media = Value(media);
+  static Insertable<FilesStorageData> custom({
+    Expression<int>? id,
+    Expression<Uint8List>? media,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (media != null) 'media': media,
+    });
+  }
+
+  FilesStorageCompanion copyWith({Value<int>? id, Value<Uint8List>? media}) {
+    return FilesStorageCompanion(
+      id: id ?? this.id,
+      media: media ?? this.media,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (media.present) {
+      map['media'] = Variable<Uint8List>(media.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FilesStorageCompanion(')
+          ..write('id: $id, ')
+          ..write('media: $media')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$NewsPortalDatabase extends GeneratedDatabase {
   _$NewsPortalDatabase(QueryExecutor e) : super(e);
   $NewsPortalDatabaseManager get managers => $NewsPortalDatabaseManager(this);
   late final $FavouritesTable favourites = $FavouritesTable(this);
   late final $FollowedSourceTable followedSource = $FollowedSourceTable(this);
   late final $UsersTable users = $UsersTable(this);
+  late final $FilesStorageTable filesStorage = $FilesStorageTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [favourites, followedSource, users];
+      [favourites, followedSource, users, filesStorage];
 }
 
 typedef $$FavouritesTableCreateCompanionBuilder = FavouritesCompanion Function({
@@ -1877,6 +2058,129 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
     (User, BaseReferences<_$NewsPortalDatabase, $UsersTable, User>),
     User,
     PrefetchHooks Function()>;
+typedef $$FilesStorageTableCreateCompanionBuilder = FilesStorageCompanion
+    Function({
+  Value<int> id,
+  required Uint8List media,
+});
+typedef $$FilesStorageTableUpdateCompanionBuilder = FilesStorageCompanion
+    Function({
+  Value<int> id,
+  Value<Uint8List> media,
+});
+
+class $$FilesStorageTableFilterComposer
+    extends Composer<_$NewsPortalDatabase, $FilesStorageTable> {
+  $$FilesStorageTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<Uint8List> get media => $composableBuilder(
+      column: $table.media, builder: (column) => ColumnFilters(column));
+}
+
+class $$FilesStorageTableOrderingComposer
+    extends Composer<_$NewsPortalDatabase, $FilesStorageTable> {
+  $$FilesStorageTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<Uint8List> get media => $composableBuilder(
+      column: $table.media, builder: (column) => ColumnOrderings(column));
+}
+
+class $$FilesStorageTableAnnotationComposer
+    extends Composer<_$NewsPortalDatabase, $FilesStorageTable> {
+  $$FilesStorageTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get media =>
+      $composableBuilder(column: $table.media, builder: (column) => column);
+}
+
+class $$FilesStorageTableTableManager extends RootTableManager<
+    _$NewsPortalDatabase,
+    $FilesStorageTable,
+    FilesStorageData,
+    $$FilesStorageTableFilterComposer,
+    $$FilesStorageTableOrderingComposer,
+    $$FilesStorageTableAnnotationComposer,
+    $$FilesStorageTableCreateCompanionBuilder,
+    $$FilesStorageTableUpdateCompanionBuilder,
+    (
+      FilesStorageData,
+      BaseReferences<_$NewsPortalDatabase, $FilesStorageTable, FilesStorageData>
+    ),
+    FilesStorageData,
+    PrefetchHooks Function()> {
+  $$FilesStorageTableTableManager(
+      _$NewsPortalDatabase db, $FilesStorageTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FilesStorageTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FilesStorageTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FilesStorageTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<Uint8List> media = const Value.absent(),
+          }) =>
+              FilesStorageCompanion(
+            id: id,
+            media: media,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required Uint8List media,
+          }) =>
+              FilesStorageCompanion.insert(
+            id: id,
+            media: media,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$FilesStorageTableProcessedTableManager = ProcessedTableManager<
+    _$NewsPortalDatabase,
+    $FilesStorageTable,
+    FilesStorageData,
+    $$FilesStorageTableFilterComposer,
+    $$FilesStorageTableOrderingComposer,
+    $$FilesStorageTableAnnotationComposer,
+    $$FilesStorageTableCreateCompanionBuilder,
+    $$FilesStorageTableUpdateCompanionBuilder,
+    (
+      FilesStorageData,
+      BaseReferences<_$NewsPortalDatabase, $FilesStorageTable, FilesStorageData>
+    ),
+    FilesStorageData,
+    PrefetchHooks Function()>;
 
 class $NewsPortalDatabaseManager {
   final _$NewsPortalDatabase _db;
@@ -1887,4 +2191,6 @@ class $NewsPortalDatabaseManager {
       $$FollowedSourceTableTableManager(_db, _db.followedSource);
   $$UsersTableTableManager get users =>
       $$UsersTableTableManager(_db, _db.users);
+  $$FilesStorageTableTableManager get filesStorage =>
+      $$FilesStorageTableTableManager(_db, _db.filesStorage);
 }

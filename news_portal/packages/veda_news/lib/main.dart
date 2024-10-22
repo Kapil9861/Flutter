@@ -42,7 +42,8 @@ class MyAppFeature extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme,
       ),
       debugShowCheckedModeBanner: false, // Hides the debug banner in the app.
-      home: const LoginPage(), // Sets the home page of the app to `HomePage`.
+      home:
+          const SliverAppBar(), // Sets the home page of the app to `HomePage`.
     );
   }
 }
@@ -67,7 +68,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: Theme.of(context).appBarTheme,
       ),
       debugShowCheckedModeBanner: false, // Hides the debug banner in the app.
-      home: const LoginPage(), // Sets the home page of the app to `HomePage`.
+      home:
+          const SliverAppBar(), // Sets the home page of the app to `HomePage`.
     );
   }
 }
