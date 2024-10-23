@@ -19,20 +19,20 @@ class MediasoupClient {
       if (kDebugMode) {
         print('cannot produce video');
       }
-      // Abort next steps.
     }
-    final Map transportInfo = await signaling.request('createTransport', {
+
+    // Setting up transport for producing media
+    final Map producerTransportInfo =
+        await signaling.request('createTransport', {
       'forceTcp': false,
       'producing': true,
       'consuming': false,
       'sctpCapabilities': device.sctpCapabilities.toMap(),
     });
 
-//callback for the producers
-    void producerCallback(Producer producer) {}
-
-    final sendTransport = device.createSendTransportFromMap(transportInfo,
-        producerCallback: producerCallback);
+    final sendTransport = device.createSendTransportFromMap(
+        producerTransportInfo,
+        producerCallback: (Producer producer) {});
 
     sendTransport.on('connect', (Map data) {
       signaling
@@ -60,25 +60,55 @@ class MediasoupClient {
       }
     });
 
-    Map<String, dynamic> mediaConstraints = <String, dynamic>{
-      'audio': false,
-      'video': {
-        'mandatory': {
-          'minWidth': '1000',
-          'minHeight': '600',
-          'minFrameRate': '30',
-        }
-      }
-    };
+    // Now setting up the consumer
+    final Map consumerTransportInfo =
+        await signaling.request('createTransport', {
+      'forceTcp': false,
+      'producing': false,
+      'consuming': true,
+      'sctpCapabilities': device.sctpCapabilities.toMap(),
+    });
 
-    final MediaStream stream =
-        await navigator.mediaDevices.getUserMedia(mediaConstraints);
-    final MediaStreamTrack track = stream.getVideoTracks().first;
-    sendTransport.produce(
-      source: 'webcam',
-      track: track,
-      stream: stream,
+    final recvTransport =
+        device.createRecvTransportFromMap(consumerTransportInfo);
+
+    recvTransport.on('connect', (Map data) {
+      signaling
+          .request('transport-connect', {
+            'transportId': recvTransport.id,
+          })
+          .then(data['callback'])
+          .catchError(data['errback']);
+    });
+
+    // Request consumer data from the server
+    final Map<String, dynamic> consumerData =
+        await signaling.request('consumeStreams', {
+      'rtpCapabilities': device.rtpCapabilities.toMap(),
+    });
+
+    // Call recvTransport.consume without awaiting since it's void
+    recvTransport.consume(
+      id: consumerData['id'],
+      producerId: consumerData['producerId'],
+      kind: consumerData['kind'],
+      rtpParameters: RtpParameters.fromMap(consumerData['rtpParameters']),
+      peerId: consumerData['peerId'],
     );
+
+    // Assuming you can access the consumer or its track through events
+    recvTransport.on('producedconsumer', (Consumer consumer) {
+      MediaStreamTrack videoTrack = consumer.track;
+
+      // Handle video track (e.g., pass it to a video player)
+
+      // Listen for track end event
+      consumer.on('trackended', () {
+        if (kDebugMode) {
+          print('Consumer track ended');
+        }
+      });
+    });
   }
 
   MediasoupClient() {
