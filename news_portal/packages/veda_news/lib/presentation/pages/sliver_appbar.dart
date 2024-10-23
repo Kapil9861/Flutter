@@ -2,6 +2,7 @@ import 'package:components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resources/resources.dart';
 import 'package:veda_news/data/models/articles.dart';
 import 'package:veda_news/presentation/providers/news_articles_providers.dart';
 import 'package:veda_news/presentation/providers/small_providers.dart';
@@ -54,7 +55,7 @@ class _SliverHomePageState extends ConsumerState<SliverHomePage> {
             expandedHeight: 132,
             title: IconButton(
               icon: Image.asset(
-                'assets/logo/Vector.png',
+                Assets.vector,
                 height: 30,
                 width: 99,
               ),
@@ -98,7 +99,7 @@ class _SliverHomePageState extends ConsumerState<SliverHomePage> {
               ),
               IconButton(
                 icon: Image.asset(
-                  'assets/icons/Frame.png',
+                  Assets.frame,
                   height: 21.5,
                   width: 18,
                 ),

@@ -18,8 +18,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/logo/Vector.png
-    - lib/assets/icons/more.png
-    - lib/assets/icons/Frame.png
-    - lib/assets/icons/share.png
-    - lib/assets/images/news1.jpg
+    - assets/logo/Vector.png
+    - assets/icons/more.png
+    - assets/icons/Frame.png
+    - assets/icons/share.png
+    - assets/images/news1.jpg

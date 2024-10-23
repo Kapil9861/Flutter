@@ -37,12 +37,12 @@ dependencies:
   google_fonts: ^6.2.1
   core: any
   components: any
-  resources: any
+  resources:
+    path: ../resources
   flutter_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
   drift: ^2.20.3
   drift_flutter: ^0.1.0
-  path: ^1.9.0
   path_provider: ^2.1.4
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
@@ -95,12 +95,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - packages/resources/lib/assets/icons/Frame.png
-    - packages/resources/lib/assets/icons/more.png
-    - packages/resources/lib/assets/icons/share.png
-    - packages/resources/lib/assets/images/news1.jpg
-    - packages/resources/lib/assets/logo/Vector.png
+  # assets:
+    # - packages/resources/assets/icons/Frame.png
+    # - packages/resources/assets/icons/more.png
+    # - packages/resources/assets/icons/share.png
+    # - packages/resources/assets/images/news1.jpg
+    # - packages/resources/assets/logo/Vector.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
