@@ -4,6 +4,7 @@ import 'package:components/components.dart';
 import 'package:core/core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:main_app/authentication/presentation/pages/login_page.dart';
+import 'package:resources/resources.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -34,12 +35,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Image.asset(Images.i1),
         title: StyledText(
           text: widget.title,
         ),
